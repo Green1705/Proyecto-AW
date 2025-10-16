@@ -4,27 +4,64 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title></title>
+	<title>DriveOne</title>
 	<link href="css/styles.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
 </head>
 
 <body>
-	<nav>
-		<img src="images/no_logo.png" id="logo" alt="logotipo de Autos electricos de madrid">
-		<a href="index.html">Inicio</a>
-		<a href="#">Vehículos</a>
-		<a href="reservation_form.html" accesskey="r">Reservas</a>
-		<a href="#">Contacto</a>
+	<nav class="navbar navbar-expand-sm">
+
+		<a href="index.html" class="navbar-brand">
+			<img src="images/no_logo.png" id="logo" alt="logotipo de Autos electricos de madrid">
+		</a>
+		<ul class="navbar-nav">
+			<li class="nav-item">
+				<a href="index.html" class="nav-link">Inicio</a>
+			</li>
+			<li class="nav-item">
+				<a href="#" class="nav-link">Vehículos</a>
+			</li>
+			<li class="nav-item">
+				<a href="reservation_form.html" class="nav-link" accesskey="r">Reservas</a>
+			</li class="nav-item">
+			<li class="nav-item">
+				<a href="#" class="nav-link">Contacto</a>
+			</li>
+		</ul>
 	</nav>
 	<main>
-		<form>
-			<fieldset>
+		<div class="container">
+			<form>
 				<legend>Datos del cliente</legend>
-				<label for="">Nombre</label>
-				<input type="text" name="name" id="name" required>
-			</fieldset>
-			<button type="submit">Enviar</button>
-		</form>
+				<fieldset>
+					<div class="form-group">
+						<label for="name" class="form-label">Nombre(s)</label>
+						<input type="text" name="name" id="name" required class="form-control">
+					</div>
+
+					<div class="form-group">
+						<label for="surname" class="form-label" required>Apellidos</label>
+						<input type="text" name="surname" id="surname" class="form-control">
+					</div>
+
+
+					<div class="form-group">
+						<label for="email" class="form-label" required>Correo
+							electrónico</label>
+						<input type="email" name="email" id="email" class="form-control">
+					</div>
+
+					<div class="form-group">
+						<label for="rent_date" class="form-label" required>Fecha de
+							renta</label>
+						<input type="date" name="rent_date" id="rent_date" class="form-control">
+					</div>
+
+				</fieldset>
+				<button type="submit" class="btn btn-default">Enviar</button>
+			</form>
+		</div>
 	</main>
 </body>
 
