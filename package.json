@@ -1,0 +1,23 @@
+{
+  "name": "proyecto-aw",
+  "version": "1.0.0",
+  "description": "Grupo de Diego y Gorast",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Green1705/Proyecto-AW.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Green1705/Proyecto-AW/issues"
+  },
+  "homepage": "https://github.com/Green1705/Proyecto-AW#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
