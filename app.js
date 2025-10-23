@@ -76,6 +76,10 @@ const server = http.createServer((request, response) => {
 
 const PORT = 3000;
 
-server.listen(PORT, () => {
-  console.log("Servidor activo en el puerto " + PORT);
+server.listen(PORT, (error) => {
+  if (error) {
+    console.log(error);
+  } else {
+    console.log("Servidor activo en el puerto " + PORT);
+  }
 });
