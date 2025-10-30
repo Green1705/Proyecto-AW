@@ -16,27 +16,9 @@ const server = http.createServer((request, response) => {
   } else if (filePath === "./vehiculos") {
     response.end(
       "<h1>Array con vehiculos</h1> <p>" +
-        cars[0].make +
-        " " +
-        cars[0].model +
-        " " +
-        cars[0].color +
-        " " +
-        "<br>" +
-        cars[1].make +
-        " " +
-        cars[1].model +
-        " " +
-        cars[1].color +
-        " " +
-        "<br>" +
-        cars[2].make +
-        " " +
-        cars[2].model +
-        " " +
-        cars[2].color +
-        " " +
-        "<br>" +
+        cars.forEach((car) => {
+          car.make + " " + cars.model + " " + cars.color + " " + "<br>";
+        }) +
         "</p>",
     );
   } else if (filePath === "./reserva") {
@@ -58,7 +40,7 @@ const server = http.createServer((request, response) => {
 
   const contentType = fileTypes[dotname];
 
-  fs.readFile(filePath, (err, content) => {
+  fs.readFile(filePath, { encoding: "utf-8" }, (err, content) => {
     if (err) {
       if (err.code === "ENOENT") {
         response.writeHead(404, { "Content-Type": "text/html" });
