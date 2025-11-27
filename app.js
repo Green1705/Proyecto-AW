@@ -2,9 +2,11 @@
 
 const express = require("express");
 const path = require("path");
-const morgan = require("morgan");
-const bodyParser = require("body-parser");
-const session = require("express-session");
+const morgan = require("morgan"); //logs
+const bodyParser = require("body-parser");//parse body of http response
+const session = require("express-session");;
+const multer = require("multer"); //form encoding
+const multerFactory = multer({dest: './uploads'});
 const app = express();
 
 const vehiclesRoutes = require("./routes/vehiculos.js");
