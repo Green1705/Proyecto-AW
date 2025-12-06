@@ -8,8 +8,7 @@ const router = express.Router();
 router
   .route("/")
   .get((req, res) => {
-    //TODO
-    res.sendFile(path.join(__dirname, "../public/reservation_form.html"));
+    res.render("forms/reservation_form");
   })
   .post((req, res) => {
     //TODO handle form data

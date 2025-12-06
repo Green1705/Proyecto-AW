@@ -9,7 +9,7 @@ const router = express.Router();
 router
   .route("/")
   .get((req, res) => {
-    res.sendFile(path.join(__dirname, "../public/login_form.html"));
+    res.render("forms/login_form");
   })
   .post((req, res) => {
     pool.getConnection((err, connection) => {
