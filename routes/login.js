@@ -28,12 +28,12 @@ router
           ].join(" ");
           req.session.isAuthenticated = true;
           req.session.isAdmin = user.rol === "administrador";
-          res.json({
+          res.render("index", {
             ok: true,
             message: "Se ha iniciado sesión correctamente",
           });
         } else {
-          res.json({
+          res.render("forms/login_form", {
             ok: false,
             message: "Correo o contraseña incorrectos",
           });
