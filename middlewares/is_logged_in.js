@@ -4,7 +4,7 @@ function is_logged(req, res, next) {
   if (req.session && req.session.isAuthenticated) {
     next();
   } else {
-    res.redirect("/login");
+    res.json({ error: "Sesión no iniciada" });
   }
 }
 

@@ -25,9 +25,10 @@ app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(middlewareSession);
 
-app.get("/api/session", (req, res) => {
+app.get("/api/session", is_logged, (req, res) => {
   const session = req.session || {};
   res.json({
+    ok: true,
     isLoggedIn: session.isAuthenticated || false,
     name: session.name || null,
     last_name: session.last_name || null,
