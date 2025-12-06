@@ -19,7 +19,7 @@ router
           .json({ message: "Error al conectarse a la base de datos" });
       } else {
         query =
-          "SELECT id_usuario, email, contrasenia FROM usuario WHERE email = ? AND password = ?";
+          "SELECT id_usuario, rol, email, password FROM usuario WHERE email = ? AND password = ?";
         connection.query(
           query,
           [req.body.email, req.body.password],
@@ -32,6 +32,11 @@ router
                 let user = results[0];
                 req.session.userId = user.id_usuario;
                 req.session.isAuthenticated = true;
+                if (user.rol == "administrador") {
+                  req.session.isAdmin = true;
+                } else {
+                  req.session.isAdmin = false;
+                }
                 res.redirect("/");
               } else {
                 res

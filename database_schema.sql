@@ -50,7 +50,7 @@ create table automovil(
     matricula varchar(20) not null,
     marca varchar(30) not null,
     modelo varchar(30) not null,
-    año_matriculacion year not null,
+    anio_matriculacion year not null,
 	numero_plazas int not null,
     autonomia_km int null,
     precio_por_dia int not null,
