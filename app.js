@@ -25,6 +25,16 @@ app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(middlewareSession);
 
+app.get("/api/session", (req, res) => {
+  const session = req.session || {};
+  res.json({
+    isLoggedIn: session.isAuthenticated || false,
+    name: session.name || null,
+    last_name: session.last_name || null,
+    isAdmin: session.isAdmin || false,
+  });
+});
+
 app.get("/", (req, res) => {
   res.render("index");
 });

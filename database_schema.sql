@@ -27,7 +27,7 @@ create table usuario(
 	id_usuario int auto_increment primary key,
     nombre varchar(30) not null,
     apellido_paterno varchar(30) not null,
-    apellido_materno varchar(30) not null,
+    apellido_materno varchar(30) null,
     rol enum('empleado', 'administrador') not null,
     email varchar(70) not null,
     password varchar(20) not null,
