@@ -115,7 +115,7 @@ nav a:hover {
 .product-section .card {
 	width: 45vw;
 	min-width: 280px;
-	height: 40vh;
+	height: 60vh !important;
 	min-height: 40vh;
 	display: flex;
 	flex-direction: column;
@@ -123,7 +123,7 @@ nav a:hover {
 }
 
 .product-section .card-img-top {
-	height: calc(40vh * 0.5);
+	height: calc(40vh * 0.9);
 	object-fit: cover;
 }
 
