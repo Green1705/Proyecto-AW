@@ -25,7 +25,7 @@ create table usuario(
     apellido_materno varchar(30) not null,
     rol enum('empleado', 'administrador') not null,
     email varchar(70) not null,
-    contrasenia varchar(20) not null,
+    password varchar(20) not null,
     telefono varchar(20) not null,
     contraste enum('normal', 'alto') default 'normal',
     tamanio_texto enum('pequeño', 'normal', 'grande') default 'normal',
@@ -53,7 +53,7 @@ create table automovil(
     año_matriculacion year not null,
 	numero_plazas int not null,
     autonomia_km int null,
-    precio_por_km float(3,2) not null,-- tres digitos, dos de ellos despues del punto
+    precio_por_dia int not null,
     color varchar(20) not null,
     imagen varchar(50),
     estado enum('disponible','reservado','mantenimiento') default 'disponible',
@@ -67,7 +67,7 @@ create table reserva(
     id_automovil int,
     fecha_inicio date not null,
     fecha_fin date not null,
-    precio_final float(7,2) default 0,-- 7 digitos, dos de ellos despues del punto
+    precio_final int not null,
     estado enum('activa','finalizada', 'cancelada') default 'activa',
     kilometros_recorridos int null,
     foreign key (id_usuario) references usuario(id_usuario),

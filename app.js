@@ -3,28 +3,30 @@
 const express = require("express");
 const path = require("path");
 const morgan = require("morgan"); //logs
-const bodyParser = require("body-parser");//parse body of http response
-const session = require("express-session");;
+const bodyParser = require("body-parser"); //parse body of http response
+const session = require("express-session");
 const multer = require("multer"); //form encoding
-const multerFactory = multer({dest: './uploads'});
+const multerFactory = multer({ dest: "./uploads" });
 const app = express();
 
 const vehiclesRoutes = require("./routes/vehiculos.js");
-const reserveForm= require("./routes/formulario_reserva.js");
+const reserveForm = require("./routes/formulario_reserva.js");
+const loginForm = require("./routes/login.js");
 const middlewareSession = session({
   saveUninitialized: false,
   secret: "example",
   resave: false,
 });
+const is_logged = require("./middlewares/is_logged_in.js");
 
 app.set("view engine", "ejs");
-
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(middlewareSession);
 
-app.use("/vehiculos", vehiclesRoutes);
-app.use("/reserva", reserveForm);
+app.use("/login", loginForm);
+app.use("/vehiculos", is_logged, vehiclesRoutes);
+app.use("/reserva", is_logged, reserveForm);
 app.use(express.static(path.join(__dirname, "public")));
 
 app.listen(3000, (err) => {
