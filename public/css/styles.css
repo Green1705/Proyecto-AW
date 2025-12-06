@@ -1,12 +1,40 @@
 body {
 	margin: 0;
-	font-size: 1rem;
+	font-size: clamp(0.9rem, 2vw, 1.4rem); 
+
 }
 
 nav {
 	font-size: 1.5rem;
-	background-color: #e6473c;
+	background-color: #6ed91c;
+	display: flex;
+	justify-content: space-between;
 }
+
+nav .navbar-nav {
+	list-style: none;
+	display: flex;
+	align-items: center;
+	margin: 0;
+	padding: 0;
+	height: 10vh;
+}
+
+nav .nav-item {
+	position: relative;
+	padding: 0 1.5rem;
+}
+
+nav .nav-item + .nav-item::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	top: 20%;
+	bottom: 20%;
+	width: 2px;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
 
 nav a:link,
 a:active,
@@ -22,4 +50,96 @@ nav a:hover {
 #logo {
 	height: 10dvh;
 
+}
+
+.container-main {
+	height: 60dvh;
+	position: relative;
+	background-image: url(../images/auto_electrico.png);
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	
+}
+
+.overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(0deg, rgba(0,0,0,1), rgba(0,0,0,0) 100%);	
+	z-index: 0; 
+}
+
+.header-text {
+	position: absolute;
+	color: #ffffff;
+	font-size: clamp(0.9rem, 2vw, 1.4rem); 
+	line-height: 1.2;
+	max-width: calc(100% - 2rem); 
+	overflow-wrap: break-word;
+	z-index: 1;
+	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.introduction {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	line-height: 1.6;
+	height: 10vh;
+	background-color: #383636;
+	color: white;
+
+}
+
+.introduction p {
+	margin: 0 2rem;
+}
+
+.product-section {
+	padding: 2rem 0;
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
+.car-card {
+	display: none;
+}
+
+.product-section .card {
+	width: 45vw;
+	min-width: 280px;
+	height: 60vh !important;
+	min-height: 40vh;
+	display: flex;
+	flex-direction: column;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.product-section .card-img-top {
+	height: calc(40vh * 0.9);
+	object-fit: cover;
+}
+
+.product-section .card-body {
+	padding: 1.5rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.product-section .card-title {
+	font-size: 1.25rem;
+	color: #1b3a1a;
+}
+
+.product-section .card-text {
+	font-size: 0.95rem;
+	color: #333;
 }
