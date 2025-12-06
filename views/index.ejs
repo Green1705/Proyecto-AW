@@ -1,0 +1,89 @@
+<%- include('partials/head', { title: 'Gestión de Flota de Vehículos Eléctricos' }) %>
+<%- include('partials/navbar') %>
+<%- include('partials/login_modal') %>
+	<div class="container-fluid container-main" >
+		<div class="overlay"></div>
+
+	<header class="header-text">
+		<h1>Autos Eléctricos Madrid &copy;</h1>
+		<h2>Plataforma de movilidad sostenible</h2>
+	</header>
+	</div>
+	<main>
+		<section class="introduction">
+			<p>
+			Somos una empresa de alquiler de automóviles <strong>eléctrico</strong> ubicados en España.
+			Nuestra
+			mision es ser una empresa comprometida con el medio ambiente que busca promover la movilidad
+			<em>sostenible</em> </p>
+		</section>
+
+		<div class="product-section container">
+			<div class="row row-cols-1 row-cols-md-2 g-4 justify-content-center" id="cars-grid"></div>
+		</div>
+
+		<section id="vehiculos">
+			Sección futura...
+		</section>
+
+		<section>
+			<article>
+				<h3>Beneficios de los autos eléctricos</h3>
+				<ol type="1">
+					<li>Cero emisiones de <strong>dioxido de carbono</strong></li>
+					<li>Ahorro en <em>combustible &euro;&euro;</em></li>
+					<li>Menos ruido eliminando la <strong>contaminación acustica</strong></li>
+				</ol>
+			</article>
+
+			<article>
+				<h3>Servicios de la plataforma</h3>
+				<ul>
+					<li>Alquiler de automóviles eléctricos</li>
+					<li>Monitorieo de alquileres activos</li>
+					<li>Consulta de estádisticas del negocio y los automóviles</li>
+				</ul>
+			</article>
+
+		</section>
+
+		<img src="images/auto_electrico.png" alt="Auto eléctrico">
+	<footer>
+
+		<a href="https://www.ucm.es/" target="_blank">Universidad Complutense de Madrid</a>
+		<a href="contacto.html">Contacto</a>
+		<a href="#vehiculos">Sección de vehículos</a>
+
+	</footer>
+
+	<script>
+		const cars = [
+			{ name: "Nissan Leaf", matricula: "EV-001-MD", autonomia: 320, estado: "Disponible", image: "images/nissan_leaf.png" },
+			{ name: "Tesla Model 3", matricula: "EV-010-MD", autonomia: 420, estado: "Reservado", image: "images/tesla_model3.png" },
+			{ name: "Renault Zoe", matricula: "EV-200-BCN", autonomia: 280, estado: "Disponible", image: "images/renault_zoe.png" },
+			{ name: "Hyundai Kona", matricula: "EV-555-VLC", autonomia: 360, estado: "Mantenimiento", image: "images/hyundai_kona.png" }
+		];
+
+	function renderCards(containerId, items, templateFn) {
+		const container = document.getElementById(containerId);
+		container.innerHTML = items.map(templateFn).join("");
+	}
+
+		renderCards("cars-grid", cars, (car) => `
+			<div class="col-12 col-md-6 d-flex mb-3 justify-content-center">
+				<div class="card h-100 shadow-sm">
+					<img src="${car.image}" class="card-img-top" alt="${car.name}">
+					<div class="card-body">
+						<h3 class="card-title h5">${car.name}</h3>
+						<p class="card-text mb-1"><strong>Matrícula:</strong> ${car.matricula}</p>
+						<p class="card-text mb-1"><strong>Autonomía:</strong> ${car.autonomia} km</p>
+						<p class="card-text"><strong>Estado:</strong> ${car.estado}</p>
+					</div>
+				</div>
+			</div>
+		`);
+
+		
+
+	</script>
+<%- include('partials/footer') %>

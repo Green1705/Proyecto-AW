@@ -1,0 +1,24 @@
+<%- include('login_modal') %>
+<script src="/js/bootstrap.bundle.min.js"></script>
+<script>
+	document.addEventListener('DOMContentLoaded', () => {
+		const loginModalEl = document.getElementById('loginModal');
+		if (!loginModalEl) return;
+
+		const loginButtons = document.querySelectorAll('[data-login-trigger]');
+		const modal = new bootstrap.Modal(loginModalEl);
+
+		loginButtons.forEach((btn) => {
+			btn.addEventListener('click', (event) => {
+				event.preventDefault();
+				// Position hook for future adjustments (e.g., width/height tweaks)
+				loginModalEl.style.position = 'fixed';
+				modal.show();
+			});
+		});
+	});
+</script>
+
+</body>
+
+</html>
