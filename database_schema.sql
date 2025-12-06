@@ -6,10 +6,12 @@ create table direccion(
 	ciudad varchar(30) not null,
     calle varchar(30) not null,
     numero int not null,
-    numero int not null,
     codigo_postal int
 );
 
+INSERT INTO direccion (ciudad, calle, numero, codigo_postal)
+VALUES ('Madrid', 'General Pardiñas', 26, 28001);
+select * from direccion;
 create table concesionario(
 	id_concesionario int auto_increment primary key,
     nombre varchar(50) not null,
@@ -17,6 +19,9 @@ create table concesionario(
     direccion_id int,
     foreign key (direccion_id) references direccion(id_direccion)
 );
+
+insert into concesionario (nombre, telefono, direccion_id) values ('Autos eléctricos Madrid', '652985542', 1);
+select * from concesionario;
 
 create table usuario(
 	id_usuario int auto_increment primary key,
@@ -32,6 +37,11 @@ create table usuario(
     id_concesionario int,
 	foreign key (id_concesionario) references concesionario(id_concesionario)
 );
+
+insert into usuario (nombre, apellido_paterno, apellido_materno, rol, email, password, telefono, contraste, tamanio_texto, id_concesionario) 
+values ('diego','moreno', 'duarte', 'administrador','diegomorduar@gmail.com','diego','652284679','normal','normal', 1);
+
+select * from usuario;
 
 create table cliente(
 	id_cliente int auto_increment primary key,

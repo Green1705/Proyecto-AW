@@ -12,6 +12,7 @@ const app = express();
 const vehiclesRoutes = require("./routes/vehiculos.js");
 const reserveForm = require("./routes/formulario_reserva.js");
 const loginForm = require("./routes/login.js");
+const adminRouter = require("./routes/admin/admin.js");
 const middlewareSession = session({
   saveUninitialized: false,
   secret: "example",
@@ -27,6 +28,7 @@ app.use(middlewareSession);
 app.use("/login", loginForm);
 app.use("/vehiculos", is_logged, vehiclesRoutes);
 app.use("/reserva", is_logged, reserveForm);
+app.use("/admin", adminRouter);
 app.use(express.static(path.join(__dirname, "public")));
 
 app.listen(3000, (err) => {
