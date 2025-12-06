@@ -24,6 +24,9 @@ app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(middlewareSession);
 
+app.get("/", (req, res) => {
+  res.render("index");
+});
 app.use("/login", loginForm);
 app.use("/vehiculos", is_logged, vehiclesRoutes);
 app.use("/reserva", is_logged, reserveForm);

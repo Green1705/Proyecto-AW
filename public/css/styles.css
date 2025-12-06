@@ -4,54 +4,6 @@ body {
 
 }
 
-nav {
-	font-size: 1.5rem;
-	background-color: #6ed91c;
-	display: flex;
-	justify-content: space-between;
-}
-
-nav .navbar-nav {
-	list-style: none;
-	display: flex;
-	align-items: center;
-	margin: 0;
-	padding: 0;
-	height: 10vh;
-}
-
-nav .nav-item {
-	position: relative;
-	padding: 0 1.5rem;
-}
-
-nav .nav-item + .nav-item::before {
-	content: "";
-	position: absolute;
-	left: 0;
-	top: 20%;
-	bottom: 20%;
-	width: 2px;
-	background-color: rgba(0, 0, 0, 0.5);
-}
-
-
-nav a:link,
-a:active,
-a:visited {
-	text-decoration: none;
-	color: #000000;
-}
-
-nav a:hover {
-	color: #383636;
-}
-
-#logo {
-	height: 10dvh;
-
-}
-
 .container-main {
 	height: 60dvh;
 	position: relative;

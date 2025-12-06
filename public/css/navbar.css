@@ -1,6 +1,6 @@
 nav {
 	font-size: 1.5rem;
-	background-color: #6ed91c;
+	background-color: #6ed91c !important;
 	display: flex;
 	justify-content: space-between;
 }
@@ -41,4 +41,15 @@ nav a:hover {
 
 #logo {
 	height: 10dvh;
+}
+
+.modal-fixed-30 {
+	width: 30vw;
+	max-width: 30vw;
+}
+
+.modal-fixed-30 .modal-content {
+	height: 30vh;
+	max-height: 30vh;
+	margin: 0 auto;
 }
