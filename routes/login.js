@@ -22,16 +22,21 @@ router
           let user = results[0];
           req.session.userId = user.id_usuario;
           req.session.name = user.nombre;
-          req.session.last_name = user.apellido_paterno + user.apellido_materno;
+          req.session.last_name = [
+            user.apellido_paterno,
+            user.apellido_materno,
+          ].join(" ");
           req.session.isAuthenticated = true;
-          if (user.rol == "administrador") {
-            req.session.isAdmin = true;
-          } else {
-            req.session.isAdmin = false;
-          }
-          res.redirect("/");
+          req.session.isAdmin = user.rol === "administrador";
+          res.json({
+            ok: true,
+            message: "Se ha iniciado sesión correctamente",
+          });
         } else {
-          res.status(404).json({ message: "Email o contraseña incorrectos" });
+          res.json({
+            ok: false,
+            message: "Correo o contraseña incorrectos",
+          });
         }
       }
     });

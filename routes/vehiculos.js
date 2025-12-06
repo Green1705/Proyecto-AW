@@ -1,12 +1,23 @@
 "use strict";
 
 const express = require("express");
+const pool = require("../db/db.js");
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  res.render("vehiculos", { vehiculos: [] });
-});
+router
+  .route("/")
+  .get((req, res) => {
+    const query = "SELECT * FROM automovil";
+    pool.query(query, (err, result) => {
+      if (err) {
+        res.status(500).json({ message: err });
+      } else {
+        res.render("vehiculos", { cars: result });
+      }
+    });
+  })
+  .post((req, res) => {});
 
 // router.get("/:id", (req, res) => {
 //   res.render("users/profile", { vehiculoId: req.params.id });
