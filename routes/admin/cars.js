@@ -117,4 +117,58 @@ router.post("/delete", async (req, res) => {
   res.redirect("/admin/vehiculos");
 });
 
+router.post("/update", uploadImage.single("imagen"), (req, res) => {
+  const {
+    id_automovil,
+    matricula,
+    marca,
+    modelo,
+    anio_matriculacion,
+    numero_plazas,
+    autonomia_km,
+    precio_por_dia,
+    color,
+    estado,
+    id_concesionario,
+    current_imagen,
+  } = req.body;
+
+  if (!id_automovil) {
+    req.flash("error", "No se especificó el vehículo a modificar");
+    return res.redirect("/admin/vehiculos");
+  }
+
+  const imagen = req.file ? "/images/autos/" + req.file.filename : current_imagen;
+
+  const query =
+    "UPDATE automovil SET matricula=?, marca=?, modelo=?, anio_matriculacion=?, numero_plazas=?, autonomia_km=?, precio_por_dia=?, color=?, imagen=?, estado=?, id_concesionario=? WHERE id_automovil=?";
+
+  pool.query(
+    query,
+    [
+      matricula,
+      marca,
+      modelo,
+      anio_matriculacion,
+      numero_plazas,
+      autonomia_km,
+      precio_por_dia,
+      color,
+      imagen,
+      estado,
+      id_concesionario,
+      id_automovil,
+    ],
+    (err) => {
+      if (err) {
+        console.error(err);
+        req.flash("error", "No se pudo actualizar el vehículo");
+      } else {
+        req.flash("success", "Vehículo actualizado correctamente");
+      }
+      res.redirect("/admin/vehiculos");
+    },
+  );
+});
+
 module.exports = router;

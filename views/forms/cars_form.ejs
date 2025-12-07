@@ -2,6 +2,7 @@
 <%- include('../partials/navbar') %>
 
 <% const availableDealerships = Array.isArray(dealerships) ? dealerships : []; %>
+<% const availableDealerships = Array.isArray(dealerships) ? dealerships : []; %>
 <main class="container py-5">
 	<section class="vehicle-table-section">
 		<header class="mb-4">
@@ -75,7 +76,21 @@
 													<button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#reserveModal" data-car-id="<%= car.id_automovil %>" data-car-rate="<%= car.precio_por_dia %>" data-car-name="<%= `${car.marca} ${car.modelo}` %>" data-car-matricula="<%= car.matricula %>" <%= car.estado === 'disponible' ? '' : 'disabled' %>>
 														Reservar
 													</button>
-													<button type="button" class="btn btn-outline-primary w-100" data-action="edit" data-car-id="<%= car.id_automovil %>">
+													<button type="button" class="btn btn-outline-primary w-100"
+														data-edit-vehicle
+														data-bs-toggle="modal" data-bs-target="#editCarModal"
+														data-car-id="<%= car.id_automovil %>"
+														data-car-matricula="<%= car.matricula %>"
+														data-car-marca="<%= car.marca %>"
+														data-car-modelo="<%= car.modelo %>"
+														data-car-anio="<%= car.anio_matriculacion %>"
+														data-car-plazas="<%= car.numero_plazas %>"
+														data-car-autonomia="<%= car.autonomia_km %>"
+														data-car-precio="<%= car.precio_por_dia %>"
+														data-car-color="<%= car.color %>"
+														data-car-estado="<%= car.estado %>"
+														data-car-concesionario="<%= car.id_concesionario %>"
+														data-car-imagen="<%= car.imagen %>">
 														Modificar este vehículo
 													</button>
 													<form action="/admin/vehiculos/delete" method="POST" class="w-100">
@@ -177,6 +192,79 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
 					<button type="submit" class="btn btn-primary">Guardar</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- Modal para editar vehículo -->
+<div class="modal fade" id="editCarModal" tabindex="-1" aria-labelledby="editCarLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="editCarLabel">Editar vehículo</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+			</div>
+			<form action="/admin/vehiculos/update" method="POST" enctype="multipart/form-data">
+				<input type="hidden" name="id_automovil" id="edit-car-id">
+				<input type="hidden" name="current_imagen" id="edit-car-current-image">
+				<div class="modal-body">
+					<div class="row g-3">
+						<div class="col-md-6">
+							<label for="edit-car-matricula" class="form-label">Matrícula</label>
+							<input type="text" class="form-control" id="edit-car-matricula" name="matricula" required>
+						</div>
+						<div class="col-md-6">
+							<label for="edit-car-estado" class="form-label">Estado</label>
+							<select class="form-select" id="edit-car-estado" name="estado" required>
+								<option value="disponible">Disponible</option>
+								<option value="reservado">Reservado</option>
+								<option value="mantenimiento">Mantenimiento</option>
+							</select>
+						</div>
+						<div class="col-md-6">
+							<label for="edit-car-marca" class="form-label">Marca</label>
+							<input type="text" class="form-control" id="edit-car-marca" name="marca" required>
+						</div>
+						<div class="col-md-6">
+							<label for="edit-car-modelo" class="form-label">Modelo</label>
+							<input type="text" class="form-control" id="edit-car-modelo" name="modelo" required>
+						</div>
+						<div class="col-md-6">
+							<label for="edit-car-anio" class="form-label">Año de matriculación</label>
+							<input type="number" class="form-control" id="edit-car-anio" name="anio_matriculacion" required>
+						</div>
+						<div class="col-md-6">
+							<label for="edit-car-plazas" class="form-label">Número de plazas</label>
+							<input type="number" class="form-control" id="edit-car-plazas" name="numero_plazas" required>
+						</div>
+						<div class="col-md-6">
+							<label for="edit-car-autonomia" class="form-label">Autonomía (km)</label>
+							<input type="number" class="form-control" id="edit-car-autonomia" name="autonomia_km" required>
+						</div>
+						<div class="col-md-6">
+							<label for="edit-car-precio" class="form-label">Precio por día (€)</label>
+							<input type="number" class="form-control" id="edit-car-precio" name="precio_por_dia" step="0.01" min="0" required>
+						</div>
+						<div class="col-md-6">
+							<label for="edit-car-color" class="form-label">Color</label>
+							<input type="text" class="form-control" id="edit-car-color" name="color" required>
+						</div>
+						<div class="col-md-6">
+							<label for="edit-car-image" class="form-label">Imagen (opcional)</label>
+							<input type="file" class="form-control" id="edit-car-image" name="imagen" accept="image/*">
+						</div>
+						<div class="col-12">
+							<label for="edit-car-dealership" class="form-label">ID concesionario</label>
+							<input type="text" class="form-control" id="edit-car-dealership" name="id_concesionario"
+								list="car-dealership-options" inputmode="numeric" pattern="\\d+" required>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+					<button type="submit" class="btn btn-primary">Guardar cambios</button>
 				</div>
 			</form>
 		</div>
