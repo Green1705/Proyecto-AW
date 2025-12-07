@@ -2,6 +2,7 @@
 
 const express = require("express");
 const pool = require("../../db/db.js");
+const uploadImage = require("../middleware/uploadImage");
 
 const router = express.Router();
 
@@ -21,7 +22,8 @@ router
       }
     });
   })
-  .post((req, res) => {
+  .post(uploadImage.single("imagen"), (req, res) => {
+    const imagen = "/images/autos/" + req.file.filename;
     const {
       matricula,
       marca,
@@ -31,7 +33,6 @@ router
       autonomia_km,
       precio_por_dia,
       color,
-      imagen,
       estado,
       id_concesionario,
     } = req.body;
