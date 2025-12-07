@@ -36,9 +36,36 @@
 								</td>
 								<td class="text-end">
 									<div class="btn-group btn-group-sm" role="group">
-										<button class="btn btn-outline-primary">Ver</button>
-										<button class="btn btn-outline-success">Finalizar</button>
-										<button class="btn btn-outline-danger">Cancelar</button>
+										<button class="btn btn-outline-primary reservation-view-btn" type="button">Ver</button>
+										<form action="/reserva/finalizar" method="POST">
+											<input type="hidden" name="id_reserva" value="<%= reservation.id_reserva %>">
+											<input type="hidden" name="id_automovil" value="<%= reservation.id_automovil %>">
+											<input type="hidden" name="estado" value="finalizada">
+
+											<button type="submit" class="btn btn-outline-success">Finalizar</button>
+										</form>
+										<form action="/reserva/finalizar" method="POST" class="ms-1">
+											<input type="hidden" name="id_reserva" value="<%= reservation.id_reserva %>">
+											<input type="hidden" name="id_automovil" value="<%= reservation.id_automovil %>">
+											<input type="hidden" name="estado" value="cancelada">
+											<button type="submit" class="btn btn-outline-danger">Cancelar</button>
+										</form>
+									</div>
+								</td>
+							</tr>
+							<tr class="reservation-details" id="reservation-details-<%= reservation.id_reserva %>">
+								<td colspan="4">
+									<div class="reservation-details-card">
+										<ul class="reservation-specs list-unstyled mb-0">
+											<li><strong>Número de reserva:</strong> <%= reservation.id_reserva %></li>
+											<li><strong>Vehículo:</strong> #<%= reservation.id_automovil %> — Matrícula <%= reservation.matricula || 'N/D' %></li>
+											<li><strong>Cliente:</strong> <%= reservation.cliente_nombre || 'Cliente' %> (ID: <%= reservation.id_cliente || 'N/D' %>)</li>
+											<li><strong>Empleado:</strong> <%= reservation.id_usuario || 'N/D' %></li>
+											<li><strong>Fechas:</strong> <%= reservation.fecha_inicio %> hasta <%= reservation.fecha_fin %></li>
+											<li><strong>Estado:</strong> <%= reservation.estado %></li>
+											<li><strong>Precio final:</strong> €<%= reservation.precio_final %></li>
+											<li><strong>Notas/Incidencias reportadas:</strong> <%= reservation.incidencias_reportadas || 'Sin incidencias' %></li>
+										</ul>
 									</div>
 								</td>
 							</tr>
@@ -64,6 +91,44 @@
 	.reservation-row:hover {
 		background-color: #eef2ff;
 	}
+
+	.reservation-details {
+		display: none;
+	}
+
+	.reservation-details.show {
+		display: table-row;
+	}
+
+	.reservation-details-card {
+		padding: 1.25rem;
+		border: 1px solid #e2e8f0;
+		border-radius: 0.75rem;
+		background-color: #ffffff;
+	}
 </style>
+
+<script>
+	(function setupReservationsToggle() {
+		const viewButtons = document.querySelectorAll(".reservation-view-btn");
+		viewButtons.forEach((button) => {
+			button.addEventListener("click", () => {
+				const row = button.closest(".reservation-row");
+				const reservationId = row.getAttribute("data-reservation-id");
+				const detailsRow = document.getElementById(`reservation-details-${reservationId}`);
+				if (!detailsRow) return;
+
+				const currentlyOpen = detailsRow.classList.contains("show");
+				document.querySelectorAll(".reservation-details.show").forEach((openRow) => {
+					openRow.classList.remove("show");
+				});
+
+				if (!currentlyOpen) {
+					detailsRow.classList.add("show");
+				}
+			});
+		});
+	})();
+</script>
 
 <%- include('partials/footer') %>
