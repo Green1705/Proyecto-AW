@@ -124,7 +124,7 @@ body.contrast-high textarea::placeholder {
 }
 
 body.contrast-high .table > :not(caption) > * > * {
-	background-color: transparent !important;
+	background-color: #151924 !important;
 }
 
 body.text-size-large {
