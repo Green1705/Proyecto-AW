@@ -1,0 +1,146 @@
+{
+	"concesionarios": [
+		{
+			"nombre": "Import Autos Centro",
+			"telefono": "600111222",
+			"direccion_id": 1
+		},
+		{
+			"nombre": "Import Autos Norte",
+			"telefono": "600333444",
+			"direccion_id": 2
+		}
+	],
+	"automoviles": [
+		{
+			"matricula": "IMP-1001",
+			"marca": "Nissan",
+			"modelo": "Leaf",
+			"anio_matriculacion": 2022,
+			"numero_plazas": 5,
+			"autonomia_km": 320,
+			"precio_por_dia": 55,
+			"color": "Blanco",
+			"imagen": "images/autos/auto_electrico.png",
+			"estado": "disponible",
+			"id_concesionario": 1
+		},
+		{
+			"matricula": "IMP-1002",
+			"marca": "Renault",
+			"modelo": "Zoe",
+			"anio_matriculacion": 2021,
+			"numero_plazas": 5,
+			"autonomia_km": 300,
+			"precio_por_dia": 52,
+			"color": "Azul",
+			"imagen": "images/autos/auto_electrico.png",
+			"estado": "disponible",
+			"id_concesionario": 1
+		},
+		{
+			"matricula": "IMP-1003",
+			"marca": "Hyundai",
+			"modelo": "Kona",
+			"anio_matriculacion": 2023,
+			"numero_plazas": 5,
+			"autonomia_km": 450,
+			"precio_por_dia": 70,
+			"color": "Gris",
+			"imagen": "images/autos/auto_electrico.png",
+			"estado": "disponible",
+			"id_concesionario": 1
+		},
+		{
+			"matricula": "IMP-1004",
+			"marca": "MG",
+			"modelo": "ZS EV",
+			"anio_matriculacion": 2020,
+			"numero_plazas": 5,
+			"autonomia_km": 335,
+			"precio_por_dia": 48,
+			"color": "Rojo",
+			"imagen": "images/autos/auto_electrico.png",
+			"estado": "disponible",
+			"id_concesionario": 1
+		},
+		{
+			"matricula": "IMP-1005",
+			"marca": "Peugeot",
+			"modelo": "e-208",
+			"anio_matriculacion": 2022,
+			"numero_plazas": 5,
+			"autonomia_km": 340,
+			"precio_por_dia": 58,
+			"color": "Amarillo",
+			"imagen": "images/autos/auto_electrico.png",
+			"estado": "disponible",
+			"id_concesionario": 1
+		},
+		{
+			"matricula": "IMP-2001",
+			"marca": "Tesla",
+			"modelo": "Model 3",
+			"anio_matriculacion": 2023,
+			"numero_plazas": 5,
+			"autonomia_km": 510,
+			"precio_por_dia": 95,
+			"color": "Negro",
+			"imagen": "images/autos/auto_electrico.png",
+			"estado": "disponible",
+			"id_concesionario": 2
+		},
+		{
+			"matricula": "IMP-2002",
+			"marca": "Volkswagen",
+			"modelo": "ID.4",
+			"anio_matriculacion": 2022,
+			"numero_plazas": 5,
+			"autonomia_km": 500,
+			"precio_por_dia": 88,
+			"color": "Plateado",
+			"imagen": "images/autos/auto_electrico.png",
+			"estado": "disponible",
+			"id_concesionario": 2
+		},
+		{
+			"matricula": "IMP-2003",
+			"marca": "Kia",
+			"modelo": "EV6",
+			"anio_matriculacion": 2022,
+			"numero_plazas": 5,
+			"autonomia_km": 480,
+			"precio_por_dia": 82,
+			"color": "Verde",
+			"imagen": "images/autos/auto_electrico.png",
+			"estado": "disponible",
+			"id_concesionario": 2
+		},
+		{
+			"matricula": "IMP-2004",
+			"marca": "Ford",
+			"modelo": "Mustang Mach-E",
+			"anio_matriculacion": 2021,
+			"numero_plazas": 5,
+			"autonomia_km": 490,
+			"precio_por_dia": 90,
+			"color": "Blanco",
+			"imagen": "images/autos/auto_electrico.png",
+			"estado": "disponible",
+			"id_concesionario": 2
+		},
+		{
+			"matricula": "IMP-2005",
+			"marca": "BMW",
+			"modelo": "i4",
+			"anio_matriculacion": 2023,
+			"numero_plazas": 5,
+			"autonomia_km": 520,
+			"precio_por_dia": 110,
+			"color": "Azul oscuro",
+			"imagen": "images/autos/auto_electrico.png",
+			"estado": "disponible",
+			"id_concesionario": 2
+		}
+	]
+}

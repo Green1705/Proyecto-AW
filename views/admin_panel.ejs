@@ -5,6 +5,16 @@
 	<header class="mb-5">
 		<h1 class="h3 mb-1">Panel de administración</h1>
 	</header>
+	<% if (success && success.length) { %>
+		<div class="alert alert-success mb-4" role="alert">
+			<%= success[0] %>
+		</div>
+	<% } %>
+	<% if (error && error.length) { %>
+		<div class="alert alert-danger mb-4" role="alert">
+			<%= error[0] %>
+		</div>
+	<% } %>
 
 	<section class="admin-sections-grid mb-4">
 		<div class="admin-section-card p-4">
@@ -35,12 +45,14 @@
 		</div>
 
 		<div class="admin-section-card p-4">
-			<div class="d-flex align-items-center justify-content-between mb-3">
-				<div>
-					<h2 class="h5 mb-1">Reservas y operaciones</h2>
-				</div>
-				<a href="/reserva" class="admin-section-link d-flex align-items-center justify-content-center text-center">Abrir</a>
+			<div class="mb-3">
+				<h2 class="h5 mb-1">Importar JSON</h2>
+				<p class="text-muted small mb-0">Carga un archivo con concesionarios y automóviles.</p>
 			</div>
+			<form action="/admin/import-json" method="POST" enctype="multipart/form-data" class="d-flex flex-column flex-md-row gap-3 align-items-start">
+				<input type="file" name="dataFile" accept="application/json" class="form-control" required>
+				<button type="submit" class="btn btn-primary px-4">Subir</button>
+			</form>
 		</div>
 	</section>
 </main>
