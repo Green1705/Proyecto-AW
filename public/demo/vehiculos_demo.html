@@ -103,36 +103,46 @@
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
 			</div>
 			<div class="modal-body">
-				<form class="row g-3" id="demo-reserve-form">
-					<input type="hidden" id="demo-reserve-user" value="102">
-					<input type="hidden" id="demo-reserve-vehicle" value="2">
-					<input type="hidden" id="demo-reserve-rate" value="60">
+				<form class="row g-3" id="reserve-form">
+					<input type="hidden" id="reserve-user-id" value="102">
+					<input type="hidden" id="reserve-vehicle-id" value="">
+					<input type="hidden" id="reserve-daily-rate" value="0">
+					<input type="hidden" id="reserve-status" value="activa">
 
+					<div class="col-12 reserve-modal-summary alert alert-light border">
+						Selecciona un vehículo para comenzar la reserva.
+					</div>
+
+					<div class="col-md-6">
+						<label for="reserve-client-id" class="form-label">ID de cliente</label>
+						<input type="text" class="form-control" id="reserve-client-id" list="reserve-client-list" placeholder="Selecciona escribiendo el nombre" autocomplete="on">
+						<datalist id="reserve-client-list">
+							<option value="1" label="Laura Pérez"></option>
+							<option value="2" label="Carlos Ruiz"></option>
+						</datalist>
+						<small class="text-muted">Empieza a escribir el nombre del cliente para autocompletar su ID.</small>
+					</div>
+
+					<div class="col-md-6">
+						<label for="reserve-start" class="form-label">Fecha y hora de inicio</label>
+						<input type="datetime-local" class="form-control" id="reserve-start">
+					</div>
+					<div class="col-md-6">
+						<label for="reserve-end" class="form-label">Fecha y hora de fin</label>
+						<input type="datetime-local" class="form-control" id="reserve-end">
+					</div>
+
+					<div class="col-md-6">
+						<label for="reserve-price" class="form-label">Precio final (€)</label>
+						<input type="number" class="form-control" id="reserve-price" readonly>
+					</div>
 					<div class="col-12">
-						<div class="alert alert-light border">
-							Reserva para usuario #102 — Vehículo #2 (Tesla Model 3)
-						</div>
-					</div>
-					<div class="col-md-6">
-						<label for="demo-reserve-start" class="form-label">Fecha y hora de inicio</label>
-						<input type="datetime-local" class="form-control" id="demo-reserve-start" value="2025-02-10T09:00">
-					</div>
-					<div class="col-md-6">
-						<label for="demo-reserve-end" class="form-label">Fecha y hora de fin</label>
-						<input type="datetime-local" class="form-control" id="demo-reserve-end" value="2025-02-13T18:00">
-					</div>
-					<input type="hidden" id="demo-reserve-status" value="activa">
-					<div class="col-md-6">
-						<label for="demo-reserve-price" class="form-label">Precio final (€)</label>
-						<input type="number" class="form-control" id="demo-reserve-price" value="" readonly>
-					</div>
-					<div class="col-12">
-						<label for="demo-reserve-notes" class="form-label">Notas / incidencias</label>
-						<textarea id="demo-reserve-notes" class="form-control" rows="3" placeholder="Registrar incidencias o comentarios del cliente"></textarea>
+						<label for="reserve-notes" class="form-label">Notas / incidencias</label>
+						<textarea id="reserve-notes" class="form-control" rows="3" placeholder="Registrar incidencias o comentarios del cliente"></textarea>
 					</div>
 					<div class="col-12 d-flex align-items-end justify-content-end gap-3">
 						<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-						<button type="button" class="btn btn-primary">Guardar reserva</button>
+						<button type="submit" class="btn btn-primary">Guardar reserva</button>
 					</div>
 				</form>
 			</div>
@@ -154,7 +164,8 @@
 				precio_por_dia: 65.0,
 				color: "Azul",
 				estado: "disponible",
-				imagen: "images/demo/nissan_leaf.png"
+				imagen: "images/demo/nissan_leaf.png",
+				dealership: "Autos Eléctricos Madrid"
 			},
 			{
 				id_automovil: 2,
@@ -167,7 +178,8 @@
 				precio_por_dia: 120.0,
 				color: "Blanco",
 				estado: "reservado",
-				imagen: "images/demo/tesla_model3.png"
+				imagen: "images/demo/tesla_model3.png",
+				dealership: "Autos Eléctricos Madrid"
 			},
 			{
 				id_automovil: 3,
@@ -180,7 +192,8 @@
 				precio_por_dia: 55.0,
 				color: "Gris",
 				estado: "mantenimiento",
-				imagen: "images/demo/renault_zoe.png"
+				imagen: "images/demo/renault_zoe.png",
+				dealership: "Autos Eléctricos Barcelona"
 			}
 		];
 
@@ -224,11 +237,12 @@
 										<li><strong>Precio por día:</strong> €${car.precio_por_dia.toFixed(2)}</li>
 										<li><strong>Color:</strong> ${car.color}</li>
 										<li><strong>Estado:</strong> ${car.estado}</li>
+										<li><strong>Concesionario:</strong> ${car.dealership || "No asignado"}</li>
 									</ul>
 								</div>
 								<div class="col-md-3">
 									<div class="vehicle-actions">
-										<button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#reserveModal">
+										<button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#reserveModal" data-car-id="${car.id_automovil}" data-car-rate="${car.precio_por_dia}" data-car-name="${car.marca} ${car.modelo}" data-car-matricula="${car.matricula}">
 											Reservar
 										</button>
 									</div>
@@ -260,13 +274,16 @@
 			});
 		}
 
-		function setupDemoPriceCalculator() {
+		function setupReserveModal() {
 			const modal = document.getElementById("reserveModal");
 			if (!modal) return;
-			const startInput = modal.querySelector("#demo-reserve-start");
-			const endInput = modal.querySelector("#demo-reserve-end");
-			const rateInput = modal.querySelector("#demo-reserve-rate");
-			const priceInput = modal.querySelector("#demo-reserve-price");
+			const startInput = modal.querySelector("#reserve-start");
+			const endInput = modal.querySelector("#reserve-end");
+			const rateInput = modal.querySelector("#reserve-daily-rate");
+			const priceInput = modal.querySelector("#reserve-price");
+			const vehicleInput = modal.querySelector("#reserve-vehicle-id");
+			const summary = modal.querySelector(".reserve-modal-summary");
+			const clientInput = modal.querySelector("#reserve-client-id");
 
 			const updatePrice = () => {
 				if (!startInput.value || !endInput.value) {
@@ -276,11 +293,12 @@
 				const startDate = new Date(startInput.value);
 				const endDate = new Date(endInput.value);
 				const rate = parseFloat(rateInput.value || "0");
-				if (!(startDate instanceof Date) || !(endDate instanceof Date) || isNaN(startDate) || isNaN(endDate) || endDate <= startDate || rate <= 0) {
+				if (isNaN(startDate) || isNaN(endDate) || endDate <= startDate || rate <= 0) {
 					priceInput.value = "";
 					return;
 				}
-				const diffDays = (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24);
+				const diffMs = endDate.getTime() - startDate.getTime();
+				const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
 				const price = Math.round(diffDays * rate * 100) / 100;
 				priceInput.value = price.toFixed(2);
 			};
@@ -290,13 +308,28 @@
 				endInput.addEventListener(evt, updatePrice);
 			});
 
-			updatePrice();
+			modal.addEventListener("show.bs.modal", (event) => {
+				const button = event.relatedTarget;
+				if (!button) return;
+				const carId = button.getAttribute("data-car-id");
+				const rate = button.getAttribute("data-car-rate");
+				const carName = button.getAttribute("data-car-name") || "Vehículo seleccionado";
+				const carPlate = button.getAttribute("data-car-matricula") || "Sin matrícula";
+
+				if (vehicleInput) vehicleInput.value = carId || "";
+				if (rateInput) rateInput.value = rate || "0";
+				if (summary) summary.textContent = `Reserva para vehículo #${carId || "--"} — ${carName} (${carPlate})`;
+				if (clientInput) clientInput.value = "";
+				startInput.value = "";
+				endInput.value = "";
+				priceInput.value = "";
+			});
 		}
 
 		document.addEventListener("DOMContentLoaded", () => {
 			renderVehicles();
 			setupVehicleRows();
-			setupDemoPriceCalculator();
+			setupReserveModal();
 		});
 	</script>
 </body>

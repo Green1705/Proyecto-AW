@@ -1,8 +1,7 @@
 "use strict";
 
 const express = require("express");
-const path = require("path");
-const pool = require("../db/db.js");
+const { findUserByEmail } = require("../data/store.js");
 
 const router = express.Router();
 
@@ -15,31 +14,22 @@ router
     });
   })
   .post((req, res) => {
-    const query =
-      "SELECT id_usuario, nombre, apellido_paterno, apellido_materno, rol, email, password FROM usuario WHERE email = ? AND password = ?";
-    pool.query(query, [req.body.email, req.body.password], (err, results) => {
-      if (err) {
-        res.status(500).json({ message: err });
-      } else {
-        if (results.length > 0) {
-          let user = results[0];
-          req.session.userId = user.id_usuario;
-          req.session.name = user.nombre;
-          req.session.lastName = [
-            user.apellido_paterno,
-            user.apellido_materno,
-          ].join(" ");
-          req.session.isLoggedIn = true;
-          req.session.isAdmin = user.rol === "administrador";
+    const user = findUserByEmail(req.body.email);
+    if (user && user.password === req.body.password) {
+      req.session.userId = user.id_usuario;
+      req.session.name = user.nombre;
+      req.session.lastName = [user.apellido_paterno, user.apellido_materno]
+        .filter(Boolean)
+        .join(" ");
+      req.session.isLoggedIn = true;
+      req.session.isAdmin = user.rol === "administrador";
 
-          req.flash("success", "Se ha iniciado sesión correctamente");
-          res.redirect("/");
-        } else {
-          req.flash("error", "Correo o contraseña incorrectos");
-          res.redirect("/");
-        }
-      }
-    });
+      req.flash("success", "Se ha iniciado sesión correctamente");
+      res.redirect("/");
+    } else {
+      req.flash("error", "Correo o contraseña incorrectos");
+      res.redirect("/");
+    }
   });
 
 module.exports = router;

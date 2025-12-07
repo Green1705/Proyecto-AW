@@ -1,8 +1,7 @@
 "use strict";
 
 const express = require("express");
-const path = require("path");
-const pool = require("../db/db.js");
+const { addReservation } = require("../data/store.js");
 
 const router = express.Router();
 
@@ -12,11 +11,30 @@ router
     res.render("forms/reservation_form");
   })
   .post((req, res) => {
-    //TODO handle form data
+    const {
+      id_usuario,
+      id_automovil,
+      id_cliente,
+      fecha_inicio,
+      fecha_fin,
+      estado,
+      precio_final,
+      incidencias_reportadas,
+    } = req.body;
 
-    // const query = "INSERT INTO reserva () values ()"
-    console.log("Formulario recibido con metodo POST");
-    res.redirect("/reserva"); // TODO agregar success template
+    addReservation({
+      id_usuario: Number(id_usuario) || null,
+      id_automovil: Number(id_automovil) || null,
+      id_cliente: Number(id_cliente) || null,
+      fecha_inicio,
+      fecha_fin,
+      estado: estado || "activa",
+      precio_final: Number(precio_final) || 0,
+      incidencias_reportadas,
+    });
+
+    req.flash("success", "Reserva registrada correctamente");
+    res.redirect("/vehiculos");
   });
 
 module.exports = router;

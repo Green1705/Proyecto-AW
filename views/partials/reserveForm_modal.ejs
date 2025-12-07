@@ -7,9 +7,9 @@
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
 			</div>
 			<div class="modal-body">
-				<form action="/reserva" method="POST" class="row g-3" id="reserve-form">
-					<input type="hidden" id="reserve-user-id" name="id_usuario" value="<%= typeof userId !== 'undefined' ? userId : '' %>">
-					<input type="hidden" id="reserve-vehicle-id" name="id_automovil" value="<%= typeof selectedCarId !== 'undefined' ? selectedCarId : '' %>">
+				<form action="/reserva/agregar" method="POST" class="row g-3" id="reserve-form">
+					<input type="hidden" id="reserve-user-id" name="id_usuario" value="<%= typeof userId !== 'undefined' ? userId : '' %>" required>
+					<input type="hidden" id="reserve-vehicle-id" name="id_automovil" value="<%= typeof selectedCarId !== 'undefined' ? selectedCarId : '' %>" required>
 					<input type="hidden" id="reserve-daily-rate" value="<%= typeof selectedCarRate !== 'undefined' ? selectedCarRate : 0 %>">
 
 					<div class="col-12 reserve-modal-summary alert alert-light border">
@@ -33,6 +33,19 @@
 						<input type="number" class="form-control" id="reserve-price" name="precio_final" min="0" step="0.01" readonly>
 					</div>
 
+					<div class="col-md-6">
+						<label for="reserve-client-id" class="form-label">ID de cliente</label>
+						<input type="text" class="form-control" id="reserve-client-id" name="id_cliente" list="reserve-client-list" placeholder="Selecciona escribiendo el nombre" autocomplete="on">
+						<datalist id="reserve-client-list">
+							<% (Array.isArray(clients) ? clients : []).forEach((client) => { %>
+								<option value="<%= client.id_cliente %>" label="<%= `${client.nombre} ${client.apellido_paterno || ''}`.trim() %>"></option>
+							<% }) %>
+						</datalist>
+						<small class="text-muted">Empieza a escribir el nombre del cliente para autocompletar su ID.</small>
+					</div>
+
+
+
 					<div class="col-12">
 						<label for="reserve-notes" class="form-label">Notas / incidencias</label>
 						<textarea id="reserve-notes" name="incidencias_reportadas" class="form-control" rows="3" placeholder="Registrar incidencias o comentarios del cliente"></textarea>
@@ -49,14 +62,18 @@
 </div>
 
 <script>
-	(function attachReservePriceCalculator() {
+	(function setupReserveModal() {
 		const modal = document.getElementById("reserveModal");
 		if (!modal) return;
 		const startInput = modal.querySelector("#reserve-start");
 		const endInput = modal.querySelector("#reserve-end");
 		const rateInput = modal.querySelector("#reserve-daily-rate");
 		const priceInput = modal.querySelector("#reserve-price");
-		if (!startInput || !endInput || !rateInput || !priceInput) return;
+		const vehicleInput = modal.querySelector("#reserve-vehicle-id");
+		const summary = modal.querySelector(".reserve-modal-summary");
+		const clientInput = modal.querySelector("#reserve-client-id");
+
+		if (!startInput || !endInput || !rateInput || !priceInput || !vehicleInput) return;
 
 		const updatePrice = () => {
 			if (!startInput.value || !endInput.value) {
@@ -66,11 +83,12 @@
 			const startDate = new Date(startInput.value);
 			const endDate = new Date(endInput.value);
 			const rate = parseFloat(rateInput.value || "0");
-			if (!(startDate instanceof Date) || !(endDate instanceof Date) || isNaN(startDate) || isNaN(endDate) || endDate <= startDate || rate <= 0) {
+			if (isNaN(startDate) || isNaN(endDate) || endDate <= startDate || rate <= 0) {
 				priceInput.value = "";
 				return;
 			}
-			const diffDays = (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24);
+			const diffMs = endDate.getTime() - startDate.getTime();
+			const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
 			const price = Math.round(diffDays * rate * 100) / 100;
 			priceInput.value = price.toFixed(2);
 		};
@@ -78,6 +96,23 @@
 		["input", "change"].forEach((evt) => {
 			startInput.addEventListener(evt, updatePrice);
 			endInput.addEventListener(evt, updatePrice);
+		});
+
+		modal.addEventListener("show.bs.modal", (event) => {
+			const button = event.relatedTarget;
+			if (!button) return;
+			const carId = button.getAttribute("data-car-id");
+			const rate = button.getAttribute("data-car-rate");
+			const carName = button.getAttribute("data-car-name") || "Vehículo seleccionado";
+			const carPlate = button.getAttribute("data-car-matricula") || "Sin matrícula";
+
+			vehicleInput.value = carId || "";
+			rateInput.value = rate || "0";
+			if (summary) summary.textContent = `Reserva para vehículo #${carId || "--"} — ${carName} (${carPlate})`;
+			if (clientInput) clientInput.value = "";
+			startInput.value = "";
+			endInput.value = "";
+			priceInput.value = "";
 		});
 	})();
 </script>
