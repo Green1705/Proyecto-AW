@@ -7,6 +7,7 @@ const bodyParser = require("body-parser"); //parse body of http response
 const session = require("express-session");
 const multer = require("multer"); //form encoding
 const multerFactory = multer({ dest: "./uploads" });
+const flash = require("connect-flash");
 const app = express();
 
 const vehiclesRoutes = require("./routes/vehiculos.js");
@@ -24,6 +25,7 @@ app.set("view engine", "ejs");
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(middlewareSession);
+app.use(flash());
 
 app.get("/api/session", is_logged, (req, res) => {
   const session = req.session || {};

@@ -12,6 +12,7 @@ create table direccion(
 INSERT INTO direccion (ciudad, calle, numero, codigo_postal)
 VALUES ('Madrid', 'General Pardiñas', 26, 28001);
 select * from direccion;
+
 create table concesionario(
 	id_concesionario int auto_increment primary key,
     nombre varchar(50) not null,
