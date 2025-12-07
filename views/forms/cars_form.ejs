@@ -1,7 +1,8 @@
 <%- include('../partials/head', { title: 'Gestión de Vehículos', extraStyles: ['/css/admin_cars.css'] }) %>
 <%- include('../partials/navbar') %>
 
-<% const availableDealerships = Array.isArray(dealerships) ? dealerships : []; %>
+<% const rawDealerships = typeof dealerships !== 'undefined' ? dealerships : []; %>
+<% const availableDealerships = Array.isArray(rawDealerships) ? rawDealerships : []; %>
 <main class="container py-5">
 	<section class="vehicle-table-section">
 		<header class="mb-4">
