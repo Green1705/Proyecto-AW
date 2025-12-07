@@ -11,6 +11,7 @@ const flash = require("connect-flash");
 const app = express();
 
 const vehiclesRoutes = require("./routes/vehiculos.js");
+const activeReservations = require("./routes/reservas_activas.js");
 const reserveForm = require("./routes/formulario_reserva.js");
 const loginForm = require("./routes/login.js");
 const adminRouter = require("./routes/admin/admin.js");
@@ -46,7 +47,8 @@ app.use(session_info);
 app.use(status_message);
 app.use("/login", is_not_logged, loginForm);
 app.use("/vehiculos", is_logged, vehiclesRoutes);
-app.use("/reserva", is_logged, reserveForm);
+app.use("/reserva", activeReservations);
+app.use("/reserva/agregar", is_logged, reserveForm);
 app.use("/admin", adminRouter);
 app.use("/logout", logout);
 app.use(express.static(path.join(__dirname, "public")));
