@@ -16,7 +16,7 @@ router
   })
   .post((req, res) => {
     const query =
-      "SELECT id_usuario, rol, email, password FROM usuario WHERE email = ? AND password = ?";
+      "SELECT id_usuario, nombre, apellido_paterno, apellido_materno, rol, email, password FROM usuario WHERE email = ? AND password = ?";
     pool.query(query, [req.body.email, req.body.password], (err, results) => {
       if (err) {
         res.status(500).json({ message: err });
