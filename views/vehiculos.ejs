@@ -48,9 +48,8 @@
 													<li><strong>Precio por día:</strong> €<%= Number(car.precio_por_dia).toFixed(2) %></li>
 													<li><strong>Color:</strong> <%= car.color %></li>
 													<li><strong>Estado:</strong> <%= car.estado %></li>
-													<li><strong>Concesionario:</strong>
-														<%= (dealershipMap && dealershipMap[car.id_concesionario]) ? dealershipMap[car.id_concesionario] : 'No asignado' %>
-													</li>
+													<li><strong>Concesionario:</strong></li>
+													<li><strong><%= car.concesionario_nombre %></strong></li>
 												</ul>
 											</div>
 											<div class="col-md-3">
