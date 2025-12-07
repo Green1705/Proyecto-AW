@@ -117,58 +117,72 @@ router.post("/delete", async (req, res) => {
   res.redirect("/admin/vehiculos");
 });
 
-router.post("/update", uploadImage.single("imagen"), (req, res) => {
-  const {
-    id_automovil,
-    matricula,
-    marca,
-    modelo,
-    anio_matriculacion,
-    numero_plazas,
-    autonomia_km,
-    precio_por_dia,
-    color,
-    estado,
-    id_concesionario,
-    current_imagen,
-  } = req.body;
-
+router.post("/update", uploadImage.single("imagen"), async (req, res) => {
+  const { id_automovil } = req.body;
   if (!id_automovil) {
     req.flash("error", "No se especificó el vehículo a modificar");
     return res.redirect("/admin/vehiculos");
   }
 
-  const imagen = req.file ? "/images/autos/" + req.file.filename : current_imagen;
+  try {
+    const [rows] = await promisePool.query(
+      "SELECT * FROM automovil WHERE id_automovil = ?",
+      [id_automovil],
+    );
+    if (!rows.length) {
+      req.flash("error", "El vehículo indicado no existe");
+      return res.redirect("/admin/vehiculos");
+    }
 
-  const query =
-    "UPDATE automovil SET matricula=?, marca=?, modelo=?, anio_matriculacion=?, numero_plazas=?, autonomia_km=?, precio_por_dia=?, color=?, imagen=?, estado=?, id_concesionario=? WHERE id_automovil=?";
+    const currentVehicle = rows[0];
+    const coerceNumber = (value, fallback) => {
+      const parsed = Number(value);
+      return Number.isFinite(parsed) ? parsed : fallback;
+    };
+    const sanitized = {
+      matricula: (req.body.matricula || "").trim() || currentVehicle.matricula,
+      marca: (req.body.marca || "").trim() || currentVehicle.marca,
+      modelo: (req.body.modelo || "").trim() || currentVehicle.modelo,
+      anio_matriculacion: coerceNumber(
+        req.body.anio_matriculacion,
+        currentVehicle.anio_matriculacion,
+      ),
+      numero_plazas: coerceNumber(
+        req.body.numero_plazas,
+        currentVehicle.numero_plazas,
+      ),
+      autonomia_km: coerceNumber(
+        req.body.autonomia_km,
+        currentVehicle.autonomia_km,
+      ),
+      precio_por_dia: coerceNumber(
+        req.body.precio_por_dia,
+        currentVehicle.precio_por_dia,
+      ),
+      color: (req.body.color || "").trim() || currentVehicle.color,
+      imagen: req.file
+        ? "/images/autos/" + req.file.filename
+        : req.body.current_imagen || currentVehicle.imagen,
+      estado: (req.body.estado || "").trim() || currentVehicle.estado,
+      id_concesionario:
+        (req.body.id_concesionario || "").trim() || currentVehicle.id_concesionario,
+    };
 
-  pool.query(
-    query,
-    [
-      matricula,
-      marca,
-      modelo,
-      anio_matriculacion,
-      numero_plazas,
-      autonomia_km,
-      precio_por_dia,
-      color,
-      imagen,
-      estado,
-      id_concesionario,
-      id_automovil,
-    ],
-    (err) => {
-      if (err) {
-        console.error(err);
-        req.flash("error", "No se pudo actualizar el vehículo");
-      } else {
-        req.flash("success", "Vehículo actualizado correctamente");
-      }
-      res.redirect("/admin/vehiculos");
-    },
-  );
+    const fields = Object.keys(sanitized);
+    const setClause = fields.map((field) => `${field}=?`).join(", ");
+    const values = [...fields.map((field) => sanitized[field]), id_automovil];
+
+    await promisePool.query(
+      `UPDATE automovil SET ${setClause} WHERE id_automovil=?`,
+      values,
+    );
+    req.flash("success", "Vehículo actualizado correctamente");
+  } catch (error) {
+    console.error(error);
+    req.flash("error", "No se pudo actualizar el vehículo");
+  }
+
+  return res.redirect("/admin/vehiculos");
 });
 
 module.exports = router;
