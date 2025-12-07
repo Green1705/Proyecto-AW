@@ -21,6 +21,7 @@ const middlewareSession = session({
 });
 const is_logged = require("./middlewares/is_logged_in.js");
 const session_info = require("./middlewares/session_info.js");
+const status_message = require("./middlewares/status_message.js");
 const logout = require("./routes/logout.js");
 
 app.set("view engine", "ejs");
@@ -41,6 +42,7 @@ app.get("/api/session", is_logged, (req, res) => {
 });
 
 app.use(session_info);
+app.use(status_message);
 app.use("/login", loginForm);
 app.use("/vehiculos", is_logged, vehiclesRoutes);
 app.use("/reserva", is_logged, reserveForm);
