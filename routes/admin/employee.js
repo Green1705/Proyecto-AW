@@ -4,6 +4,7 @@ const express = require("express");
 const pool = require("../../db/db.js");
 
 const router = express.Router();
+const dealersQuery = "SELECT id_concesionario, nombre FROM concesionario";
 
 router
   .route("/")
@@ -13,10 +14,17 @@ router
       if (err) {
         res.status(500).json({ message: err });
       } else {
-        res.render("forms/employee_form", {
-          employees: results,
-          success: req.flash("success"),
-          error: req.flash("error"),
+        pool.query(dealersQuery, (err2, dealers) => {
+          if (err2) {
+            res.status(500).json({ message: err2 });
+          } else {
+            res.render("forms/employee_form", {
+              employees: results,
+              dealerships: dealers,
+              success: req.flash("success"),
+              error: req.flash("error"),
+            });
+          }
         });
       }
     });
@@ -34,14 +42,14 @@ router
     } = req.body;
 
     const query =
-      "INSER INTO usuario (nombre, apellido_paterno, apellido_materno, rol, email, password, telefono, id_concesionario) values (?,?,?,?,?,?,?,?)";
+      "INSERT INTO usuario (nombre, apellido_paterno, apellido_materno, rol, email, password, telefono, id_concesionario) values (?,?,?,?,?,?,?,?)";
 
     pool.query(
       query,
       [
         nombre,
         apellido_paterno,
-        apellido_materno,
+        apellido_materno || null,
         rol,
         email,
         password,
@@ -50,6 +58,7 @@ router
       ],
       (err, result) => {
         if (err) {
+          console.error(err);
           req.flash("error", "Error al crear empleado");
           res.redirect("/admin/empleados");
         } else {

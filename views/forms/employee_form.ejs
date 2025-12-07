@@ -1,15 +1,21 @@
 <%- include('../partials/head', { title: 'Gestión de Empleados', extraStyles: ['/css/admin_employees.css'] }) %>
 <%- include('../partials/navbar') %>
 
+<% const availableDealerships = Array.isArray(dealerships) ? dealerships : []; %>
 <main class="container py-5">
 	<section class="employee-section">
 		<header class="mb-4">
 			<h1 class="h3 mb-1">Gestión de empleados</h1>
-			<div class="row mb-3">
+			<div class="row g-3 align-items-center mb-3">
 				<div class="col-md-6">
 					<label for="employee-search" class="form-label visually-hidden">Buscar empleados</label>
 					<input type="search" class="form-control" id="employee-search" placeholder="Buscar empleados..."
 						data-search-row-selector=".employee-row" data-detail-prefix="employee-details-" data-detail-attr="data-employee-id">
+				</div>
+				<div class="col-md-6 text-md-end">
+					<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">
+						Agregar empleado
+					</button>
 				</div>
 			</div>
 			<% if (success && success.length) { %>
@@ -51,19 +57,6 @@
 													<li><strong>ID Concesionario:</strong> <%= employee.id_concesionario || 'N/D' %></li>
 												</ul>
 											</div>
-											<div class="col-md-4">
-												<div class="employee-actions">
-													<button type="button" class="btn btn-success w-100" data-action="add">
-														Agregar empleado
-													</button>
-													<button type="button" class="btn btn-outline-primary w-100" data-action="edit" data-employee-id="<%= employee.id_usuario %>">
-														Modificar este empleado
-													</button>
-													<button type="button" class="btn btn-outline-danger w-100" data-action="delete" data-employee-id="<%= employee.id_usuario %>">
-														Eliminar este empleado
-													</button>
-												</div>
-											</div>
 										</div>
 									</div>
 								</td>
@@ -83,6 +76,70 @@
 </main>
 
 <script src="/js/admin_employees.js"></script>
+<script src="/js/search.js"></script>
+
+<!-- Modal agregar empleado -->
+<div class="modal fade" id="addEmployeeModal" tabindex="-1" aria-labelledby="addEmployeeLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="addEmployeeLabel">Nuevo empleado</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+			</div>
+			<form action="/admin/empleados" method="POST">
+				<div class="modal-body">
+					<div class="row g-3">
+						<div class="col-md-6">
+							<label for="employee-name" class="form-label">Nombre</label>
+							<input type="text" class="form-control" id="employee-name" name="nombre" required>
+						</div>
+						<div class="col-md-6">
+							<label for="employee-lastname" class="form-label">Apellido paterno</label>
+							<input type="text" class="form-control" id="employee-lastname" name="apellido_paterno" required>
+						</div>
+						<div class="col-md-6">
+							<label for="employee-second-lastname" class="form-label">Apellido materno</label>
+							<input type="text" class="form-control" id="employee-second-lastname" name="apellido_materno">
+						</div>
+						<div class="col-md-6">
+							<label for="employee-role" class="form-label">Rol</label>
+							<select class="form-select" id="employee-role" name="rol" required>
+								<option value="empleado">Empleado</option>
+								<option value="administrador">Administrador</option>
+							</select>
+						</div>
+						<div class="col-md-6">
+							<label for="employee-email" class="form-label">Correo</label>
+							<input type="email" class="form-control" id="employee-email" name="email" required>
+						</div>
+						<div class="col-md-6">
+							<label for="employee-password" class="form-label">Contraseña</label>
+							<input type="password" class="form-control" id="employee-password" name="password" required>
+						</div>
+						<div class="col-md-6">
+							<label for="employee-phone" class="form-label">Teléfono</label>
+							<input type="tel" class="form-control" id="employee-phone" name="telefono" required>
+						</div>
+						<div class="col-md-6">
+							<label for="employee-dealership" class="form-label">ID concesionario</label>
+							<input type="text" class="form-control" id="employee-dealership" name="id_concesionario"
+								list="employee-dealership-options" inputmode="numeric" pattern="\\d+" placeholder="Selecciona un concesionario" required>
+							<datalist id="employee-dealership-options">
+								<% availableDealerships.forEach((dealer) => { %>
+									<option value="<%= dealer.id_concesionario %>"><%= dealer.nombre %></option>
+								<% }) %>
+							</datalist>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+					<button type="submit" class="btn btn-primary">Guardar empleado</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
 <script src="/js/search.js"></script>
 
 <%- include('../partials/footer') %>
