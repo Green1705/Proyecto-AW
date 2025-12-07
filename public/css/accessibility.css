@@ -1,88 +1,115 @@
 body.contrast-high {
-	background-color: #05060a;
-	color: #f5f7ff;
+	background-color: #05060a !important;
+	color: #f4f7ff !important;
+}
+
+body.contrast-high *,
+body.contrast-high *::after,
+body.contrast-high *::before {
+	color: inherit;
+	border-color: #2a3242;
 }
 
 body.contrast-high a {
-	color: #7ed2ff;
+	color: #7ed2ff !important;
 }
 
 body.contrast-high .navbar,
-body.contrast-high .dropdown-menu,
 body.contrast-high .site-footer,
-body.contrast-high .offcanvas {
-	background-color: #0f1118;
-	color: #f5f7ff;
+body.contrast-high .offcanvas,
+body.contrast-high .dropdown-menu {
+	background-color: #0e121d !important;
+	color: inherit !important;
+	border-color: #2a3242 !important;
+}
+
+body.contrast-high section,
+body.contrast-high article,
+body.contrast-high aside,
+body.contrast-high main {
+	background-color: transparent !important;
 }
 
 body.contrast-high .card,
+body.contrast-high .table,
+body.contrast-high .table-light,
+body.contrast-high .table-hover tbody tr,
 body.contrast-high .vehicle-details-card,
 body.contrast-high .reservation-details-card,
 body.contrast-high .admin-section-card,
 body.contrast-high .accordion-item,
+body.contrast-high .accordion-body,
 body.contrast-high .list-group-item,
 body.contrast-high .modal-content,
-body.contrast-high .table,
-body.contrast-high .table-light,
-body.contrast-high .table-hover tbody tr,
+body.contrast-high .modal-header,
+body.contrast-high .modal-footer,
 body.contrast-high .form-control,
 body.contrast-high .form-select,
+body.contrast-high .input-group-text,
 body.contrast-high .btn,
 body.contrast-high .badge,
-body.contrast-high .alert {
-	background-color: #151924;
-	color: #f5f7ff;
-	border-color: #2a3242;
-}
-
-body.contrast-high .form-control,
-body.contrast-high .form-select,
-body.contrast-high .modal-footer,
-body.contrast-high .modal-header {
-	background-color: #151924;
-	color: #f5f7ff;
-	border-color: #2a3242;
+body.contrast-high .alert,
+body.contrast-high .table-striped > tbody > tr:nth-of-type(odd),
+body.contrast-high .table-striped > tbody > tr:nth-of-type(even),
+body.contrast-high .dropdown-item,
+body.contrast-high .list-group-item-action {
+	background-color: #151924 !important;
+	color: inherit !important;
+	border-color: #2a3242 !important;
 }
 
 body.contrast-high .table thead,
-body.contrast-high .table thead th {
-	background-color: #1f2431;
-	color: #f5f7ff;
+body.contrast-high .table thead th,
+body.contrast-high .accordion-button,
+body.contrast-high .accordion-button:not(.collapsed) {
+	background-color: #1e2433 !important;
+	color: inherit !important;
+	border-color: #2a3242 !important;
 }
 
-body.contrast-high .table tbody tr:hover {
-	background-color: #1f2534;
+body.contrast-high .table tbody tr:hover,
+body.contrast-high .dropdown-item:hover,
+body.contrast-high .list-group-item-action:hover,
+body.contrast-high .accordion-button:focus {
+	background-color: #22293a !important;
+	color: inherit !important;
 }
 
 body.contrast-high .text-muted,
 body.contrast-high .small,
 body.contrast-high li,
 body.contrast-high p,
-body.contrast-high h1,
-body.contrast-high h2,
-body.contrast-high h3,
-body.contrast-high h4,
-body.contrast-high h5,
-body.contrast-high h6 {
-	color: #f5f7ff !important;
+body.contrast-high span {
+	color: #dce2f5 !important;
 }
 
 body.contrast-high .btn {
-	border-color: #5f6b85;
+	border-color: #4a5570 !important;
 }
 
 body.contrast-high .btn-outline-primary,
 body.contrast-high .btn-outline-secondary,
 body.contrast-high .btn-outline-success,
 body.contrast-high .btn-outline-danger {
-	color: #f5f7ff;
+	color: inherit !important;
 }
 
 body.contrast-high .btn-primary,
 body.contrast-high .btn-success {
-	background-color: #3a6bf2;
-	border-color: #3a6bf2;
-	color: #ffffff;
+	background-color: #3a6bf2 !important;
+	border-color: #3a6bf2 !important;
+	color: #ffffff !important;
+}
+
+body.contrast-high .form-control::placeholder,
+body.contrast-high .form-select,
+body.contrast-high input::placeholder,
+body.contrast-high textarea::placeholder {
+	color: #a7b3cf !important;
+}
+
+body.contrast-high .table > :not(caption) > * > * {
+	background-color: transparent !important;
 }
 
 body.text-size-large {
