@@ -9,10 +9,17 @@
 				Consulta el inventario tal como lo ven los empleados y utiliza las acciones adicionales para agregar,
 				modificar o eliminar registros.
 			</p>
-			<div class="d-flex justify-content-end mb-3">
-				<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addCarModal">
-					Agregar vehículo
-				</button>
+			<div class="row g-3 align-items-center mb-3">
+				<div class="col-md-6">
+					<label for="admin-vehicle-search" class="form-label visually-hidden">Buscar vehículos</label>
+					<input type="search" class="form-control" id="admin-vehicle-search" placeholder="Buscar vehículos..."
+						data-search-row-selector=".vehicle-row" data-detail-prefix="vehicle-details-" data-detail-attr="data-car-id">
+				</div>
+				<div class="col-md-6 text-md-end">
+					<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addCarModal">
+						Agregar vehículo
+					</button>
+				</div>
 			</div>
 			<% if (success && success.length) { %>
 				<div class="alert alert-success py-2 mb-2"><%= success[0] %></div>
@@ -98,6 +105,7 @@
 </main>
 
 <script src="/js/admin_cars.js"></script>
+<script src="/js/search.js"></script>
 
 <!-- Modal para nuevo vehículo -->
 <div class="modal fade" id="addCarModal" tabindex="-1" aria-labelledby="addCarLabel" aria-hidden="true">

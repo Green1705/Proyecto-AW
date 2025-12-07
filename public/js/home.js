@@ -1,8 +1,9 @@
+const DEFAULT_CAR_IMAGE = "images/autos/auto_electrico.png";
 const cars = [
-	{ name: "Nissan Leaf", matricula: "EV-001-MD", autonomia: 320, estado: "Disponible", image: "images/nissan_leaf.png" },
-	{ name: "Tesla Model 3", matricula: "EV-010-MD", autonomia: 420, estado: "Reservado", image: "images/tesla_model3.png" },
-	{ name: "Renault Zoe", matricula: "EV-200-BCN", autonomia: 280, estado: "Disponible", image: "images/renault_zoe.png" },
-	{ name: "Hyundai Kona", matricula: "EV-555-VLC", autonomia: 360, estado: "Mantenimiento", image: "images/hyundai_kona.png" },
+	{ name: "Nissan Leaf", matricula: "EV-001-MD", autonomia: 320, estado: "Disponible", image: DEFAULT_CAR_IMAGE },
+	{ name: "Tesla Model 3", matricula: "EV-010-MD", autonomia: 420, estado: "Reservado", image: DEFAULT_CAR_IMAGE },
+	{ name: "Renault Zoe", matricula: "EV-200-BCN", autonomia: 280, estado: "Disponible", image: DEFAULT_CAR_IMAGE },
+	{ name: "Hyundai Kona", matricula: "EV-555-VLC", autonomia: 360, estado: "Mantenimiento", image: DEFAULT_CAR_IMAGE },
 ];
 
 function renderCards(containerId, items, templateFn) {

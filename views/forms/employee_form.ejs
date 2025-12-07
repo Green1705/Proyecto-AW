@@ -8,6 +8,13 @@
 			<p class="text-muted mb-3">
 				Revisa el personal registrado y usa las acciones para agregar nuevos empleados o actualizar/eliminar los existentes.
 			</p>
+			<div class="row mb-3">
+				<div class="col-md-6">
+					<label for="employee-search" class="form-label visually-hidden">Buscar empleados</label>
+					<input type="search" class="form-control" id="employee-search" placeholder="Buscar empleados..."
+						data-search-row-selector=".employee-row" data-detail-prefix="employee-details-" data-detail-attr="data-employee-id">
+				</div>
+			</div>
 			<% if (success && success.length) { %>
 				<div class="alert alert-success py-2 mb-2"><%= success[0] %></div>
 			<% } %>
@@ -79,5 +86,6 @@
 </main>
 
 <script src="/js/admin_employees.js"></script>
+<script src="/js/search.js"></script>
 
 <%- include('../partials/footer') %>

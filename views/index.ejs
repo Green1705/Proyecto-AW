@@ -16,11 +16,20 @@
 	</div>
 	<main>
 		<section class="introduction">
-			<p>
-			Somos una empresa de alquiler de automóviles <strong>eléctrico</strong> ubicados en España.
-			Nuestra
-			mision es ser una empresa comprometida con el medio ambiente que busca promover la movilidad
-			<em>sostenible</em> </p>
+			<div class="intro-grid container">
+				<div class="intro-card intro-left">
+					<p>
+						Somos una empresa de alquiler de automóviles <strong>eléctricos</strong> ubicada en España. Nuestra
+						misión es impulsar la movilidad <em>sostenible</em> ofreciendo flotas eficientes, seguras y modernas.
+					</p>
+				</div>
+				<div class="intro-card intro-right">
+					<p>
+						Acompañamos a empresas y particulares con asesoría personalizada, monitoreo de reservas y un servicio
+						centrado en reducir la huella de carbono sin sacrificar confort.
+					</p>
+				</div>
+			</div>
 		</section>
 
 		<div class="product-section container">
@@ -28,38 +37,28 @@
 		</div>
 
 		<section id="vehiculos">
-			Sección futura...
+		
 		</section>
 
-		<section>
-			<article>
+		<section class="info-section container">
+			<div class="info-card">
 				<h3>Beneficios de los autos eléctricos</h3>
 				<ol type="1">
-					<li>Cero emisiones de <strong>dioxido de carbono</strong></li>
+					<li>Cero emisiones de <strong>dióxido de carbono</strong></li>
 					<li>Ahorro en <em>combustible &euro;&euro;</em></li>
-					<li>Menos ruido eliminando la <strong>contaminación acustica</strong></li>
+					<li>Menos ruido eliminando la <strong>contaminación acústica</strong></li>
 				</ol>
-			</article>
+			</div>
 
-			<article>
+			<div class="info-card">
 				<h3>Servicios de la plataforma</h3>
 				<ul>
 					<li>Alquiler de automóviles eléctricos</li>
-					<li>Monitorieo de alquileres activos</li>
-					<li>Consulta de estádisticas del negocio y los automóviles</li>
+					<li>Monitoreo de alquileres activos</li>
+					<li>Consulta de estadísticas del negocio y los automóviles</li>
 				</ul>
-			</article>
-
+			</div>
 		</section>
-
-		<img src="images/auto_electrico.png" alt="Auto eléctrico">
-	<footer>
-
-		<a href="https://www.ucm.es/" target="_blank">Universidad Complutense de Madrid</a>
-		<a href="contacto.html">Contacto</a>
-		<a href="#vehiculos">Sección de vehículos</a>
-
-	</footer>
 
 	<input type="hidden" id="login-error-message" value="<%= (typeof error !== 'undefined' && error && error.length) ? error[0] : '' %>">
 	<input type="hidden" id="login-success-message" value="<%= (typeof success !== 'undefined' && success && success.length) ? success[0] : '' %>">

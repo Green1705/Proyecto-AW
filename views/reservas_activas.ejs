@@ -7,6 +7,13 @@
 			<h1 class="h3 mb-1">Reservas activas</h1>
 			<p class="text-muted mb-0">Listado de reservas abiertas y pendientes.</p>
 		</header>
+		<div class="row justify-content-end mb-3">
+			<div class="col-md-6">
+				<label for="reservation-search" class="form-label visually-hidden">Buscar reservas</label>
+				<input type="search" class="form-control" id="reservation-search" placeholder="Buscar reservas..."
+					data-search-row-selector=".reservation-row" data-detail-prefix="reservation-details-" data-detail-attr="data-reservation-id">
+			</div>
+		</div>
 
 		<div class="table-responsive">
 			<table class="table table-hover align-middle">
@@ -84,6 +91,7 @@
 </main>
 
 <script src="/js/reservations.js"></script>
+<script src="/js/search.js"></script>
 
 <%- include('partials/footer') %>
 </body>

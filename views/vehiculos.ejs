@@ -7,6 +7,13 @@
 			<h1 class="h3 mb-1">Listado de vehículos</h1>
 			<p class="text-muted mb-0">Selecciona un vehículo para ver sus detalles y reservarlo.</p>
 		</header>
+		<div class="row justify-content-end mb-3">
+			<div class="col-md-6">
+				<label for="vehicle-search" class="form-label visually-hidden">Buscar vehículos</label>
+				<input type="search" class="form-control" id="vehicle-search" placeholder="Buscar vehículos..."
+					data-search-row-selector=".vehicle-row" data-detail-prefix="vehicle-details-" data-detail-attr="data-car-id">
+			</div>
+		</div>
 
 		<div class="table-responsive">
 			<table class="table table-hover align-middle">
@@ -78,6 +85,7 @@
 	</main>
 
 <script src="/js/vehicles.js"></script>
+<script src="/js/search.js"></script>
 
 <%- include('partials/reserveForm_modal') %>
 

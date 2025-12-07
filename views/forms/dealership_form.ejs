@@ -8,10 +8,17 @@
 			<p class="text-muted mb-3">
 				Consulta todos los concesionarios y utiliza las acciones para agregar, actualizar o eliminar registros.
 			</p>
-			<div class="d-flex justify-content-end mb-3">
-				<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addDealershipModal">
-					Agregar concesionario
-				</button>
+			<div class="row g-3 align-items-center mb-3">
+				<div class="col-md-6">
+					<label for="dealership-search" class="form-label visually-hidden">Buscar concesionarios</label>
+					<input type="search" class="form-control" id="dealership-search" placeholder="Buscar concesionarios..."
+						data-search-row-selector=".dealership-row" data-detail-prefix="dealership-details-" data-detail-attr="data-dealer-id">
+				</div>
+				<div class="col-md-6 text-md-end">
+					<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addDealershipModal">
+						Agregar concesionario
+					</button>
+				</div>
 			</div>
 			<% if (success && success.length) { %>
 				<div class="alert alert-success py-2 mb-2"><%= success[0] %></div>
@@ -125,5 +132,6 @@
 </div>
 
 <script src="/js/admin_dealerships.js"></script>
+<script src="/js/search.js"></script>
 
 <%- include('../partials/footer') %>
