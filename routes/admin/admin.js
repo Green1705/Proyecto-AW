@@ -9,7 +9,7 @@ const router = express.Router();
 router.get("/", (req, res) => {
   res.render("admin_panel");
 });
-router.use("/vehiculos", isAdmin, require("./cars.js"));
+router.use("/vehiculos", require("./cars.js"));
 router.use("/concesionarios", isAdmin, require("./dealership.js"));
 router.use("/empleados", isAdmin, require("./employee.js"));
 
