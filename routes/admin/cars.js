@@ -13,7 +13,7 @@ router
       if (err) {
         res.status(500).json({ message: err });
       } else {
-        res.render("vehiculos", {
+        res.render("forms/cars_form", {
           cars: result,
           success: req.flash("success"),
           error: req.flash("error"),

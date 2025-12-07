@@ -51,9 +51,7 @@ create table cliente(
     apellido_materno varchar(30) null,
     dni varchar(30) not null,
     telefono varchar(30) not null,
-    email varchar(70) null,
-    id_direccion int,
-    foreign key (id_direccion) references direccion(id_direccion)
+    email varchar(70) null
 );
 
 create table automovil(
@@ -73,14 +71,15 @@ create table automovil(
 );
 
 create table reserva(
-	id_reserva int auto_increment primary key,
+    id_reserva int auto_increment primary key,
     id_usuario int,
     id_automovil int,
+    id_cliente int,
     fecha_inicio date not null,
     fecha_fin date not null,
     precio_final int not null,
     estado enum('activa','finalizada', 'cancelada') default 'activa',
-    kilometros_recorridos int null,
     foreign key (id_usuario) references usuario(id_usuario),
-    foreign key (id_automovil) references automovil(id_automovil)
+    foreign key (id_automovil) references automovil(id_automovil),
+    foreign key (id_cliente) references cliente(id_cliente)
 );
