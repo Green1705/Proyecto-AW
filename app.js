@@ -21,6 +21,7 @@ const middlewareSession = session({
 });
 const is_logged = require("./middlewares/is_logged_in.js");
 const session_info = require("./middlewares/session_info.js");
+const logout = require("./routes/logout.js");
 
 app.set("view engine", "ejs");
 app.use(morgan("dev"));
@@ -44,6 +45,7 @@ app.use("/login", loginForm);
 app.use("/vehiculos", is_logged, vehiclesRoutes);
 app.use("/reserva", is_logged, reserveForm);
 app.use("/admin", adminRouter);
+app.use("/logout", logout);
 app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", (req, res) => {
