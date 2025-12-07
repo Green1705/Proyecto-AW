@@ -91,7 +91,19 @@
 		
 
 	</script>
-	
+	<input type="hidden" id="login-error-message" value="<%= (typeof error !== 'undefined' && error && error.length) ? error[0] : '' %>">
+	<script>
+
+		(function showLoginError() {
+			const errorInput = document.getElementById("login-error-message");
+			if (!errorInput) return;
+			//if the hidden input has a value, show an alert of the error
+			const message = errorInput.value.trim();
+			if (message.length > 0) {
+				alert(message);
+			}
+		})();
+	</script>
 	
 
 </main>

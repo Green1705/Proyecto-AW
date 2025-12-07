@@ -1,5 +1,5 @@
 <!-- Login Modal -->
-<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
 	<div class="modal-dialog modal-dialog-centered modal-fixed-50">
 		<!-- Adjust modal size by changing modal-fixed-30 styles -->
 		<div class="modal-content">
@@ -16,9 +16,6 @@
 					<div class="mb-3">
 						<label for="modal-password" class="form-label">Contraseña</label>
 						<input type="password" class="form-control" id="modal-password" name="password">
-						<% if (typeof error !== "undefined" && error) { %>
-							<div class="text-danger mt-2"><%= typeof error !== "undefined" ? error : "" %></div>
-						<% } %>
 					</div>
 					<button type="submit" class="btn btn-primary w-100">Acceder</button>
 				</form>
