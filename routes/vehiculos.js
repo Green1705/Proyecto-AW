@@ -8,7 +8,14 @@ const router = express.Router();
 router
   .route("/")
   .get((req, res) => {
-    const query = "SELECT * FROM automovil";
+    if (req.session.isAdmin) {
+      const query = "SELECT * FROM automovil";
+    } else {
+      const query =
+        "SELECT * FROM automovil WHERE id_concesionario =" +
+        req.session.dealershipId +
+        ";";
+    }
     pool.query(query, (err, result) => {
       if (err) {
         res.status(500).json({ message: err });

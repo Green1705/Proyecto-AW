@@ -8,6 +8,7 @@ function session_info(req, res, next) {
   res.locals.lastName = session.lastName || null;
   res.locals.isLoggedIn = session.isLoggedIn || false;
   res.locals.isAdmin = session.isAdmin || false;
+  res.locals.dealershipId = session.dealershipId || null;
 
   next();
 }

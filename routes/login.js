@@ -16,7 +16,7 @@ router
   })
   .post((req, res) => {
     const query =
-      "SELECT id_usuario, nombre, apellido_paterno, apellido_materno, rol, email, password FROM usuario WHERE email = ? AND password = ?";
+      "SELECT id_usuario, nombre, apellido_paterno, apellido_materno, rol, email, password, id_concesionario FROM usuario WHERE email = ? AND password = ?";
     pool.query(query, [req.body.email, req.body.password], (err, results) => {
       if (err) {
         res.status(500).json({ message: err });
@@ -31,6 +31,7 @@ router
           ].join(" ");
           req.session.isLoggedIn = true;
           req.session.isAdmin = user.rol === "administrador";
+          req.session.dealershipId = user.id_concesionario;
 
           req.flash("success", "Se ha iniciado sesión correctamente");
           res.redirect("/");
