@@ -45,10 +45,10 @@ app.get("/api/session", is_logged, (req, res) => {
 
 app.use(session_info);
 app.use(status_message);
-app.use("/login", is_not_logged, loginForm);
-app.use("/vehiculos", is_logged, vehiclesRoutes);
+app.use("/login", loginForm);
+app.use("/vehiculos", vehiclesRoutes);
 app.use("/reserva", activeReservations);
-app.use("/reserva/agregar", is_logged, reserveForm);
+app.use("/reserva/agregar", reserveForm);
 app.use("/admin", adminRouter);
 app.use("/logout", logout);
 app.use(express.static(path.join(__dirname, "public")));
