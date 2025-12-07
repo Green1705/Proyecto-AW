@@ -11,11 +11,14 @@
 		const detailPrefix = input.getAttribute("data-detail-prefix");
 		const detailAttr = input.getAttribute("data-detail-attr");
 
-		const toggleDetailDisplay = (row, matches) => {
-			if (!detailPrefix || !detailAttr) return;
+		const getDetailRow = (row) => {
+			if (!detailPrefix || !detailAttr) return null;
 			const idValue = row.getAttribute(detailAttr);
-			if (!idValue) return;
-			const detailRow = document.getElementById(`${detailPrefix}${idValue}`);
+			if (!idValue) return null;
+			return document.getElementById(`${detailPrefix}${idValue}`);
+		};
+
+		const toggleDetailDisplay = (detailRow, matches) => {
 			if (!detailRow) return;
 			if (!matches) {
 				detailRow.classList.remove("show");
@@ -28,9 +31,14 @@
 		const applyFilter = () => {
 			const term = input.value.trim().toLowerCase();
 			rows.forEach((row) => {
-				const matches = row.textContent.toLowerCase().includes(term);
+				const detailRow = getDetailRow(row);
+				const combinedText = (
+					row.textContent +
+					(detailRow ? ` ${detailRow.textContent}` : "")
+				).toLowerCase();
+				const matches = combinedText.includes(term);
 				row.style.display = matches ? "" : "none";
-				toggleDetailDisplay(row, matches);
+				toggleDetailDisplay(detailRow, matches);
 			});
 		};
 
