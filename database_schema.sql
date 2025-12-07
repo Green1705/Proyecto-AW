@@ -50,15 +50,6 @@ values ('diego','moreno', 'duarte', 'administrador','diegomorduar@gmail.com','di
 
 select * from usuario;
 
-create table cliente(
-	id_cliente int auto_increment primary key,
-    nombre varchar(50) not null,
-    apellido_paterno varchar(30) not null,
-    apellido_materno varchar(30) null,
-    dni varchar(30) not null,
-    telefono varchar(30) not null,
-    email varchar(70) null
-);
 
 create table automovil(
 	id_automovil int auto_increment primary	key,
