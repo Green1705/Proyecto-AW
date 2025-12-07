@@ -1,25 +1,79 @@
-<!-- Login Modal -->
-<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-	<div class="modal-dialog modal-dialog-centered modal-fixed-50">
-		<!-- Adjust modal size by changing modal-fixed-30 styles -->
+<!-- Reserve Modal -->
+<div class="modal fade" id="reserveModal" tabindex="-1" aria-labelledby="reserveModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+	<div class="modal-dialog modal-dialog-centered modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="loginModalLabel">Iniciar sesión</h5>
+				<h5 class="modal-title" id="reserveModalLabel">Registrar reserva</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
 			</div>
 			<div class="modal-body">
-				<form action="/login" method="post">
-					<div class="mb-3">
-						<label for="modal-email" class="form-label">Correo electrónico</label>
-						<input type="email" class="form-control" id="modal-email" name="email">
+				<form action="/reserva" method="POST" class="row g-3" id="reserve-form">
+					<input type="hidden" id="reserve-user-id" name="id_usuario" value="<%= typeof userId !== 'undefined' ? userId : '' %>">
+					<input type="hidden" id="reserve-vehicle-id" name="id_automovil" value="<%= typeof selectedCarId !== 'undefined' ? selectedCarId : '' %>">
+					<input type="hidden" id="reserve-daily-rate" value="<%= typeof selectedCarRate !== 'undefined' ? selectedCarRate : 0 %>">
+
+					<div class="col-md-6">
+						<label for="reserve-start" class="form-label">Fecha y hora de inicio</label>
+						<input type="datetime-local" class="form-control" id="reserve-start" name="fecha_inicio" required>
 					</div>
-					<div class="mb-3">
-						<label for="modal-password" class="form-label">Contraseña</label>
-						<input type="password" class="form-control" id="modal-password" name="password">
+
+					<div class="col-md-6">
+						<label for="reserve-end" class="form-label">Fecha y hora de fin</label>
+						<input type="datetime-local" class="form-control" id="reserve-end" name="fecha_fin" required>
 					</div>
-					<button type="submit" class="btn btn-primary w-100">Acceder</button>
+
+					<input type="hidden" id="reserve-status" name="estado" value="activa">
+
+					<div class="col-md-6">
+						<label for="reserve-price" class="form-label">Precio final (€)</label>
+						<input type="number" class="form-control" id="reserve-price" name="precio_final" min="0" step="0.01" readonly>
+					</div>
+
+					<div class="col-12">
+						<label for="reserve-notes" class="form-label">Notas / incidencias</label>
+						<textarea id="reserve-notes" name="incidencias_reportadas" class="form-control" rows="3" placeholder="Registrar incidencias o comentarios del cliente"></textarea>
+					</div>
+
+					<div class="col-12 d-flex align-items-end justify-content-end gap-3">
+						<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+						<button type="submit" class="btn btn-primary">Guardar reserva</button>
+					</div>
 				</form>
 			</div>
 		</div>
 	</div>
 </div>
+
+<script>
+	(function attachReservePriceCalculator() {
+		const modal = document.getElementById("reserveModal");
+		if (!modal) return;
+		const startInput = modal.querySelector("#reserve-start");
+		const endInput = modal.querySelector("#reserve-end");
+		const rateInput = modal.querySelector("#reserve-daily-rate");
+		const priceInput = modal.querySelector("#reserve-price");
+		if (!startInput || !endInput || !rateInput || !priceInput) return;
+
+		const updatePrice = () => {
+			if (!startInput.value || !endInput.value) {
+				priceInput.value = "";
+				return;
+			}
+			const startDate = new Date(startInput.value);
+			const endDate = new Date(endInput.value);
+			const rate = parseFloat(rateInput.value || "0");
+			if (!(startDate instanceof Date) || !(endDate instanceof Date) || isNaN(startDate) || isNaN(endDate) || endDate <= startDate || rate <= 0) {
+				priceInput.value = "";
+				return;
+			}
+			const diffDays = (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24);
+			const price = Math.round(diffDays * rate * 100) / 100;
+			priceInput.value = price.toFixed(2);
+		};
+
+		["input", "change"].forEach((evt) => {
+			startInput.addEventListener(evt, updatePrice);
+			endInput.addEventListener(evt, updatePrice);
+		});
+	})();
+</script>
