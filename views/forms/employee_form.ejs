@@ -1,6 +1,139 @@
-<%- include('../partials/head', { title: 'Formulario de Empleados' }) %>
+<%- include('../partials/head', { title: 'Gestión de Empleados' }) %>
 <%- include('../partials/navbar') %>
-<main class="container py-4">
-	<h1>Formulario de empleados</h1>
+
+<main class="container py-5">
+	<section class="employee-section">
+		<header class="mb-4">
+			<h1 class="h3 mb-1">Gestión de empleados</h1>
+			<p class="text-muted mb-3">
+				Revisa el personal registrado y usa las acciones para agregar nuevos empleados o actualizar/eliminar los existentes.
+			</p>
+			<% if (success && success.length) { %>
+				<div class="alert alert-success py-2 mb-2"><%= success[0] %></div>
+			<% } %>
+			<% if (error && error.length) { %>
+				<div class="alert alert-danger py-2 mb-2"><%= error[0] %></div>
+			<% } %>
+		</header>
+
+		<div class="table-responsive">
+			<table class="table table-hover align-middle">
+				<thead class="table-light">
+					<tr>
+						<th scope="col">Nombre</th>
+						<th scope="col" class="text-end">ID</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% if (Array.isArray(employees) && employees.length) { %>
+						<% employees.forEach((employee) => { %>
+							<tr class="employee-row" data-employee-id="<%= employee.id_usuario %>">
+								<td>
+									<strong><%= employee.nombre %> <%= employee.apellido_paterno %></strong>
+									<span class="d-block text-muted small">Rol: <%= employee.rol %></span>
+								</td>
+								<td class="text-end fw-semibold">#<%= employee.id_usuario %></td>
+							</tr>
+							<tr class="employee-details" id="employee-details-<%= employee.id_usuario %>">
+								<td colspan="2">
+									<div class="employee-details-card">
+										<div class="row g-4">
+											<div class="col-md-8">
+												<ul class="employee-info">
+													<li><strong>Nombre completo:</strong> <%= employee.nombre %> <%= employee.apellido_paterno %> <%= employee.apellido_materno || '' %></li>
+													<li><strong>Rol:</strong> <%= employee.rol %></li>
+													<li><strong>Email:</strong> <%= employee.email %></li>
+													<li><strong>Teléfono:</strong> <%= employee.telefono %></li>
+													<li><strong>ID Concesionario:</strong> <%= employee.id_concesionario || 'N/D' %></li>
+												</ul>
+											</div>
+											<div class="col-md-4">
+												<div class="employee-actions">
+													<button type="button" class="btn btn-success w-100" data-action="add">
+														Agregar empleado
+													</button>
+													<button type="button" class="btn btn-outline-primary w-100" data-action="edit" data-employee-id="<%= employee.id_usuario %>">
+														Modificar este empleado
+													</button>
+													<button type="button" class="btn btn-outline-danger w-100" data-action="delete" data-employee-id="<%= employee.id_usuario %>">
+														Eliminar este empleado
+													</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</td>
+							</tr>
+						<% }) %>
+					<% } else { %>
+						<tr>
+							<td colspan="2" class="text-center text-muted py-5">
+								No hay empleados registrados actualmente.
+							</td>
+						</tr>
+					<% } %>
+				</tbody>
+			</table>
+		</div>
+	</section>
 </main>
-<%- include('../partials/footer') %>
+
+<style>
+	.employee-row {
+		cursor: pointer;
+	}
+
+	.employee-row:hover {
+		background-color: #eef2ff;
+	}
+
+	.employee-details {
+		display: none;
+	}
+
+	.employee-details.show {
+		display: table-row;
+	}
+
+	.employee-details-card {
+		padding: 1.5rem;
+		border: 1px solid #e2e8f0;
+		border-radius: 0.75rem;
+		background-color: #ffffff;
+	}
+
+	.employee-info {
+		list-style: none;
+		padding-left: 0;
+		margin-bottom: 0;
+	}
+
+	.employee-info li {
+		margin-bottom: 0.4rem;
+		color: #475569;
+	}
+
+	.employee-actions {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+</style>
+
+<script>
+	(function setupEmployeeRows() {
+		const rows = document.querySelectorAll(".employee-row");
+		rows.forEach((row) => {
+			row.addEventListener("click", () => {
+				const employeeId = row.getAttribute("data-employee-id");
+				const detailRow = document.getElementById(`employee-details-${employeeId}`);
+				if (!detailRow) return;
+				const isVisible = detailRow.classList.contains("show");
+				document.querySelectorAll(".employee-details.show").forEach((openRow) => openRow.classList.remove("show"));
+				if (!isVisible) detailRow.classList.add("show");
+			});
+		});
+	})();
+</script>
+
+<%- include('partials/footer') %>
