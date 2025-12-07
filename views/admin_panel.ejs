@@ -1,1 +1,136 @@
-<h1>This is gonna be the admin panel</h1>
+<%- include('partials/head', { title: 'Panel de administración' }) %>
+<%- include('partials/navbar') %>
+
+<main class="container py-5">
+	<header class="mb-5">
+		<h1 class="h3 mb-1">Panel de administración</h1>
+		<p class="text-muted mb-0">Gestiona vehículos, concesionarios, empleados y reservas desde un único lugar.</p>
+	</header>
+
+	<section class="admin-section-card p-4 mb-4">
+		<div class="d-flex align-items-center justify-content-between">
+			<div>
+				<h2 class="h5 mb-1">Resumen general</h2>
+				<p class="text-muted mb-0">Indicadores rápidos de la plataforma.</p>
+			</div>
+		</div>
+		<div class="row g-3 mt-3">
+			<div class="col-md-3 col-sm-6">
+				<div class="stat-tile">
+					<p class="text-muted mb-1">Vehículos</p>
+					<p class="h3 mb-0">-</p>
+				</div>
+			</div>
+			<div class="col-md-3 col-sm-6">
+				<div class="stat-tile">
+					<p class="text-muted mb-1">Reservas activas</p>
+					<p class="h3 mb-0">-</p>
+				</div>
+			</div>
+			<div class="col-md-3 col-sm-6">
+				<div class="stat-tile">
+					<p class="text-muted mb-1">Empleados</p>
+					<p class="h3 mb-0">-</p>
+				</div>
+			</div>
+			<div class="col-md-3 col-sm-6">
+				<div class="stat-tile">
+					<p class="text-muted mb-1">Incidencias</p>
+					<p class="h3 mb-0">-</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="admin-section-card p-4 mb-4">
+		<div class="d-flex align-items-center justify-content-between mb-3">
+			<div>
+				<h2 class="h5 mb-1">Gestión de vehículos</h2>
+				<p class="text-muted mb-0">Control del inventario por concesionario, asignaciones y estado.</p>
+			</div>
+			<a href="/admin/vehiculos" class="btn btn-outline-primary btn-sm">Abrir módulo</a>
+		</div>
+		<ul class="mb-0 text-muted small">
+			<li>Registrar nuevos vehículos en la flota.</li>
+			<li>Editar o retirar vehículos existentes.</li>
+			<li>Asignar concesionarios y estados operativos.</li>
+		</ul>
+	</section>
+
+	<section class="admin-section-card p-4 mb-4">
+		<div class="d-flex align-items-center justify-content-between mb-3">
+			<div>
+				<h2 class="h5 mb-1">Gestión de concesionarios</h2>
+				<p class="text-muted mb-0">Información del catálogo de bases/regiones.</p>
+			</div>
+			<a href="/admin/concesionarios" class="btn btn-outline-primary btn-sm">Abrir módulo</a>
+		</div>
+		<ul class="mb-0 text-muted small">
+			<li>Crear, editar o eliminar concesionarios.</li>
+			<li>Actualizar datos de contacto y ubicación.</li>
+			<li>Relacionar vehículos y personal por base.</li>
+		</ul>
+	</section>
+
+	<section class="admin-section-card p-4 mb-4">
+		<div class="d-flex align-items-center justify-content-between mb-3">
+			<div>
+				<h2 class="h5 mb-1">Gestión de empleados</h2>
+				<p class="text-muted mb-0">Control de usuarios internos (empleados/admins).</p>
+			</div>
+			<a href="/admin/empleados" class="btn btn-outline-primary btn-sm">Abrir módulo</a>
+		</div>
+		<ul class="mb-0 text-muted small">
+			<li>Alta/baja de empleados y asignación de roles.</li>
+			<li>Asociar empleados a concesionarios.</li>
+			<li>Gestión de credenciales y permisos.</li>
+		</ul>
+	</section>
+
+	<section class="admin-section-card p-4 mb-4">
+		<div class="d-flex align-items-center justify-content-between mb-3">
+			<div>
+				<h2 class="h5 mb-1">Gestión de clientes</h2>
+				<p class="text-muted mb-0">Registro y mantenimiento del histórico de clientes.</p>
+			</div>
+			<a href="/admin/clientes" class="btn btn-outline-primary btn-sm">Abrir módulo</a>
+		</div>
+		<ul class="mb-0 text-muted small">
+			<li>Registrar nuevos clientes y sus datos de contacto.</li>
+			<li>Consultar historial de reservas y actividad.</li>
+		</ul>
+	</section>
+
+	<section class="admin-section-card p-4 mb-4">
+		<div class="d-flex align-items-center justify-content-between mb-3">
+			<div>
+				<h2 class="h5 mb-1">Reservas y operaciones</h2>
+				<p class="text-muted mb-0">Seguimiento de reservas activas/pasadas y acciones masivas.</p>
+			</div>
+			<a href="/reserva" class="btn btn-outline-primary btn-sm">Abrir módulo</a>
+		</div>
+		<ul class="mb-0 text-muted small">
+			<li>Revisar y actualizar el estado de reservas.</li>
+			<li>Ver incidentes, notas y kilometraje reportado.</li>
+			<li>Generar reportes operativos.</li>
+		</ul>
+	</section>
+</main>
+
+<style>
+	.admin-section-card {
+		border: 1px solid #e2e8f0;
+		border-radius: 0.75rem;
+		background-color: #ffffff;
+		box-shadow: 0 1rem 2rem rgba(15, 23, 42, 0.08);
+	}
+
+	.stat-tile {
+		border: 1px solid #e3e6ef;
+		border-radius: 0.75rem;
+		padding: 1rem;
+		background-color: #f8f9fc;
+	}
+</style>
+
+<%- include('partials/footer') %>
