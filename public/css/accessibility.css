@@ -34,8 +34,6 @@ body.contrast-high .card,
 body.contrast-high .table,
 body.contrast-high .table-light,
 body.contrast-high .table-hover tbody tr,
-body.contrast-high .vehicle-details-card,
-body.contrast-high .reservation-details-card,
 body.contrast-high .admin-section-card,
 body.contrast-high .accordion-item,
 body.contrast-high .accordion-body,
@@ -56,6 +54,23 @@ body.contrast-high .list-group-item-action {
 	background-color: #151924 !important;
 	color: inherit !important;
 	border-color: #2a3242 !important;
+}
+
+body.contrast-high .vehicle-details-card,
+body.contrast-high .reservation-details-card,
+body.contrast-high .intro-card,
+body.contrast-high .info-card {
+	background-color: #1c2234 !important;
+	color: #f8fbff !important;
+	border-color: #36405a !important;
+}
+
+body.contrast-high .vehicle-details-card li,
+body.contrast-high .reservation-details-card li,
+body.contrast-high .intro-card p,
+body.contrast-high .info-card li,
+body.contrast-high .info-card h3 {
+	color: #fefefe !important;
 }
 
 body.contrast-high .table thead,
