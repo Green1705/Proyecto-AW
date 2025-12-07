@@ -1,9 +1,6 @@
 "use strict";
-
 const express = require("express");
 const pool = require("../../db/db.js");
-const promisePool = pool.promise();
-
 const router = express.Router();
 
 router
@@ -12,6 +9,7 @@ router
     const query = "SELECT * FROM concesionario";
     pool.query(query, (err, results) => {
       if (err) {
+        console.error(err);
         res.status(500).json({ message: err });
       } else {
         res.render("forms/dealership_form", {
@@ -22,36 +20,38 @@ router
       }
     });
   })
-  .post(async (req, res) => {
-    //TODO add a new dealership to the database
+  .post((req, res) => {
     const { nombre, telefono, ciudad, calle, numero, codigo_postal } = req.body;
 
-    try {
-      const address_query =
-        "INSERT INTO direccion (ciudad, calle , numero, codigo_postal) VALUES (?,?,?,?)";
-      const [address_result] = await promisePool.execute(address_query, [
-        ciudad,
-        calle,
-        numero,
-        codigo_postal,
-      ]);
+    const address_query =
+      "INSERT INTO direccion (ciudad, calle, numero, codigo_postal) VALUES (?,?,?,?)";
 
-      const address_id = address_result.insertId;
-      const dealership_query =
-        "INSERT INTO concesionario (nombre, telefono, direccion_id) VALUES (?,?,?) ";
+    pool.query(
+      address_query,
+      [ciudad, calle, numero, codigo_postal],
+      (err, address_result) => {
+        if (err) {
+          console.error(err);
+          req.flash("error", "Error al crear concesionario");
+          return res.redirect("/admin/concesionarios");
+        }
 
-      await promisePool.execute(dealership_query, [
-        nombre,
-        telefono,
-        address_id,
-      ]);
+        const address_id = address_result.insertId;
+        const dealership_query =
+          "INSERT INTO concesionario (nombre, telefono, direccion_id) VALUES (?,?,?)";
 
-      req.flash("success", "Concesionario agregado con exito");
-      res.redirect("/admin/concesionarios");
-    } catch (error) {
-      req.flash("error", "Error al crear concesionario");
-      res.redirect("/admin/concesionarios");
-    }
+        pool.query(dealership_query, [nombre, telefono, address_id], (err) => {
+          if (err) {
+            console.error(err);
+            req.flash("error", "Error al crear concesionario");
+            return res.redirect("/admin/concesionarios");
+          }
+
+          req.flash("success", "Concesionario agregado con exito");
+          res.redirect("/admin/concesionarios");
+        });
+      },
+    );
   });
 
 module.exports = router;
