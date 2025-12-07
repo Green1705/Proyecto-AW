@@ -9,9 +9,9 @@ router
   .route("/")
   .get((req, res) => {
     if (req.session.isAdmin) {
-      const query = "SELECT * FROM automovil";
+      var query = "SELECT * FROM automovil";
     } else {
-      const query =
+      var query =
         "SELECT * FROM automovil WHERE id_concesionario =" +
         req.session.dealershipId +
         ";";
