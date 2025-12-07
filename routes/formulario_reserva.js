@@ -6,17 +6,31 @@ const pool = require("../db/db.js");
 
 const router = express.Router();
 
-router
-  .route("/")
-  .get((req, res) => {
-    res.render("forms/reservation_form");
-  })
-  .post((req, res) => {
-    //TODO handle form data
+router.post("/", (req, res) => {
+  const {
+    id_usuario,
+    id_automovil,
+    id_cliente,
+    fecha_inicio,
+    fecha_fin,
+    precio_final,
+    notas,
+  } = req.body;
 
-    // const query = "INSERT INTO reserva () values ()"
-    console.log("Formulario recibido con metodo POST");
-    res.redirect("/reserva"); // TODO agregar success template
+  const query =
+    "INSERT INTO reserva (id_usuario, id_automovil, id_cliente, fecha_inicio, fecha_fin, precio_final, notas) values (?,?,?,?,?,?,?)";
+
+  pool.query(query, (err, result) => {
+    if (err) {
+      req.flash("error", "Error al realizar la reserva");
+      res.redirect("/vehiculos");
+    } else {
+      req.flash("success", "Reserva realizada correctamente");
+      res.redirect("/vehiculos");
+    }
   });
+
+  res.redirect("/reserva");
+});
 
 module.exports = router;

@@ -10,7 +10,9 @@ create table direccion(
 );
 
 INSERT INTO direccion (ciudad, calle, numero, codigo_postal)
-VALUES ('Madrid', 'General Pardiñas', 26, 28001);
+VALUES ('Madrid', 'General Pardiñas', 26, 28001),
+	('Barcelona', 'Avenida Diagonal', 123, 08019);
+
 select * from direccion;
 
 create table concesionario(
@@ -21,7 +23,10 @@ create table concesionario(
     foreign key (direccion_id) references direccion(id_direccion)
 );
 
-insert into concesionario (nombre, telefono, direccion_id) values ('Autos eléctricos Madrid', '652985542', 1);
+INSERT INTO concesionario (nombre, telefono, direccion_id)
+VALUES ('Autos eléctricos Madrid', '652985542', 1),
+	('Concesionario Barcelona Premium', '931245678', 2);
+
 select * from concesionario;
 
 create table usuario(
@@ -40,7 +45,8 @@ create table usuario(
 );
 
 insert into usuario (nombre, apellido_paterno, apellido_materno, rol, email, password, telefono, contraste, tamanio_texto, id_concesionario) 
-values ('diego','moreno', 'duarte', 'administrador','diegomorduar@gmail.com','diego','652284679','normal','normal', 1);
+values ('diego','moreno', 'duarte', 'administrador','diegomorduar@gmail.com','diego','652284679','normal','normal', 1),
+	('Adrian', 'Moreno', 'Duarte', 'empleado', 'diegoadrianm@gmail.com', 'diego', '652984332', 'normal', 'normal', 2);
 
 select * from usuario;
 
@@ -83,6 +89,21 @@ VALUES
 ('VWX9012', 'Hyundai', 'Kona EV', 2022, 5, 480, 95, 'Verde', 'konaev.jpg', 'disponible', 1),
 ('YZA3456', 'Kia', 'Sportage', 2018, 5, 700, 55, 'Azul', 'sportage.jpg', 'mantenimiento', 1),
 ('BCD7890', 'Volkswagen', 'Golf', 2021, 5, 730, 60, 'Rojo', 'golf.jpg', 'disponible', 1);
+
+
+INSERT INTO automovil 
+(matricula, marca, modelo, anio_matriculacion, numero_plazas, autonomia_km, precio_por_dia, color, imagen, estado, id_concesionario)
+VALUES
+('XYZ1001', 'Seat', 'Ibiza', 2019, 5, 680, 40, 'Rojo', 'ibiza.jpg', 'disponible', 2),
+('XYZ1002', 'Seat', 'Leon', 2020, 5, 720, 55, 'Negro', 'leon.jpg', 'disponible', 2),
+('XYZ1003', 'Peugeot', '208', 2018, 5, 650, 38, 'Azul', '208.jpg', 'reservado', 2),
+('XYZ1004', 'Peugeot', '3008', 2021, 5, 750, 70, 'Gris', '3008.jpg', 'disponible', 2),
+('XYZ1005', 'Nissan', 'Leaf', 2022, 5, 400, 85, 'Blanco', 'leaf.jpg', 'disponible', 2),
+('XYZ1006', 'Nissan', 'Qashqai', 2019, 5, 700, 60, 'Verde', 'qashqai.jpg', 'mantenimiento', 2),
+('XYZ1007', 'Mercedes', 'Clase A', 2020, 5, 760, 90, 'Negro', 'clasea.jpg', 'disponible', 2),
+('XYZ1008', 'Mercedes', 'EQA', 2023, 5, 430, 110, 'Azul', 'eqa.jpg', 'disponible', 2),
+('XYZ1009', 'Opel', 'Corsa', 2018, 5, 670, 35, 'Rojo', 'corsa.jpg', 'reservado', 2),
+('XYZ1010', 'Opel', 'Mokka', 2021, 5, 710, 58, 'Blanco', 'mokka.jpg', 'disponible', 2);
 
 create table reserva(
     id_reserva int auto_increment primary key,
