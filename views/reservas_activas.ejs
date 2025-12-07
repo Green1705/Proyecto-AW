@@ -1,0 +1,136 @@
+<%- include('partials/head', { title: 'Reservas activas' }) %>
+<%- include('partials/navbar') %>
+
+<main class="container py-5">
+	<section class="reservations-table-section">
+		<header class="mb-4">
+			<h1 class="h3 mb-1">Reservas activas</h1>
+			<p class="text-muted mb-0">Listado de reservas abiertas y pendientes.</p>
+		</header>
+
+		<div class="table-responsive">
+			<table class="table table-hover align-middle">
+				<thead class="table-light">
+					<tr>
+						<th scope="col">Vehículo</th>
+						<th scope="col">Cliente</th>
+						<th scope="col">Periodo</th>
+						<th scope="col" class="text-end">Acciones</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% if (Array.isArray(reservations) && reservations.length) { %>
+						<% reservations.forEach((reservation) => { %>
+							<tr class="reservation-row" data-reservation-id="<%= reservation.id_reserva %>">
+								<td>
+									<strong>#<%= reservation.id_automovil %></strong>
+									<span class="d-block text-muted small">Matrícula: <%= reservation.matricula || 'N/D' %></span>
+								</td>
+								<td>
+									<strong><%= reservation.cliente_nombre || 'Cliente' %></strong>
+									<span class="d-block text-muted small">ID: <%= reservation.id_cliente || 'N/D' %></span>
+								</td>
+								<td>
+									<span class="d-block"><strong>Inicio:</strong> <%= reservation.fecha_inicio %></span>
+									<span class="d-block"><strong>Fin:</strong> <%= reservation.fecha_fin %></span>
+								</td>
+								<td class="text-end">
+									<div class="btn-group btn-group-sm" role="group">
+										<button class="btn btn-outline-primary reservation-view-btn" type="button">Ver</button>
+										<form action="/reserva/finalizar" method="POST">
+											<input type="hidden" name="id_reserva" value="<%= reservation.id_reserva %>">
+											<input type="hidden" name="id_automovil" value="<%= reservation.id_automovil %>">
+											<input type="hidden" name="estado" value="finalizada">
+
+											<button type="submit" class="btn btn-outline-success">Finalizar</button>
+										</form>
+										<form action="/reserva/finalizar" method="POST" class="ms-1">
+											<input type="hidden" name="id_reserva" value="<%= reservation.id_reserva %>">
+											<input type="hidden" name="id_automovil" value="<%= reservation.id_automovil %>">
+											<input type="hidden" name="estado" value="cancelada">
+											<button type="submit" class="btn btn-outline-danger">Cancelar</button>
+										</form>
+									</div>
+								</td>
+							</tr>
+							<tr class="reservation-details" id="reservation-details-<%= reservation.id_reserva %>">
+								<td colspan="4">
+									<div class="reservation-details-card">
+										<ul class="reservation-specs list-unstyled mb-0">
+											<li><strong>Número de reserva:</strong> <%= reservation.id_reserva %></li>
+											<li><strong>Vehículo:</strong> #<%= reservation.id_automovil %> — Matrícula <%= reservation.matricula || 'N/D' %></li>
+											<li><strong>Cliente:</strong> <%= reservation.cliente_nombre || 'Cliente' %> (ID: <%= reservation.id_cliente || 'N/D' %>)</li>
+											<li><strong>Empleado:</strong> <%= reservation.id_usuario || 'N/D' %></li>
+											<li><strong>Fechas:</strong> <%= reservation.fecha_inicio %> hasta <%= reservation.fecha_fin %></li>
+											<li><strong>Estado:</strong> <%= reservation.estado %></li>
+											<li><strong>Precio final:</strong> €<%= reservation.precio_final %></li>
+											<li><strong>Notas/Incidencias reportadas:</strong> <%= reservation.incidencias_reportadas || 'Sin incidencias' %></li>
+										</ul>
+									</div>
+								</td>
+							</tr>
+						<% }) %>
+					<% } else { %>
+						<tr>
+							<td colspan="4" class="text-center text-muted py-5">
+								No hay reservas activas registradas.
+							</td>
+						</tr>
+					<% } %>
+				</tbody>
+			</table>
+		</div>
+	</section>
+</main>
+
+<style>
+	.reservation-row {
+		cursor: pointer;
+	}
+
+	.reservation-row:hover {
+		background-color: #eef2ff;
+	}
+
+	.reservation-details {
+		display: none;
+	}
+
+	.reservation-details.show {
+		display: table-row;
+	}
+
+	.reservation-details-card {
+		padding: 1.25rem;
+		border: 1px solid #e2e8f0;
+		border-radius: 0.75rem;
+		background-color: #ffffff;
+	}
+</style>
+
+<script>
+	(function setupReservationsToggle() {
+		const viewButtons = document.querySelectorAll(".reservation-view-btn");
+		viewButtons.forEach((button) => {
+			button.addEventListener("click", () => {
+				const row = button.closest(".reservation-row");
+				const reservationId = row.getAttribute("data-reservation-id");
+				const detailsRow = document.getElementById(`reservation-details-${reservationId}`);
+				if (!detailsRow) return;
+
+				const currentlyOpen = detailsRow.classList.contains("show");
+				document.querySelectorAll(".reservation-details.show").forEach((openRow) => {
+					openRow.classList.remove("show");
+				});
+
+				if (!currentlyOpen) {
+					detailsRow.classList.add("show");
+				}
+			});
+		});
+	})();
+</script>
+
+<%- include('partials/footer') %>
+</body>
+</html>
