@@ -20,6 +20,17 @@
 	integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
 	crossorigin="anonymous"></script>
 <script src="/js/reserve_modal.js"></script>
+<script>
+	(function showGlobalFlashAlerts() {
+		const successMessage = <%- JSON.stringify(success && success.length ? success[0] : null) %>;
+		const errorMessage = <%- JSON.stringify(error && error.length ? error[0] : null) %>;
+		if (errorMessage) {
+			alert(errorMessage);
+		} else if (successMessage) {
+			alert(successMessage);
+		}
+	})();
+</script>
 
 </body>
 

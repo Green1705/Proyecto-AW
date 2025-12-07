@@ -14,14 +14,16 @@ router.route("/").post((req, res) => {
 
   pool.query(reservationQuery, [estado, id_reserva], (err, result) => {
     if (err) {
-      res.status(500).json({ message: "Error al actualizar reserva" });
+      req.flash("error", "Error al actualizar la reserva");
+      return res.redirect("/reserva");
     } else {
       pool.query(carQuery, [id_automovil], (err, result) => {
         if (err) {
-          res.status(500).json({ message: "Error al actualizar reserva" });
+          req.flash("error", "No se pudo actualizar el estado del vehículo");
+          return res.redirect("/reserva");
         } else {
           req.flash("success", "Reserva finalizada correctamente");
-          res.redirect("/reserva");
+          return res.redirect("/reserva");
         }
       });
     }
