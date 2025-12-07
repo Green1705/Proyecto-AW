@@ -29,8 +29,6 @@ router.post("/", (req, res) => {
       res.redirect("/vehiculos");
     }
   });
-
-  res.redirect("/reserva");
 });
 
 module.exports = router;

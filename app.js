@@ -46,7 +46,7 @@ app.use(session_info);
 app.use(status_message);
 app.use("/login", is_not_logged, loginForm);
 app.use("/vehiculos", is_logged, vehiclesRoutes);
-app.use("/reserva", is_logged, reserveForm);
+app.use("/reserva/agregar", is_logged, reserveForm);
 app.use("/admin", adminRouter);
 app.use("/logout", logout);
 app.use(express.static(path.join(__dirname, "public")));
