@@ -123,7 +123,7 @@
 						<div class="col-md-6">
 							<label for="employee-dealership" class="form-label">ID concesionario</label>
 							<input type="text" class="form-control" id="employee-dealership" name="id_concesionario"
-								list="employee-dealership-options" inputmode="numeric" pattern="\\d+" placeholder="Selecciona un concesionario" required>
+								list="employee-dealership-options" inputmode="numeric" placeholder="Selecciona un concesionario">
 							<datalist id="employee-dealership-options">
 								<% availableDealerships.forEach((dealer) => { %>
 									<option value="<%= dealer.id_concesionario %>"><%= dealer.nombre %></option>
