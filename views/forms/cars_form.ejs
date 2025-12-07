@@ -1,6 +1,7 @@
 <%- include('../partials/head', { title: 'Gestión de Vehículos', extraStyles: ['/css/admin_cars.css'] }) %>
 <%- include('../partials/navbar') %>
 
+<% const availableDealerships = Array.isArray(dealerships) ? dealerships : []; %>
 <main class="container py-5">
 	<section class="vehicle-table-section">
 		<header class="mb-4">
@@ -163,7 +164,13 @@
 						</div>
 						<div class="col-12">
 							<label for="car-dealership" class="form-label">ID concesionario</label>
-							<input type="number" class="form-control" id="car-dealership" name="id_concesionario" required>
+							<input type="text" class="form-control" id="car-dealership" name="id_concesionario"
+								list="car-dealership-options" inputmode="numeric" pattern="\\d+" placeholder="Selecciona un concesionario" required>
+							<datalist id="car-dealership-options">
+								<% availableDealerships.forEach((dealer) => { %>
+									<option value="<%= dealer.id_concesionario %>"><%= dealer.nombre %></option>
+								<% }) %>
+							</datalist>
 						</div>
 					</div>
 				</div>

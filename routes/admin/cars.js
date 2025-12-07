@@ -6,6 +6,7 @@ const uploadImage = require("../../middlewares/uploadImage.js");
 
 const router = express.Router();
 const promisePool = pool.promise();
+const dealersQuery = "SELECT id_concesionario, nombre FROM concesionario";
 
 router
   .route("/")
@@ -16,10 +17,17 @@ router
       if (err) {
         res.status(500).json({ message: err });
       } else {
-        res.render("forms/cars_form", {
-          cars: result,
-          success: req.flash("success"),
-          error: req.flash("error"),
+        pool.query(dealersQuery, (err2, dealers) => {
+          if (err2) {
+            res.status(500).json({ message: err2 });
+          } else {
+            res.render("forms/cars_form", {
+              cars: result,
+              dealerships: dealers,
+              success: req.flash("success"),
+              error: req.flash("error"),
+            });
+          }
         });
       }
     });
