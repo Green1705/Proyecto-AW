@@ -34,8 +34,8 @@
 									<span class="d-block text-muted small">Matrícula: <%= reservation.matricula || 'N/D' %></span>
 								</td>
 								<td>
-									<strong><%= reservation.cliente_nombre || 'Cliente' %></strong>
-									<span class="d-block text-muted small">ID: <%= reservation.id_cliente || 'N/D' %></span>
+									<strong><%= reservation.nombre_cliente %> <%= reservation.apellido_paterno %> <%= reservation.apellido_materno || '' %></strong>
+									<span class="d-block text-muted small">DNI: <%= reservation.dni %></span>
 								</td>
 								<td>
 									<span class="d-block"><strong>Inicio:</strong> <%= reservation.fecha_inicio %></span>
@@ -66,7 +66,7 @@
 										<ul class="reservation-specs list-unstyled mb-0">
 											<li><strong>Número de reserva:</strong> <%= reservation.id_reserva %></li>
 											<li><strong>Vehículo:</strong> #<%= reservation.id_automovil %> — Matrícula <%= reservation.matricula || 'N/D' %></li>
-											<li><strong>Cliente:</strong> <%= reservation.cliente_nombre || 'Cliente' %> (ID: <%= reservation.id_cliente || 'N/D' %>)</li>
+											<li><strong>Cliente:</strong> <%= reservation.nombre_cliente %> <%= reservation.apellido_paterno %> <%= reservation.apellido_materno || '' %> — DNI: <%= reservation.dni %></li>
 											<li><strong>Empleado:</strong> <%= reservation.id_usuario || 'N/D' %></li>
 											<li><strong>Fechas:</strong> <%= reservation.fecha_inicio %> hasta <%= reservation.fecha_fin %></li>
 											<li><strong>Estado:</strong> <%= reservation.estado %></li>
