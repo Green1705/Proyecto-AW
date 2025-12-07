@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!el.value.trim()) {
       setError("el, ${label} es obligatorio");
       return false;
-    }   
+    }
     clearError(el);
     return true;
   };
@@ -40,7 +40,6 @@ document.addEventListener("DOMContentLoaded", () => {
       return false;
     }
 
-    //for email format
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!re.test(val)) {
       setError(el, "Formato de correo inválido");
@@ -58,7 +57,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     const picked = new Date(val);
     const today = new Date();
-    // Normalize times to ignore time-of-day
     picked.setHours(0, 0, 0, 0);
     today.setHours(0, 0, 0, 0);
     if (picked < today) {
@@ -69,22 +67,19 @@ document.addEventListener("DOMContentLoaded", () => {
     return true;
   };
 
-  // Live validation on blur
   name.addEventListener("blur", () => validateRequired(name, "Nombre"));
   surname.addEventListener("blur", () =>
-    validateRequired(surname, "Apellidos")
+    validateRequired(surname, "Apellidos"),
   );
   email.addEventListener("blur", () => validateEmail(email));
   rentDate.addEventListener("blur", () => validateDateNotPast(rentDate));
 
-  // Form submit validation
   form.addEventListener("submit", (e) => {
     const okName = validateRequired(name, "Nombre");
     const okSurname = validateRequired(surname, "Apellidos");
     const okEmail = validateEmail(email);
     const okDate = validateDateNotPast(rentDate);
 
-    //if one thing is wrong the form will not be submitted
     if (!(okName && okSurname && okEmail && okDate)) {
       e.preventDefault();
       e.stopPropagation();
