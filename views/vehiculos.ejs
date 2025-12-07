@@ -54,7 +54,7 @@
 											</div>
 											<div class="col-md-3">
 												<div class="vehicle-actions">
-													<button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#reserveModal" data-car-id="<%= car.id_automovil %>" data-car-rate="<%= car.precio_por_dia %>" data-car-name="<%= `${car.marca} ${car.modelo}` %>" data-car-matricula="<%= car.matricula %>">
+													<button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#reserveModal" data-car-id="<%= car.id_automovil %>" data-car-rate="<%= car.precio_por_dia %>" data-car-name="<%= `${car.marca} ${car.modelo}` %>" data-car-matricula="<%= car.matricula %>" <%= car.estado === 'disponible' ? '' : 'disabled' %>>
 														Reservar
 													</button>
 												</div>
