@@ -11,6 +11,5 @@ router.use("/", isAdmin, (req, res) => {
 router.use("/vehiculos", isAdmin, require("./cars.js"));
 router.use("/concesionarios", isAdmin, require("./dealership.js"));
 router.use("/empleados", isAdmin, require("./employee.js"));
-router.use("/clientes", isAdmin, require("./client.js"));
 
 module.exports = router;

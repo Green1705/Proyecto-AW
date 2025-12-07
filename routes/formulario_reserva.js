@@ -11,6 +11,11 @@ router.post("/", (req, res) => {
     id_usuario,
     id_automovil,
     id_cliente,
+    nombre_cliente,
+    apellido_paterno,
+    apellido_materno,
+    dni,
+    telefono,
     fecha_inicio,
     fecha_fin,
     precio_final,
@@ -18,17 +23,34 @@ router.post("/", (req, res) => {
   } = req.body;
 
   const query =
-    "INSERT INTO reserva (id_usuario, id_automovil, id_cliente, fecha_inicio, fecha_fin, precio_final, notas) values (?,?,?,?,?,?,?)";
+    "INSERT INTO reserva (id_usuario, id_automovil, nombre_cliente, apellido_paterno, apellido_materno, dni, telefono, fecha_inicio, fecha_fin, precio_final, notas) values (?,?,?,?,?,?,?,?,?,?,?,?)";
 
-  pool.query(query, (err, result) => {
-    if (err) {
-      req.flash("error", "Error al realizar la reserva");
-      res.redirect("/vehiculos");
-    } else {
-      req.flash("success", "Reserva realizada correctamente");
-      res.redirect("/vehiculos");
-    }
-  });
+  pool.query(
+    query,
+    [
+      id_usuario,
+      id_automovil,
+      id_cliente,
+      nombre_cliente,
+      apellido_paterno,
+      apellido_materno,
+      dni,
+      telefono,
+      fecha_inicio,
+      fecha_fin,
+      precio_final,
+      notas,
+    ],
+    (err, result) => {
+      if (err) {
+        req.flash("error", "Error al realizar la reserva");
+        res.redirect("/vehiculos");
+      } else {
+        req.flash("success", "Reserva realizada correctamente");
+        res.redirect("/vehiculos");
+      }
+    },
+  );
 });
 
 module.exports = router;
