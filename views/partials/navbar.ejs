@@ -28,10 +28,10 @@
 				<% } %>
 				<li class="nav-item">
 					<% if (typeof isLoggedIn !== "undefined" && isLoggedIn === true) { %>
-						<span class="nav-link d-flex align-items-center gap-2">
+						<a href="/perfil" class="nav-link d-flex align-items-center gap-2">
 							<%= typeof name !== "undefined" ? name : "" %>
 							<%= typeof lastName !== "undefined" ? lastName : "" %>
-						</span>
+						</a>
 					<% } else { %>
 						<a href="#" class="nav-link d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#loginModal" role="button">
 							<i class="bi bi-box-arrow-in-right"></i>

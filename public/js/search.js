@@ -28,8 +28,18 @@
 			}
 		};
 
+		const countTargetSelector = input.getAttribute("data-count-target");
+		const updateCount = (count) => {
+			if (!countTargetSelector) return;
+			const target = document.querySelector(countTargetSelector);
+			if (target) {
+				target.textContent = count;
+			}
+		};
+
 		const applyFilter = () => {
 			const term = input.value.trim().toLowerCase();
+			let visibleCount = 0;
 			rows.forEach((row) => {
 				const detailRow = getDetailRow(row);
 				const combinedText = (
@@ -39,9 +49,12 @@
 				const matches = combinedText.includes(term);
 				row.style.display = matches ? "" : "none";
 				toggleDetailDisplay(detailRow, matches);
+				if (matches) visibleCount += 1;
 			});
+			updateCount(visibleCount);
 		};
 
 		input.addEventListener("input", applyFilter);
+		applyFilter();
 	});
 })();

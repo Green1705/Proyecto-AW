@@ -17,6 +17,7 @@ const reserveForm = require("./routes/formulario_reserva.js");
 const finalizarReserva = require("./routes/finalizar_reserva.js");
 const loginForm = require("./routes/login.js");
 const adminRouter = require("./routes/admin/admin.js");
+const profileRoute = require("./routes/profile.js");
 const middlewareSession = session({
   saveUninitialized: false,
   secret: "example",
@@ -54,6 +55,7 @@ app.use("/reserva", activeReservations);
 app.use("/reserva/agregar", is_logged, reserveForm);
 app.use("/reserva/finalizar", finalizarReserva);
 app.use("/admin", adminRouter);
+app.use("/perfil", is_logged, profileRoute);
 app.use("/logout", logout);
 app.use(express.static(path.join(__dirname, "public")));
 
