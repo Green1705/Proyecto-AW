@@ -22,7 +22,6 @@ router
     });
   })
   .post((req, res) => {
-    //TODO add a new employee to the database
     const {
       nombre,
       apellido_paterno,
