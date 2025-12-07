@@ -19,6 +19,22 @@ body.contrast-high .reservation-details-card {
 	color: #ffffff;
 }
 
+body.contrast-high .table thead th,
+body.contrast-high .table tbody td {
+	color: #ffffff;
+}
+
+body.contrast-high .table tbody tr {
+	border-color: #2f3440;
+}
+
+body.contrast-high .text-muted,
+body.contrast-high .small,
+body.contrast-high .badge,
+body.contrast-high li {
+	color: #e4e7ec !important;
+}
+
 body.contrast-high .btn {
 	border-color: #f3f4f6;
 }
