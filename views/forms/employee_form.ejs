@@ -110,11 +110,16 @@
 						</div>
 						<div class="col-md-6">
 							<label for="employee-email" class="form-label">Correo</label>
-							<input type="email" class="form-control" id="employee-email" name="email" required>
+							<input type="email" class="form-control" id="employee-email" name="email"
+								pattern="^[a-zA-Z0-9._%+-]+@aem\.com$"
+								title="El correo debe terminar en @aem.com" required>
 						</div>
 						<div class="col-md-6">
 							<label for="employee-password" class="form-label">Contraseña</label>
-							<input type="password" class="form-control" id="employee-password" name="password" required>
+							<input type="password" class="form-control" id="employee-password" name="password"
+								minlength="8"
+								pattern="^(?=.*[A-Z])(?=.*\d).{8,}$"
+								title="Mínimo 8 caracteres, con al menos una mayúscula y un número" required>
 						</div>
 						<div class="col-md-6">
 							<label for="employee-phone" class="form-label">Teléfono</label>
