@@ -1,6 +1,175 @@
-<%- include('../partials/head', { title: 'Formulario de Vehículos' }) %>
-<%- include('../partials/navbar') %>
-<main class="container py-4">
-	<h1>Formulario de vehículos</h1>
+<%- include('partials/head', { title: 'Gestión de Vehículos' }) %>
+<%- include('partials/navbar') %>
+
+<main class="container py-5">
+	<section class="vehicle-table-section">
+		<header class="mb-4">
+			<h1 class="h3 mb-1">Gestión de vehículos</h1>
+			<p class="text-muted mb-3">
+				Consulta el inventario tal como lo ven los empleados y utiliza las acciones adicionales para agregar,
+				modificar o eliminar registros.
+			</p>
+			<% if (success && success.length) { %>
+				<div class="alert alert-success py-2 mb-2"><%= success[0] %></div>
+			<% } %>
+			<% if (error && error.length) { %>
+				<div class="alert alert-danger py-2 mb-2"><%= error[0] %></div>
+			<% } %>
+		</header>
+
+		<div class="table-responsive">
+			<table class="table table-hover align-middle">
+				<thead class="table-light">
+					<tr>
+						<th scope="col">Nombre</th>
+						<th scope="col" class="text-end">ID</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% if (Array.isArray(cars) && cars.length) { %>
+						<% cars.forEach((car) => { %>
+							<tr class="vehicle-row" data-car-id="<%= car.id_automovil %>">
+								<td>
+									<strong><%= car.marca %> <%= car.modelo %></strong>
+									<span class="d-block text-muted small">Matrícula: <%= car.matricula %></span>
+								</td>
+								<td class="text-end fw-semibold">#<%= car.id_automovil %></td>
+							</tr>
+							<tr class="vehicle-details" id="vehicle-details-<%= car.id_automovil %>">
+								<td colspan="2">
+									<div class="vehicle-details-card">
+										<div class="row g-4 align-items-center">
+											<div class="col-md-4">
+												<div class="vehicle-image">
+													<% if (car.imagen) { %>
+														<img src="<%= car.imagen %>" alt="<%= car.marca %> <%= car.modelo %>" class="img-fluid rounded">
+													<% } else { %>
+														<span>Imagen de <%= car.marca %> <%= car.modelo %></span>
+													<% } %>
+												</div>
+											</div>
+											<div class="col-md-5">
+												<ul class="vehicle-specs">
+													<li><strong>Matrícula:</strong> <%= car.matricula %></li>
+													<li><strong>Año de matriculación:</strong> <%= car.anio_matriculacion %></li>
+													<li><strong>Número de plazas:</strong> <%= car.numero_plazas %></li>
+													<li><strong>Autonomía:</strong> <%= car.autonomia_km || 'N/D' %> km</li>
+													<li><strong>Precio por día:</strong> €<%= Number(car.precio_por_dia).toFixed(2) %></li>
+													<li><strong>Color:</strong> <%= car.color %></li>
+													<li><strong>Estado:</strong> <%= car.estado %></li>
+													<li><strong>Concesionario:</strong></li>
+													<li><strong><%= car.concesionario_nombre %></strong></li>
+												</ul>
+											</div>
+											<div class="col-md-3">
+												<div class="vehicle-actions">
+													<button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#reserveModal" data-car-id="<%= car.id_automovil %>" data-car-rate="<%= car.precio_por_dia %>" data-car-name="<%= `${car.marca} ${car.modelo}` %>" data-car-matricula="<%= car.matricula %>" <%= car.estado === 'disponible' ? '' : 'disabled' %>>
+														Reservar
+													</button>
+													<button type="button" class="btn btn-success w-100" data-action="add">
+														Agregar vehículo
+													</button>
+													<button type="button" class="btn btn-outline-primary w-100" data-action="edit" data-car-id="<%= car.id_automovil %>">
+														Modificar este vehículo
+													</button>
+													<button type="button" class="btn btn-outline-danger w-100" data-action="delete" data-car-id="<%= car.id_automovil %>">
+														Eliminar este vehículo
+													</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</td>
+							</tr>
+						<% }) %>
+					<% } else { %>
+						<tr>
+							<td colspan="2" class="text-center text-muted py-5">
+								No hay vehículos registrados actualmente.
+							</td>
+						</tr>
+					<% } %>
+				</tbody>
+			</table>
+		</div>
+	</section>
 </main>
-<%- include('../partials/footer') %>
+
+<style>
+	.vehicle-row {
+		cursor: pointer;
+	}
+
+	.vehicle-row:hover {
+		background-color: #eef2ff;
+	}
+
+	.vehicle-details {
+		display: none;
+	}
+
+	.vehicle-details.show {
+		display: table-row;
+	}
+
+	.vehicle-details-card {
+		padding: 1.5rem;
+		border: 1px solid #e2e8f0;
+		border-radius: 0.75rem;
+		background-color: #ffffff;
+	}
+
+	.vehicle-specs {
+		list-style: none;
+		padding-left: 0;
+		margin-bottom: 0;
+	}
+
+	.vehicle-specs li {
+		margin-bottom: 0.35rem;
+		color: #475569;
+	}
+
+	.vehicle-image {
+		max-width: 200px;
+		border-radius: 0.5rem;
+		background: #f8fafc;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 120px;
+		color: #94a3b8;
+		font-size: 0.9rem;
+		padding: 0.75rem;
+	}
+
+	.vehicle-actions {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+</style>
+
+<script>
+	(function setupVehicleRows() {
+		const rows = document.querySelectorAll(".vehicle-row");
+		rows.forEach((row) => {
+			row.addEventListener("click", () => {
+				const carId = row.getAttribute("data-car-id");
+				const detailRow = document.getElementById(`vehicle-details-${carId}`);
+				if (!detailRow) return;
+				const isVisible = detailRow.classList.contains("show");
+				document.querySelectorAll(".vehicle-details.show").forEach((openRow) => {
+					openRow.classList.remove("show");
+				});
+				if (!isVisible) {
+					detailRow.classList.add("show");
+				}
+			});
+		});
+	})();
+</script>
+
+<%- include('partials/reserveForm_modal') %>
+
+<%- include('partials/footer') %>

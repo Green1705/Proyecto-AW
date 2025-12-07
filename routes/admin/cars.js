@@ -9,7 +9,8 @@ const router = express.Router();
 router
   .route("/")
   .get((req, res) => {
-    const query = "SELECT * FROM automovil";
+    const query =
+      "SELECT a.*, c.nombre AS concesionario_nombre FROM automovil AS a LEFT JOIN concesionario AS c ON a.id_concesionario = c.id_concesionario";
     pool.query(query, (err, result) => {
       if (err) {
         res.status(500).json({ message: err });

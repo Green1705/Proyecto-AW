@@ -5,7 +5,8 @@ const isAdmin = require("../../middlewares/is_admin.js");
 
 const router = express.Router();
 
-router.use("/", isAdmin, (req, res) => {
+//changed to get temporarily
+router.get("/", (req, res) => {
   res.render("admin_panel");
 });
 router.use("/vehiculos", isAdmin, require("./cars.js"));
