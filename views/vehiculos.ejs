@@ -1,6 +1,8 @@
 <%- include('partials/head', { title: 'Vehículos', extraStyles: ['/css/vehicles.css'] }) %>
 <%- include('partials/navbar') %>
 
+<% const rawVehicleDealerships = (typeof dealerships !== 'undefined') ? dealerships : []; %>
+<% const vehicleDealerships = Array.isArray(rawVehicleDealerships) ? rawVehicleDealerships : []; %>
 <main class="container py-5">
 	<section class="vehicle-table-section">
 		<header class="mb-4">
@@ -87,6 +89,6 @@
 <script src="/js/vehicles.js"></script>
 <script src="/js/search.js"></script>
 
-<%- include('partials/reserveForm_modal', { dealerships, userId }) %>
+<%- include('partials/reserveForm_modal', { dealerships: vehicleDealerships, userId }) %>
 
 <%- include('partials/footer') %>

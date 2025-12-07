@@ -1,6 +1,8 @@
 <%- include('partials/head', { title: 'Mi perfil', extraStyles: ['/css/reservations.css'] }) %>
 <%- include('partials/navbar') %>
 
+<% const profileTextPref = (typeof textSizePreference === 'string' && textSizePreference.length) ? textSizePreference : 'normal'; %>
+<% const profileContrastPref = (typeof contrastPreference === 'string' && contrastPreference.length) ? contrastPreference : 'normal'; %>
 <main class="container py-5">
 	<section class="reservations-table-section">
 		<header class="mb-4">
@@ -15,7 +17,10 @@
 					<strong id="profile-total-count"><%= Array.isArray(reservations) ? reservations.length : 0 %></strong>
 				</div>
 			</div>
-			<div class="col-md-6 text-md-end">
+			<div class="col-md-6 d-flex flex-column flex-md-row justify-content-md-end gap-2">
+				<button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#accessibilityModal">
+					Accesibilidad
+				</button>
 				<a class="btn btn-outline-secondary" href="/logout">Cerrar sesión</a>
 			</div>
 		</div>
@@ -93,6 +98,52 @@
 		</div>
 	</section>
 </main>
+
+<div class="modal fade" id="accessibilityModal" tabindex="-1" aria-labelledby="accessibilityModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="accessibilityModalLabel">Opciones de accesibilidad</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+			</div>
+			<form action="/perfil/accesibilidad" method="POST">
+				<div class="modal-body">
+					<p class="text-muted">Estos ajustes se aplicarán automáticamente en todas las páginas cuando guardes la configuración.</p>
+					<div class="mb-4">
+						<h6 class="mb-2">Contraste</h6>
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="contraste" id="contrast-normal" value="normal" <%= profileContrastPref === 'normal' ? 'checked' : '' %>>
+							<label class="form-check-label" for="contrast-normal">Normal</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="contraste" id="contrast-high" value="alto" <%= profileContrastPref === 'alto' ? 'checked' : '' %>>
+							<label class="form-check-label" for="contrast-high">Alto contraste</label>
+						</div>
+					</div>
+					<div>
+						<h6 class="mb-2">Tamaño del texto</h6>
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="tamanio_texto" id="text-small" value="pequeno" <%= profileTextPref === 'pequeno' ? 'checked' : '' %>>
+							<label class="form-check-label" for="text-small">Reducido (−20%)</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="tamanio_texto" id="text-normal" value="normal" <%= profileTextPref === 'normal' ? 'checked' : '' %>>
+							<label class="form-check-label" for="text-normal">Normal</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="tamanio_texto" id="text-large" value="grande" <%= profileTextPref === 'grande' ? 'checked' : '' %>>
+							<label class="form-check-label" for="text-large">Ampliado (+20%)</label>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+					<button type="submit" class="btn btn-primary">Guardar preferencias</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
 
 <script src="/js/reservations.js"></script>
 <script src="/js/search.js"></script>

@@ -4,6 +4,8 @@ const express = require("express");
 const pool = require("../db/db.js");
 
 const router = express.Router();
+const VALID_CONTRAST = new Set(["normal", "alto"]);
+const VALID_TEXT_SIZE = new Set(["pequeno", "normal", "grande"]);
 
 router.get("/", (req, res) => {
   const userId = req.session && req.session.userId;
@@ -25,6 +27,32 @@ router.get("/", (req, res) => {
     res.render("profile", {
       reservations: result || [],
     });
+  });
+});
+
+router.post("/accesibilidad", (req, res) => {
+  const userId = req.session && req.session.userId;
+  if (!userId) {
+    req.flash("error", "Debes iniciar sesión para actualizar tus preferencias");
+    return res.redirect("/login");
+  }
+
+  const requestedContrast = (req.body.contraste || "").toLowerCase();
+  const requestedTextSize = (req.body.tamanio_texto || "").toLowerCase();
+  const contrast = VALID_CONTRAST.has(requestedContrast) ? requestedContrast : "normal";
+  const textSize = VALID_TEXT_SIZE.has(requestedTextSize) ? requestedTextSize : "normal";
+
+  const query = "UPDATE usuario SET contraste = ?, tamanio_texto = ? WHERE id_usuario = ?";
+  pool.query(query, [contrast, textSize, userId], (err) => {
+    if (err) {
+      console.error(err);
+      req.flash("error", "No se pudieron guardar las preferencias de accesibilidad");
+    } else {
+      req.session.contrastPreference = contrast;
+      req.session.textSizePreference = textSize;
+      req.flash("success", "Preferencias de accesibilidad guardadas");
+    }
+    res.redirect("/perfil");
   });
 });
 

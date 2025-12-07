@@ -1,0 +1,47 @@
+body.contrast-high {
+	background-color: #0f1115;
+	color: #ffffff;
+}
+
+body.contrast-high .card,
+body.contrast-high .table,
+body.contrast-high .modal-content,
+body.contrast-high .navbar,
+body.contrast-high footer {
+	background-color: #1a1d23;
+	color: #ffffff;
+}
+
+body.contrast-high .table thead,
+body.contrast-high .vehicle-details-card,
+body.contrast-high .reservation-details-card {
+	background-color: #242832;
+	color: #ffffff;
+}
+
+body.contrast-high .btn {
+	border-color: #f3f4f6;
+}
+
+body.contrast-high .btn-primary,
+body.contrast-high .btn-success {
+	background-color: #3a6bf2;
+	border-color: #3a6bf2;
+}
+
+body.contrast-high a {
+	color: #5cc4ff;
+}
+
+body.text-size-large {
+	font-size: 1.2em;
+}
+
+body.text-size-small {
+	font-size: 0.85em;
+}
+
+body.text-size-large .btn,
+body.text-size-small .btn {
+	font-size: inherit;
+}
