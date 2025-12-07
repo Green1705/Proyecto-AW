@@ -92,15 +92,20 @@
 
 	</script>
 	<input type="hidden" id="login-error-message" value="<%= (typeof error !== 'undefined' && error && error.length) ? error[0] : '' %>">
+	<input type="hidden" id="login-success-message" value="<%= (typeof success !== 'undefined' && success && success.length) ? success[0] : '' %>">
 	<script>
 
-		(function showLoginError() {
+		(function showLoginAlerts() {
 			const errorInput = document.getElementById("login-error-message");
-			if (!errorInput) return;
-			//if the hidden input has a value, show an alert of the error
-			const message = errorInput.value.trim();
-			if (message.length > 0) {
-				alert(message);
+			const successInput = document.getElementById("login-success-message");
+
+			const errorMessage = errorInput ? errorInput.value.trim() : "";
+			const successMessage = successInput ? successInput.value.trim() : "";
+
+			if (errorMessage.length > 0) {
+				alert(errorMessage);
+			} else if (successMessage.length > 0) {
+				alert(successMessage);
 			}
 		})();
 	</script>
