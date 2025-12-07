@@ -1,4 +1,4 @@
-<%- include('../partials/head', { title: 'Gestión de Empleados' }) %>
+<%- include('../partials/head', { title: 'Gestión de Empleados', extraStyles: ['/css/admin_employees.css'] }) %>
 <%- include('../partials/navbar') %>
 
 <main class="container py-5">
@@ -27,7 +27,7 @@
 				<tbody>
 					<% if (Array.isArray(employees) && employees.length) { %>
 						<% employees.forEach((employee) => { %>
-							<tr class="employee-row" data-employee-id="<%= employee.id_usuario %>">
+							<tr class="employee-row" tabindex="0" data-employee-id="<%= employee.id_usuario %>">
 								<td>
 									<strong><%= employee.nombre %> <%= employee.apellido_paterno %></strong>
 									<span class="d-block text-muted small">Rol: <%= employee.rol %></span>
@@ -78,62 +78,6 @@
 	</section>
 </main>
 
-<style>
-	.employee-row {
-		cursor: pointer;
-	}
-
-	.employee-row:hover {
-		background-color: #eef2ff;
-	}
-
-	.employee-details {
-		display: none;
-	}
-
-	.employee-details.show {
-		display: table-row;
-	}
-
-	.employee-details-card {
-		padding: 1.5rem;
-		border: 1px solid #e2e8f0;
-		border-radius: 0.75rem;
-		background-color: #ffffff;
-	}
-
-	.employee-info {
-		list-style: none;
-		padding-left: 0;
-		margin-bottom: 0;
-	}
-
-	.employee-info li {
-		margin-bottom: 0.4rem;
-		color: #475569;
-	}
-
-	.employee-actions {
-		display: flex;
-		flex-direction: column;
-		gap: 0.5rem;
-	}
-</style>
-
-<script>
-	(function setupEmployeeRows() {
-		const rows = document.querySelectorAll(".employee-row");
-		rows.forEach((row) => {
-			row.addEventListener("click", () => {
-				const employeeId = row.getAttribute("data-employee-id");
-				const detailRow = document.getElementById(`employee-details-${employeeId}`);
-				if (!detailRow) return;
-				const isVisible = detailRow.classList.contains("show");
-				document.querySelectorAll(".employee-details.show").forEach((openRow) => openRow.classList.remove("show"));
-				if (!isVisible) detailRow.classList.add("show");
-			});
-		});
-	})();
-</script>
+<script src="/js/admin_employees.js"></script>
 
 <%- include('../partials/footer') %>

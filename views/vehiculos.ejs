@@ -1,4 +1,4 @@
-<%- include('partials/head', { title: 'Vehículos' }) %>
+<%- include('partials/head', { title: 'Vehículos', extraStyles: ['/css/vehicles.css'] }) %>
 <%- include('partials/navbar') %>
 
 <main class="container py-5">
@@ -74,83 +74,10 @@
 				</tbody>
 			</table>
 		</div>
-	</section>
-</main>
+		</section>
+	</main>
 
-<style>
-	.vehicle-row {
-		cursor: pointer;
-	}
-
-	.vehicle-row:hover {
-		background-color: #eef2ff;
-	}
-
-	.vehicle-details {
-		display: none;
-	}
-
-	.vehicle-details.show {
-		display: table-row;
-	}
-
-	.vehicle-details-card {
-		padding: 1.5rem;
-		border: 1px solid #e2e8f0;
-		border-radius: 0.75rem;
-		background-color: #ffffff;
-	}
-
-	.vehicle-specs {
-		list-style: none;
-		padding-left: 0;
-		margin-bottom: 0;
-	}
-
-	.vehicle-specs li {
-		margin-bottom: 0.35rem;
-		color: #475569;
-	}
-
-	.vehicle-image {
-		max-width: 200px;
-		border-radius: 0.5rem;
-		background: #f8fafc;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		min-height: 120px;
-		color: #94a3b8;
-		font-size: 0.9rem;
-		padding: 0.75rem;
-	}
-
-	.vehicle-actions {
-		display: flex;
-		align-items: center;
-		justify-content: flex-end;
-	}
-</style>
-
-<script>
-	(function setupVehicleRows() {
-		const rows = document.querySelectorAll(".vehicle-row");
-		rows.forEach((row) => {
-			row.addEventListener("click", () => {
-				const carId = row.getAttribute("data-car-id");
-				const detailRow = document.getElementById(`vehicle-details-${carId}`);
-				if (!detailRow) return;
-				const isVisible = detailRow.classList.contains("show");
-				document.querySelectorAll(".vehicle-details.show").forEach((openRow) => {
-					openRow.classList.remove("show");
-				});
-				if (!isVisible) {
-					detailRow.classList.add("show");
-				}
-			});
-		});
-	})();
-</script>
+<script src="/js/vehicles.js"></script>
 
 <%- include('partials/reserveForm_modal') %>
 
