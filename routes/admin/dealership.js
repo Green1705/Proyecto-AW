@@ -2,6 +2,7 @@
 
 const express = require("express");
 const pool = require("../../db/db.js");
+const promisePool = pool.promise();
 
 const router = express.Router();
 
@@ -28,7 +29,7 @@ router
     try {
       const address_query =
         "INSERT INTO direccion (ciudad, calle , numero, codigo_postal) VALUES (?,?,?,?)";
-      const address_result = await pool.execute(address_query, [
+      const [address_result] = await promisePool.execute(address_query, [
         ciudad,
         calle,
         numero,
@@ -39,13 +40,17 @@ router
       const dealership_query =
         "INSERT INTO concesionario (nombre, telefono, direccion_id) VALUES (?,?,?) ";
 
-      await pool.execute(dealership_query, [nombre, telefono, address_id]);
+      await promisePool.execute(dealership_query, [
+        nombre,
+        telefono,
+        address_id,
+      ]);
 
       req.flash("success", "Concesionario agregado con exito");
-      res.redirect("/admin/vehiculos");
+      res.redirect("/admin/concesionarios");
     } catch (error) {
       req.flash("error", "Error al crear concesionario");
-      res.redirect("/admin/vehiculos");
+      res.redirect("/admin/concesionarios");
     }
   });
 
