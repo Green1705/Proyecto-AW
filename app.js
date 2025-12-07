@@ -20,6 +20,7 @@ const middlewareSession = session({
   resave: false,
 });
 const is_logged = require("./middlewares/is_logged_in.js");
+const session_info = require("./middlewares/session_info.js");
 
 app.set("view engine", "ejs");
 app.use(morgan("dev"));
@@ -38,14 +39,16 @@ app.get("/api/session", is_logged, (req, res) => {
   });
 });
 
-app.get("/", (req, res) => {
-  res.render("index");
-});
+app.use(session_info);
 app.use("/login", loginForm);
 app.use("/vehiculos", is_logged, vehiclesRoutes);
 app.use("/reserva", is_logged, reserveForm);
 app.use("/admin", adminRouter);
 app.use(express.static(path.join(__dirname, "public")));
+
+app.get("/", (req, res) => {
+  res.render("index");
+});
 
 app.listen(3000, (err) => {
   if (err) {

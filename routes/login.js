@@ -25,11 +25,11 @@ router
           let user = results[0];
           req.session.userId = user.id_usuario;
           req.session.name = user.nombre;
-          req.session.last_name = [
+          req.session.lastName = [
             user.apellido_paterno,
             user.apellido_materno,
           ].join(" ");
-          req.session.isAuthenticated = true;
+          req.session.isLoggedIn = true;
           req.session.isAdmin = user.rol === "administrador";
 
           req.flash("success", "Se ha iniciado sesión correctamente");
