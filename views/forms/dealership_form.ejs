@@ -1,4 +1,4 @@
-<%- include('../partials/head', { title: 'Gestión de Concesionarios' }) %>
+<%- include('../partials/head', { title: 'Gestión de Concesionarios', extraStyles: ['/css/admin_dealerships.css'] }) %>
 <%- include('../partials/navbar') %>
 
 <main class="container py-5">
@@ -76,64 +76,6 @@
 	</section>
 </main>
 
-<style>
-	.dealership-row {
-		cursor: pointer;
-	}
-
-	.dealership-row:hover {
-		background-color: #eef2ff;
-	}
-
-	.dealership-details {
-		display: none;
-	}
-
-	.dealership-details.show {
-		display: table-row;
-	}
-
-	.dealership-details-card {
-		padding: 1.5rem;
-		border: 1px solid #e2e8f0;
-		border-radius: 0.75rem;
-		background-color: #ffffff;
-	}
-
-	.dealership-info {
-		list-style: none;
-		padding-left: 0;
-		margin-bottom: 0;
-	}
-
-	.dealership-info li {
-		margin-bottom: 0.4rem;
-		color: #475569;
-	}
-
-	.dealership-actions {
-		display: flex;
-		flex-direction: column;
-		gap: 0.5rem;
-	}
-</style>
-
-<script>
-	(function setupDealershipRows() {
-		const rows = document.querySelectorAll(".dealership-row");
-		rows.forEach((row) => {
-			row.addEventListener("click", () => {
-				const dealerId = row.getAttribute("data-dealer-id");
-				const detailRow = document.getElementById(`dealership-details-${dealerId}`);
-				if (!detailRow) return;
-				const isVisible = detailRow.classList.contains("show");
-				document.querySelectorAll(".dealership-details.show").forEach((openRow) => {
-					openRow.classList.remove("show");
-				});
-				if (!isVisible) detailRow.classList.add("show");
-			});
-		});
-	})();
-</script>
+<script src="/js/admin_dealerships.js"></script>
 
 <%- include('../partials/footer') %>

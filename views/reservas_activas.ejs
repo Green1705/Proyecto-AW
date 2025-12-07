@@ -1,4 +1,4 @@
-<%- include('partials/head', { title: 'Reservas activas' }) %>
+<%- include('partials/head', { title: 'Reservas activas', extraStyles: ['/css/reservations.css'] }) %>
 <%- include('partials/navbar') %>
 
 <main class="container py-5">
@@ -21,7 +21,7 @@
 				<tbody>
 					<% if (Array.isArray(reservations) && reservations.length) { %>
 						<% reservations.forEach((reservation) => { %>
-							<tr class="reservation-row" data-reservation-id="<%= reservation.id_reserva %>">
+							<tr class="reservation-row" tabindex="0" data-reservation-id="<%= reservation.id_reserva %>">
 								<td>
 									<strong>#<%= reservation.id_automovil %></strong>
 									<span class="d-block text-muted small">Matrícula: <%= reservation.matricula || 'N/D' %></span>
@@ -83,53 +83,7 @@
 	</section>
 </main>
 
-<style>
-	.reservation-row {
-		cursor: pointer;
-	}
-
-	.reservation-row:hover {
-		background-color: #eef2ff;
-	}
-
-	.reservation-details {
-		display: none;
-	}
-
-	.reservation-details.show {
-		display: table-row;
-	}
-
-	.reservation-details-card {
-		padding: 1.25rem;
-		border: 1px solid #e2e8f0;
-		border-radius: 0.75rem;
-		background-color: #ffffff;
-	}
-</style>
-
-<script>
-	(function setupReservationsToggle() {
-		const viewButtons = document.querySelectorAll(".reservation-view-btn");
-		viewButtons.forEach((button) => {
-			button.addEventListener("click", () => {
-				const row = button.closest(".reservation-row");
-				const reservationId = row.getAttribute("data-reservation-id");
-				const detailsRow = document.getElementById(`reservation-details-${reservationId}`);
-				if (!detailsRow) return;
-
-				const currentlyOpen = detailsRow.classList.contains("show");
-				document.querySelectorAll(".reservation-details.show").forEach((openRow) => {
-					openRow.classList.remove("show");
-				});
-
-				if (!currentlyOpen) {
-					detailsRow.classList.add("show");
-				}
-			});
-		});
-	})();
-</script>
+<script src="/js/reservations.js"></script>
 
 <%- include('partials/footer') %>
 </body>

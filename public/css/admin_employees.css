@@ -1,0 +1,44 @@
+.employee-row {
+	cursor: pointer;
+}
+
+.employee-row:hover {
+	background-color: #eef2ff;
+}
+
+.employee-row:focus {
+	outline: 2px solid #3b82f6;
+	outline-offset: -2px;
+}
+
+.employee-details {
+	display: none;
+}
+
+.employee-details.show {
+	display: table-row;
+}
+
+.employee-details-card {
+	padding: 1.5rem;
+	border: 1px solid #e2e8f0;
+	border-radius: 0.75rem;
+	background-color: #ffffff;
+}
+
+.employee-info {
+	list-style: none;
+	padding-left: 0;
+	margin-bottom: 0;
+}
+
+.employee-info li {
+	margin-bottom: 0.4rem;
+	color: #475569;
+}
+
+.employee-actions {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
