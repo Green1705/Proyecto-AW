@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Vehículos (Demo)</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<style>
+		body {
+			background: #f4f6fb;
+		}
+
+		.vehicle-row {
+			cursor: pointer;
+		}
+
+		.vehicle-row:hover {
+			background-color: #eef2ff;
+		}
+
+		.vehicle-details {
+			display: none;
+		}
+
+		.vehicle-details.show {
+			display: table-row;
+		}
+
+		.vehicle-details-card {
+			padding: 1.5rem;
+			border: 1px solid #e2e8f0;
+			border-radius: 0.75rem;
+			background-color: #ffffff;
+		}
+
+		.vehicle-specs {
+			list-style: none;
+			padding-left: 0;
+			margin-bottom: 0;
+		}
+
+		.vehicle-specs li {
+			margin-bottom: 0.35rem;
+			color: #475569;
+		}
+
+		.vehicle-image {
+			max-width: 200px;
+			border-radius: 0.5rem;
+			background: #f8fafc;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			min-height: 120px;
+			color: #94a3b8;
+			font-size: 0.9rem;
+		}
+
+		.vehicle-actions {
+			display: flex;
+			align-items: center;
+			justify-content: flex-end;
+			gap: 1rem;
+		}
+	</style>
+</head>
+
+<body>
+	<main class="container py-5">
+		<section class="vehicle-table-section">
+			<header class="mb-4">
+				<h1 class="h3 mb-1">Listado de vehículos (Demo)</h1>
+				<p class="text-muted mb-0">Ejemplo con datos ficticios usando la misma estructura que la vista real.</p>
+			</header>
+
+			<div class="table-responsive">
+				<table class="table table-hover align-middle">
+					<thead class="table-light">
+						<tr>
+							<th scope="col">Nombre</th>
+							<th scope="col" class="text-end">ID</th>
+						</tr>
+					</thead>
+					<tbody id="vehicle-table-body">
+						<tr>
+							<td colspan="2" class="text-center py-5 text-muted">
+								Cargando vehículos...
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
+	</main>
+
+	<script>
+		const cars = [
+			{
+				id_automovil: 1,
+				matricula: "EV-001-MD",
+				marca: "Nissan",
+				modelo: "Leaf",
+				anio_matriculacion: 2021,
+				numero_plazas: 5,
+				autonomia_km: 320,
+				precio_por_dia: 65.0,
+				color: "Azul",
+				estado: "disponible",
+				imagen: "images/demo/nissan_leaf.png"
+			},
+			{
+				id_automovil: 2,
+				matricula: "EV-025-MD",
+				marca: "Tesla",
+				modelo: "Model 3",
+				anio_matriculacion: 2022,
+				numero_plazas: 5,
+				autonomia_km: 450,
+				precio_por_dia: 120.0,
+				color: "Blanco",
+				estado: "reservado",
+				imagen: "images/demo/tesla_model3.png"
+			},
+			{
+				id_automovil: 3,
+				matricula: "EV-300-BCN",
+				marca: "Renault",
+				modelo: "Zoe",
+				anio_matriculacion: 2020,
+				numero_plazas: 5,
+				autonomia_km: 280,
+				precio_por_dia: 55.0,
+				color: "Gris",
+				estado: "mantenimiento",
+				imagen: "images/demo/renault_zoe.png"
+			}
+		];
+
+		function renderVehicles() {
+			const tbody = document.getElementById("vehicle-table-body");
+			if (!Array.isArray(cars) || cars.length === 0) {
+				tbody.innerHTML = `
+					<tr>
+						<td colspan="2" class="text-center text-muted py-5">
+							No hay vehículos en la lista.
+						</td>
+					</tr>
+				`;
+				return;
+			}
+
+			tbody.innerHTML = cars.map((car) => `
+				<tr class="vehicle-row" data-car-id="${car.id_automovil}">
+					<td>
+						<strong>${car.marca} ${car.modelo}</strong>
+						<span class="d-block text-muted small">Matrícula: ${car.matricula}</span>
+					</td>
+					<td class="text-end fw-semibold">#${car.id_automovil}</td>
+				</tr>
+				<tr class="vehicle-details" id="vehicle-details-${car.id_automovil}">
+					<td colspan="2">
+						<div class="vehicle-details-card">
+							<div class="row g-4 align-items-center">
+								<div class="col-md-4">
+									<div class="vehicle-image">
+										${car.imagen ? `<img src="${car.imagen}" alt="${car.marca} ${car.modelo}" class="img-fluid rounded">`
+					: `Imagen de ${car.marca} ${car.modelo}`}
+									</div>
+								</div>
+								<div class="col-md-5">
+									<ul class="vehicle-specs">
+										<li><strong>Matrícula:</strong> ${car.matricula}</li>
+										<li><strong>Año de matriculación:</strong> ${car.anio_matriculacion}</li>
+										<li><strong>Número de plazas:</strong> ${car.numero_plazas}</li>
+										<li><strong>Autonomía:</strong> ${car.autonomia_km} km</li>
+										<li><strong>Precio por día:</strong> €${car.precio_por_dia.toFixed(2)}</li>
+										<li><strong>Color:</strong> ${car.color}</li>
+										<li><strong>Estado:</strong> ${car.estado}</li>
+									</ul>
+								</div>
+								<div class="col-md-3">
+									<div class="vehicle-actions">
+										<button class="btn btn-primary w-100 data-bs-toggle="modal" data-bs-target="#reserveCar"">Reservar</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</td>
+				</tr>
+			`).join("");
+		}
+
+		function setupVehicleRows() {
+			const rows = document.querySelectorAll(".vehicle-row");
+			rows.forEach((row) => {
+				row.addEventListener("click", () => {
+					const carId = row.getAttribute("data-car-id");
+					const detailRow = document.getElementById(`vehicle-details-${carId}`);
+					if (!detailRow) return;
+
+					const isVisible = detailRow.classList.contains("show");
+					document.querySelectorAll(".vehicle-details.show").forEach((openRow) => {
+						openRow.classList.remove("show");
+					});
+
+					if (!isVisible) {
+						detailRow.classList.add("show");
+					}
+				});
+			});
+		}
+
+		document.addEventListener("DOMContentLoaded", () => {
+			renderVehicles();
+			setupVehicleRows();
+		});
+	</script>
+</body>
+
+</html>
