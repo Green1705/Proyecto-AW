@@ -3,11 +3,13 @@
 function session_info(req, res, next) {
   const session = req.session;
 
-  req.locals.userId = session.userId || null;
-  req.locals.name = session.name || null;
-  req.locals.lastName = session.lastName || null;
-  req.locals.isLoggedIn = session.isLoggedIn || false;
-  req.locals.isAdmin = session.isAdmin || false;
+  res.locals.userId = session.userId || null;
+  res.locals.name = session.name || null;
+  res.locals.lastName = session.lastName || null;
+  res.locals.isLoggedIn = session.isLoggedIn || false;
+  res.locals.isAdmin = session.isAdmin || false;
+
+  next();
 }
 
 module.exports = session_info;
