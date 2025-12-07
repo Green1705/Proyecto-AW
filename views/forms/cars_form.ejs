@@ -9,6 +9,11 @@
 				Consulta el inventario tal como lo ven los empleados y utiliza las acciones adicionales para agregar,
 				modificar o eliminar registros.
 			</p>
+			<div class="d-flex justify-content-end mb-3">
+				<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addCarModal">
+					Agregar vehículo
+				</button>
+			</div>
 			<% if (success && success.length) { %>
 				<div class="alert alert-success py-2 mb-2"><%= success[0] %></div>
 			<% } %>
@@ -66,9 +71,6 @@
 													<button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#reserveModal" data-car-id="<%= car.id_automovil %>" data-car-rate="<%= car.precio_por_dia %>" data-car-name="<%= `${car.marca} ${car.modelo}` %>" data-car-matricula="<%= car.matricula %>" <%= car.estado === 'disponible' ? '' : 'disabled' %>>
 														Reservar
 													</button>
-													<button type="button" class="btn btn-success w-100" data-action="add">
-														Agregar vehículo
-													</button>
 													<button type="button" class="btn btn-outline-primary w-100" data-action="edit" data-car-id="<%= car.id_automovil %>">
 														Modificar este vehículo
 													</button>
@@ -96,6 +98,76 @@
 </main>
 
 <script src="/js/admin_cars.js"></script>
+
+<!-- Modal para nuevo vehículo -->
+<div class="modal fade" id="addCarModal" tabindex="-1" aria-labelledby="addCarLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="addCarLabel">Nuevo vehículo</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+			</div>
+			<form action="/admin/vehiculos" method="POST" enctype="multipart/form-data">
+				<div class="modal-body">
+					<div class="row g-3">
+						<div class="col-md-6">
+							<label for="car-matricula" class="form-label">Matrícula</label>
+							<input type="text" class="form-control" id="car-matricula" name="matricula" required>
+						</div>
+						<div class="col-md-6">
+							<label for="car-estado" class="form-label">Estado</label>
+							<select class="form-select" id="car-estado" name="estado" required>
+								<option value="disponible">Disponible</option>
+								<option value="reservado">Reservado</option>
+								<option value="mantenimiento">Mantenimiento</option>
+							</select>
+						</div>
+						<div class="col-md-6">
+							<label for="car-marca" class="form-label">Marca</label>
+							<input type="text" class="form-control" id="car-marca" name="marca" required>
+						</div>
+						<div class="col-md-6">
+							<label for="car-modelo" class="form-label">Modelo</label>
+							<input type="text" class="form-control" id="car-modelo" name="modelo" required>
+						</div>
+						<div class="col-md-6">
+							<label for="car-anio" class="form-label">Año de matriculación</label>
+							<input type="number" class="form-control" id="car-anio" name="anio_matriculacion" required>
+						</div>
+						<div class="col-md-6">
+							<label for="car-plazas" class="form-label">Número de plazas</label>
+							<input type="number" class="form-control" id="car-plazas" name="numero_plazas" required>
+						</div>
+						<div class="col-md-6">
+							<label for="car-autonomia" class="form-label">Autonomía (km)</label>
+							<input type="number" class="form-control" id="car-autonomia" name="autonomia_km" required>
+						</div>
+						<div class="col-md-6">
+							<label for="car-precio" class="form-label">Precio por día (€)</label>
+							<input type="number" class="form-control" id="car-precio" name="precio_por_dia" step="0.01" min="0" required>
+						</div>
+						<div class="col-md-6">
+							<label for="car-color" class="form-label">Color</label>
+							<input type="text" class="form-control" id="car-color" name="color" required>
+						</div>
+						<div class="col-md-6">
+							<label for="car-image" class="form-label">Imagen</label>
+							<input type="file" class="form-control" id="car-image" name="imagen" accept="image/*" required>
+						</div>
+						<div class="col-12">
+							<label for="car-dealership" class="form-label">ID concesionario</label>
+							<input type="number" class="form-control" id="car-dealership" name="id_concesionario" required>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+					<button type="submit" class="btn btn-primary">Guardar</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
 
 <%- include('../partials/reserveForm_modal') %>
 

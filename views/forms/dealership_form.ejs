@@ -8,6 +8,11 @@
 			<p class="text-muted mb-3">
 				Consulta todos los concesionarios y utiliza las acciones para agregar, actualizar o eliminar registros.
 			</p>
+			<div class="d-flex justify-content-end mb-3">
+				<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addDealershipModal">
+					Agregar concesionario
+				</button>
+			</div>
 			<% if (success && success.length) { %>
 				<div class="alert alert-success py-2 mb-2"><%= success[0] %></div>
 			<% } %>
@@ -47,9 +52,6 @@
 											</div>
 											<div class="col-md-4">
 												<div class="dealership-actions">
-													<button type="button" class="btn btn-success w-100" data-action="add">
-														Agregar concesionario
-													</button>
 													<button type="button" class="btn btn-outline-primary w-100" data-action="edit" data-dealer-id="<%= dealer.id_concesionario %>">
 														Modificar este concesionario
 													</button>
@@ -75,6 +77,52 @@
 		</div>
 	</section>
 </main>
+
+<!-- Modal para nuevo concesionario -->
+<div class="modal fade" id="addDealershipModal" tabindex="-1" aria-labelledby="addDealershipLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="addDealershipLabel">Nuevo concesionario</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+			</div>
+			<form action="/admin/concesionarios" method="POST">
+				<div class="modal-body">
+					<div class="mb-3">
+						<label for="dealer-name" class="form-label">Nombre</label>
+						<input type="text" class="form-control" id="dealer-name" name="nombre" required>
+					</div>
+					<div class="mb-3">
+						<label for="dealer-phone" class="form-label">Teléfono</label>
+						<input type="tel" class="form-control" id="dealer-phone" name="telefono" required>
+					</div>
+					<div class="mb-3">
+						<label for="dealer-city" class="form-label">Ciudad</label>
+						<input type="text" class="form-control" id="dealer-city" name="ciudad" required>
+					</div>
+					<div class="mb-3">
+						<label for="dealer-street" class="form-label">Calle</label>
+						<input type="text" class="form-control" id="dealer-street" name="calle" required>
+					</div>
+					<div class="row g-3">
+						<div class="col-md-6">
+							<label for="dealer-number" class="form-label">Número</label>
+							<input type="number" class="form-control" id="dealer-number" name="numero" required>
+						</div>
+						<div class="col-md-6">
+							<label for="dealer-zip" class="form-label">Código postal</label>
+							<input type="text" class="form-control" id="dealer-zip" name="codigo_postal">
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+					<button type="submit" class="btn btn-primary">Guardar</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
 
 <script src="/js/admin_dealerships.js"></script>
 
