@@ -61,7 +61,7 @@ create table automovil(
     modelo varchar(30) not null,
     anio_matriculacion year not null,
 	numero_plazas int not null,
-    autonomia_km int null,
+    autonomia_km int not null,
     precio_por_dia int not null,
     color varchar(20) not null,
     imagen varchar(50),
@@ -69,6 +69,20 @@ create table automovil(
     id_concesionario int,
     foreign key (id_concesionario) references concesionario(id_concesionario)
 );
+
+INSERT INTO automovil 
+(matricula, marca, modelo, anio_matriculacion, numero_plazas, autonomia_km, precio_por_dia, color, imagen, estado, id_concesionario)
+VALUES
+('ABC1234', 'Toyota', 'Corolla', 2019, 5, 700, 45, 'Blanco', 'corolla.jpg', 'disponible', 1),
+('DEF5678', 'Honda', 'Civic', 2020, 5, 720, 50, 'Negro', 'civic.jpg', 'disponible', 1),
+('GHI9012', 'Ford', 'Focus', 2018, 5, 680, 40, 'Rojo', 'focus.jpg', 'mantenimiento', 1),
+('JKL3456', 'Tesla', 'Model 3', 2021, 5, 450, 90, 'Azul', 'model3.jpg', 'disponible', 1),
+('MNO7890', 'Renault', 'Clio', 2017, 5, 650, 35, 'Gris', 'clio.jpg', 'reservado', 1),
+('PQR1234', 'BMW', 'Serie 1', 2020, 5, 750, 80, 'Blanco', 'serie1.jpg', 'disponible', 1),
+('STU5678', 'Audi', 'A3', 2019, 5, 740, 85, 'Negro', 'a3.jpg', 'reservado', 1),
+('VWX9012', 'Hyundai', 'Kona EV', 2022, 5, 480, 95, 'Verde', 'konaev.jpg', 'disponible', 1),
+('YZA3456', 'Kia', 'Sportage', 2018, 5, 700, 55, 'Azul', 'sportage.jpg', 'mantenimiento', 1),
+('BCD7890', 'Volkswagen', 'Golf', 2021, 5, 730, 60, 'Rojo', 'golf.jpg', 'disponible', 1);
 
 create table reserva(
     id_reserva int auto_increment primary key,
@@ -78,6 +92,7 @@ create table reserva(
     fecha_inicio datetime not null,
     fecha_fin datetime not null,
     precio_final int not null,
+    notas varchar(100) null,
     estado enum('activa','finalizada', 'cancelada') default 'activa',
     foreign key (id_usuario) references usuario(id_usuario),
     foreign key (id_automovil) references automovil(id_automovil),
