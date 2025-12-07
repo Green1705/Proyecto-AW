@@ -136,7 +136,10 @@ router.post("/update", uploadImage.single("imagen"), async (req, res) => {
 
     const currentVehicle = rows[0];
     const coerceNumber = (value, fallback) => {
-      const parsed = Number(value);
+      if (value === undefined || value === null) return fallback;
+      const raw = typeof value === "string" ? value.trim() : value;
+      if (raw === "") return fallback;
+      const parsed = Number(raw);
       return Number.isFinite(parsed) ? parsed : fallback;
     };
     const sanitized = {
