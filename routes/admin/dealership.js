@@ -8,7 +8,7 @@ const router = express.Router();
 router
   .route("/")
   .get((req, res) => {
-    const query = "SELECT * FROM cocesionario";
+    const query = "SELECT * FROM concesionario";
     pool.query(query, (err, results) => {
       if (err) {
         res.status(500).json({ message: err });
