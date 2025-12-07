@@ -34,16 +34,29 @@
 					</div>
 
 					<div class="col-md-6">
-						<label for="reserve-client-id" class="form-label">ID de cliente</label>
-						<input type="text" class="form-control" id="reserve-client-id" name="id_cliente" list="reserve-client-list" placeholder="Selecciona escribiendo el nombre" autocomplete="on">
-						<datalist id="reserve-client-list">
-							<% (Array.isArray(clients) ? clients : []).forEach((client) => { %>
-								<option value="<%= client.id_cliente %>" label="<%= `${client.nombre} ${client.apellido_paterno || ''}`.trim() %>"></option>
-							<% }) %>
-						</datalist>
-						<small class="text-muted">Empieza a escribir el nombre del cliente para autocompletar su ID.</small>
+						<label for="reserve-client-name" class="form-label">Nombre del cliente</label>
+						<input type="text" class="form-control reserve-client-field" id="reserve-client-name" name="cliente_nombre" required>
 					</div>
 
+					<div class="col-md-6">
+						<label for="reserve-client-lastname" class="form-label">Apellido paterno</label>
+						<input type="text" class="form-control reserve-client-field" id="reserve-client-lastname" name="cliente_apellido_paterno" required>
+					</div>
+
+					<div class="col-md-6">
+						<label for="reserve-client-second-lastname" class="form-label">Apellido materno</label>
+						<input type="text" class="form-control reserve-client-field" id="reserve-client-second-lastname" name="cliente_apellido_materno">
+					</div>
+
+					<div class="col-md-6">
+						<label for="reserve-client-dni" class="form-label">DNI / Pasaporte</label>
+						<input type="text" class="form-control reserve-client-field" id="reserve-client-dni" name="cliente_dni" required>
+					</div>
+
+					<div class="col-md-6">
+						<label for="reserve-client-phone" class="form-label">Teléfono</label>
+						<input type="tel" class="form-control reserve-client-field" id="reserve-client-phone" name="cliente_telefono" required>
+					</div>
 
 
 					<div class="col-12">
@@ -71,7 +84,7 @@
 		const priceInput = modal.querySelector("#reserve-price");
 		const vehicleInput = modal.querySelector("#reserve-vehicle-id");
 		const summary = modal.querySelector(".reserve-modal-summary");
-		const clientInput = modal.querySelector("#reserve-client-id");
+		const clientFields = modal.querySelectorAll(".reserve-client-field");
 
 		if (!startInput || !endInput || !rateInput || !priceInput || !vehicleInput) return;
 
@@ -109,7 +122,9 @@
 			vehicleInput.value = carId || "";
 			rateInput.value = rate || "0";
 			if (summary) summary.textContent = `Reserva para vehículo #${carId || "--"} — ${carName} (${carPlate})`;
-			if (clientInput) clientInput.value = "";
+			clientFields.forEach((field) => {
+				field.value = "";
+			});
 			startInput.value = "";
 			endInput.value = "";
 			priceInput.value = "";
