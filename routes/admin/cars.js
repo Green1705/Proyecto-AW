@@ -2,7 +2,7 @@
 
 const express = require("express");
 const pool = require("../../db/db.js");
-const uploadImage = require("../middleware/uploadImage");
+const uploadImage = require("../../middlewares/uploadImage.js");
 
 const router = express.Router();
 
@@ -38,7 +38,7 @@ router
     } = req.body;
 
     const query =
-      "INSERT INTO automovil (matricula, marca, modelo, anio_matriculacion, numero_plazas, autonomia_km, precio_por_dia, color, imagen, estado, id_concesionario) VALUES (?,?,?,?,?,?,?,?,?,?,)";
+      "INSERT INTO automovil (matricula, marca, modelo, anio_matriculacion, numero_plazas, autonomia_km, precio_por_dia, color, imagen, estado, id_concesionario) VALUES (?,?,?,?,?,?,?,?,?,?)";
 
     pool.query(
       query,
