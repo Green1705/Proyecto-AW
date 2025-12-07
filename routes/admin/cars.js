@@ -5,6 +5,7 @@ const pool = require("../../db/db.js");
 const uploadImage = require("../../middlewares/uploadImage.js");
 
 const router = express.Router();
+const promisePool = pool.promise();
 
 router
   .route("/")
@@ -68,27 +69,44 @@ router
     );
   });
 
-router.post("/delete", (req, res) => {
+router.post("/delete", async (req, res) => {
   const { id_automovil } = req.body;
   if (!id_automovil) {
     req.flash("error", "No se especificó el vehículo a eliminar");
     return res.redirect("/admin/vehiculos");
   }
-  pool.query(
-    "DELETE FROM automovil WHERE id_automovil = ?",
-    [id_automovil],
-    (err, result) => {
-      if (err) {
-        console.error(err);
-        req.flash("error", "No se pudo eliminar el vehículo");
-      } else if (result.affectedRows === 0) {
-        req.flash("error", "El vehículo indicado no existe");
-      } else {
-        req.flash("success", "Vehículo eliminado correctamente");
-      }
-      res.redirect("/admin/vehiculos");
-    },
-  );
+  let connection;
+  try {
+    connection = await promisePool.getConnection();
+    await connection.beginTransaction();
+
+    await connection.execute("DELETE FROM reserva WHERE id_automovil = ?", [
+      id_automovil,
+    ]);
+    const [result] = await connection.execute(
+      "DELETE FROM automovil WHERE id_automovil = ?",
+      [id_automovil],
+    );
+
+    if (result.affectedRows === 0) {
+      await connection.rollback();
+      req.flash("error", "El vehículo indicado no existe");
+    } else {
+      await connection.commit();
+      req.flash("success", "Vehículo eliminado correctamente");
+    }
+  } catch (error) {
+    console.error(error);
+    if (connection) {
+      try {
+        await connection.rollback();
+      } catch (_) {}
+    }
+    req.flash("error", "No se pudo eliminar el vehículo");
+  } finally {
+    if (connection) connection.release();
+  }
+  res.redirect("/admin/vehiculos");
 });
 
 module.exports = router;
