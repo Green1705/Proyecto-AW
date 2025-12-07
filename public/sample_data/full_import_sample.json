@@ -1,0 +1,67 @@
+{
+	"direcciones": [
+		{
+			"id_direccion": 101,
+			"ciudad": "Madrid",
+			"calle": "Gran Via",
+			"numero": 45,
+			"codigo_postal": 28013
+		}
+	],
+	"concesionarios": [
+		{
+			"id_concesionario": 201,
+			"nombre": "Movilidad Centro",
+			"telefono": "911223344",
+			"direccion_id": 101
+		}
+	],
+	"usuarios": [
+		{
+			"id_usuario": 301,
+			"nombre": "Alicia",
+			"apellido_paterno": "García",
+			"apellido_materno": "López",
+			"rol": "empleado",
+			"email": "alicia@example.com",
+			"password": "alicia123",
+			"telefono": "600111222",
+			"contraste": "normal",
+			"tamanio_texto": "normal",
+			"id_concesionario": 201
+		}
+	],
+	"automoviles": [
+		{
+			"id_automovil": 501,
+			"matricula": "EV-9001",
+			"marca": "Seat",
+			"modelo": "Mii Electric",
+			"anio_matriculacion": 2022,
+			"numero_plazas": 4,
+			"autonomia_km": 260,
+			"precio_por_dia": 49,
+			"color": "Azul",
+			"imagen": "images/autos/auto_electrico.png",
+			"estado": "disponible",
+			"id_concesionario": 201
+		}
+	],
+	"reservas": [
+		{
+			"id_reserva": 601,
+			"id_usuario": 301,
+			"id_automovil": 501,
+			"nombre_cliente": "Carlos",
+			"apellido_paterno": "Ruiz",
+			"apellido_materno": "Santos",
+			"dni": "X1234567",
+			"telefono": "677889900",
+			"fecha_inicio": "2024-05-01 10:00:00",
+			"fecha_fin": "2024-05-05 10:00:00",
+			"precio_final": 196,
+			"notas": "Entrega en oficina central",
+			"estado": "finalizada"
+		}
+	]
+}

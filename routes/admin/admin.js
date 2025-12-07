@@ -41,27 +41,121 @@ router.post(
       return redirectToPanel();
     }
 
-    const { concesionarios, automoviles } = payload;
-    if (!Array.isArray(concesionarios) || !Array.isArray(automoviles)) {
-      req.flash(
-        "error",
-        "El JSON debe incluir los arreglos 'concesionarios' y 'automoviles'.",
-      );
-      return redirectToPanel();
-    }
+    const datasets = {
+      direcciones: Array.isArray(payload.direcciones) ? payload.direcciones : [],
+      concesionarios: Array.isArray(payload.concesionarios) ? payload.concesionarios : [],
+      usuarios: Array.isArray(payload.usuarios) ? payload.usuarios : [],
+      automoviles: Array.isArray(payload.automoviles) ? payload.automoviles : [],
+      reservas: Array.isArray(payload.reservas) ? payload.reservas : [],
+    };
 
-    const REQUIRED_DEALERSHIP_FIELDS = ["nombre", "telefono", "direccion_id"];
-    const REQUIRED_CAR_FIELDS = [
-      "matricula",
-      "marca",
-      "modelo",
-      "anio_matriculacion",
-      "numero_plazas",
-      "autonomia_km",
-      "precio_por_dia",
-      "color",
-      "estado",
-      "id_concesionario",
+    const TABLE_CONFIG = [
+      {
+        key: "direcciones",
+        label: "Dirección",
+        table: "direccion",
+        columns: ["id_direccion", "ciudad", "calle", "numero", "codigo_postal"],
+        required: ["id_direccion", "ciudad", "calle", "numero"],
+      },
+      {
+        key: "concesionarios",
+        label: "Concesionario",
+        table: "concesionario",
+        columns: ["id_concesionario", "nombre", "telefono", "direccion_id"],
+        required: ["id_concesionario", "nombre", "telefono", "direccion_id"],
+      },
+      {
+        key: "usuarios",
+        label: "Usuario",
+        table: "usuario",
+        columns: [
+          "id_usuario",
+          "nombre",
+          "apellido_paterno",
+          "apellido_materno",
+          "rol",
+          "email",
+          "password",
+          "telefono",
+          "contraste",
+          "tamanio_texto",
+          "id_concesionario",
+        ],
+        required: [
+          "id_usuario",
+          "nombre",
+          "apellido_paterno",
+          "rol",
+          "email",
+          "password",
+          "telefono",
+          "id_concesionario",
+        ],
+      },
+      {
+        key: "automoviles",
+        label: "Automóvil",
+        table: "automovil",
+        columns: [
+          "id_automovil",
+          "matricula",
+          "marca",
+          "modelo",
+          "anio_matriculacion",
+          "numero_plazas",
+          "autonomia_km",
+          "precio_por_dia",
+          "color",
+          "imagen",
+          "estado",
+          "id_concesionario",
+        ],
+        required: [
+          "id_automovil",
+          "matricula",
+          "marca",
+          "modelo",
+          "anio_matriculacion",
+          "numero_plazas",
+          "autonomia_km",
+          "precio_por_dia",
+          "color",
+          "estado",
+          "id_concesionario",
+        ],
+      },
+      {
+        key: "reservas",
+        label: "Reserva",
+        table: "reserva",
+        columns: [
+          "id_reserva",
+          "id_usuario",
+          "id_automovil",
+          "nombre_cliente",
+          "apellido_paterno",
+          "apellido_materno",
+          "dni",
+          "telefono",
+          "fecha_inicio",
+          "fecha_fin",
+          "precio_final",
+          "notas",
+          "estado",
+        ],
+        required: [
+          "id_reserva",
+          "id_usuario",
+          "id_automovil",
+          "nombre_cliente",
+          "apellido_paterno",
+          "dni",
+          "telefono",
+          "fecha_inicio",
+          "fecha_fin",
+          "precio_final",
+        ],
+      },
     ];
 
     const ensureFields = (entry, required, label, index) => {
@@ -76,47 +170,29 @@ router.post(
 
     let connection;
     try {
-      concesionarios.forEach((dealer, index) =>
-        ensureFields(dealer, REQUIRED_DEALERSHIP_FIELDS, "Concesionario", index),
-      );
-      automoviles.forEach((car, index) =>
-        ensureFields(car, REQUIRED_CAR_FIELDS, "Automóvil", index),
-      );
+      TABLE_CONFIG.forEach(({ key, required, label }) => {
+        datasets[key].forEach((item, index) => ensureFields(item, required, label, index));
+      });
 
       connection = await promisePool.getConnection();
       await connection.beginTransaction();
 
-      for (const dealer of concesionarios) {
-        await connection.execute(
-          "INSERT INTO concesionario (nombre, telefono, direccion_id) VALUES (?, ?, ?)",
-          [dealer.nombre, dealer.telefono, dealer.direccion_id],
-        );
-      }
-
-      for (const car of automoviles) {
-        await connection.execute(
-          "INSERT INTO automovil (matricula, marca, modelo, anio_matriculacion, numero_plazas, autonomia_km, precio_por_dia, color, imagen, estado, id_concesionario) VALUES (?,?,?,?,?,?,?,?,?,?,?)",
-          [
-            car.matricula,
-            car.marca,
-            car.modelo,
-            car.anio_matriculacion,
-            car.numero_plazas,
-            car.autonomia_km,
-            car.precio_por_dia,
-            car.color,
-            car.imagen || null,
-            car.estado,
-            car.id_concesionario,
-          ],
-        );
+      for (const { key, table, columns } of TABLE_CONFIG) {
+        const entries = datasets[key];
+        if (!entries.length) continue;
+        const placeholders = `(${columns.map(() => "?").join(",")})`;
+        const sql = `INSERT INTO ${table} (${columns.join(",")}) VALUES ${placeholders}`;
+        for (const entry of entries) {
+          const values = columns.map((col) =>
+            Object.prototype.hasOwnProperty.call(entry, col) ? entry[col] : null,
+          );
+          await connection.execute(sql, values);
+        }
       }
 
       await connection.commit();
-      req.flash(
-        "success",
-        `Importación completada (${concesionarios.length} concesionarios y ${automoviles.length} automóviles).`,
-      );
+      const summary = TABLE_CONFIG.map(({ key, label }) => `${label}s: ${datasets[key].length}`).join(", ");
+      req.flash("success", `Importación completada (${summary}).`);
     } catch (error) {
       if (connection) {
         try {
