@@ -120,6 +120,5 @@ create table reserva(
     notas varchar(100) null,
     estado enum('activa','finalizada', 'cancelada') default 'activa',
     foreign key (id_usuario) references usuario(id_usuario),
-    foreign key (id_automovil) references automovil(id_automovil),
-    foreign key (id_cliente) references cliente(id_cliente)
+    foreign key (id_automovil) references automovil(id_automovil)
 );
