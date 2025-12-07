@@ -2,7 +2,97 @@
 <%- include('partials/navbar') %>
 
 <main class="container py-4">
-	<h1>Aquí van los vehículos</h1>
+	<section class="vehicle-table-section">
+		<header class="mb-4">
+			<h1 class="h3 mb-1">Listado de vehículos</h1>
+			<p class="text-muted mb-0">Selecciona un vehículo para ver sus detalles.</p>
+		</header>
+
+		<div class="table-responsive">
+			<table class="table table-hover align-middle">
+				<thead class="table-light">
+					<tr>
+						<th scope="col">Nombre</th>
+						<th scope="col" class="text-end">ID</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% if (Array.isArray(cars) && cars.length > 0) { %>
+						<% cars.forEach((car) => { %>
+							<tr class="vehicle-row" data-car-id="<%= car.id_automovil %>">
+								<td>
+									<strong><%= car.marca %> <%= car.modelo %></strong>
+									<span class="d-block text-muted small">Matrícula: <%= car.matricula %></span>
+								</td>
+								<td class="text-end fw-semibold">#<%= car.id_automovil %></td>
+							</tr>
+							<tr class="vehicle-details" id="vehicle-details-<%= car.id_automovil %>">
+								<td colspan="2">
+									<div class="vehicle-details-card">
+										<!-- Detailed specifications for <%= car.marca %> <%= car.modelo %> go here -->
+										<!-- Vehicle image preview for <%= car.marca %> <%= car.modelo %> goes here -->
+									</div>
+								</td>
+							</tr>
+						<% }) %>
+					<% } else { %>
+						<tr>
+							<td colspan="2" class="text-center text-muted py-5">
+								No hay vehículos registrados actualmente.
+							</td>
+						</tr>
+					<% } %>
+				</tbody>
+			</table>
+		</div>
+	</section>
 </main>
+
+<style>
+	.vehicle-row {
+		cursor: pointer;
+	}
+
+	.vehicle-row:hover {
+		background-color: #f8fafc;
+	}
+
+	.vehicle-details {
+		display: none;
+	}
+
+	.vehicle-details.show {
+		display: table-row;
+	}
+
+	.vehicle-details-card {
+		padding: 1.25rem;
+		border: 1px dashed #d0d7e2;
+		border-radius: 0.75rem;
+		background-color: #fdfefe;
+		color: #64748b;
+		font-style: italic;
+	}
+</style>
+
+<script>
+	(function setupVehicleRows() {
+		const rows = document.querySelectorAll(".vehicle-row");
+		rows.forEach((row) => {
+			row.addEventListener("click", () => {
+				const carId = row.getAttribute("data-car-id");
+				const detailRow = document.getElementById(`vehicle-details-${carId}`);
+				if (!detailRow) return;
+				const isVisible = detailRow.classList.contains("show");
+				document.querySelectorAll(".vehicle-details.show").forEach((openRow) => {
+					openRow.classList.remove("show");
+				});
+				if (!isVisible) {
+					detailRow.classList.add("show");
+				}
+			});
+		});
+	})();
+</script>
 
 <%- include('partials/footer') %>
