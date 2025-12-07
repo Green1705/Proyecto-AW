@@ -9,7 +9,10 @@ const router = express.Router();
 router
   .route("/")
   .get((req, res) => {
-    res.render("forms/login_form");
+    res.render("forms/login_form", {
+      success: req.flash("success"),
+      error: req.flash("error"),
+    });
   })
   .post((req, res) => {
     const query =
@@ -28,15 +31,12 @@ router
           ].join(" ");
           req.session.isAuthenticated = true;
           req.session.isAdmin = user.rol === "administrador";
-          res.render("index", {
-            ok: true,
-            message: "Se ha iniciado sesión correctamente",
-          });
+
+          req.flash("success", "Se ha iniciado sesión correctamente");
+          res.redirect("/");
         } else {
-          res.render("forms/login_form", {
-            ok: false,
-            message: "Correo o contraseña incorrectos",
-          });
+          req.flash("error", "Correo o contraseña incorrectos");
+          res.redirect("/");
         }
       }
     });
