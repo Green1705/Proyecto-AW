@@ -12,6 +12,10 @@
 					<input type="hidden" id="reserve-vehicle-id" name="id_automovil" value="<%= typeof selectedCarId !== 'undefined' ? selectedCarId : '' %>">
 					<input type="hidden" id="reserve-daily-rate" value="<%= typeof selectedCarRate !== 'undefined' ? selectedCarRate : 0 %>">
 
+					<div class="col-12 reserve-modal-summary alert alert-light border">
+						Selecciona un vehículo para comenzar la reserva.
+					</div>
+
 					<div class="col-md-6">
 						<label for="reserve-start" class="form-label">Fecha y hora de inicio</label>
 						<input type="datetime-local" class="form-control" id="reserve-start" name="fecha_inicio" required>

@@ -1,11 +1,11 @@
 <%- include('partials/head', { title: 'Vehículos' }) %>
 <%- include('partials/navbar') %>
 
-<main class="container py-4">
+<main class="container py-5">
 	<section class="vehicle-table-section">
 		<header class="mb-4">
 			<h1 class="h3 mb-1">Listado de vehículos</h1>
-			<p class="text-muted mb-0">Selecciona un vehículo para ver sus detalles.</p>
+			<p class="text-muted mb-0">Selecciona un vehículo para ver sus detalles y reservarlo.</p>
 		</header>
 
 		<div class="table-responsive">
@@ -17,7 +17,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<% if (Array.isArray(cars) && cars.length > 0) { %>
+					<% if (Array.isArray(cars) && cars.length) { %>
 						<% cars.forEach((car) => { %>
 							<tr class="vehicle-row" data-car-id="<%= car.id_automovil %>">
 								<td>
@@ -29,8 +29,35 @@
 							<tr class="vehicle-details" id="vehicle-details-<%= car.id_automovil %>">
 								<td colspan="2">
 									<div class="vehicle-details-card">
-										<!-- Detailed specifications for <%= car.marca %> <%= car.modelo %> go here -->
-										<!-- Vehicle image preview for <%= car.marca %> <%= car.modelo %> goes here -->
+										<div class="row g-4 align-items-center">
+											<div class="col-md-4">
+												<div class="vehicle-image">
+													<% if (car.imagen) { %>
+														<img src="<%= car.imagen %>" alt="<%= car.marca %> <%= car.modelo %>" class="img-fluid rounded">
+													<% } else { %>
+														<span>Imagen de <%= car.marca %> <%= car.modelo %></span>
+													<% } %>
+												</div>
+											</div>
+											<div class="col-md-5">
+												<ul class="vehicle-specs">
+													<li><strong>Matrícula:</strong> <%= car.matricula %></li>
+													<li><strong>Año de matriculación:</strong> <%= car.anio_matriculacion %></li>
+													<li><strong>Número de plazas:</strong> <%= car.numero_plazas %></li>
+													<li><strong>Autonomía:</strong> <%= car.autonomia_km || 'N/D' %> km</li>
+													<li><strong>Precio por día:</strong> €<%= Number(car.precio_por_dia).toFixed(2) %></li>
+													<li><strong>Color:</strong> <%= car.color %></li>
+													<li><strong>Estado:</strong> <%= car.estado %></li>
+												</ul>
+											</div>
+											<div class="col-md-3">
+												<div class="vehicle-actions">
+													<button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#reserveModal" data-car-id="<%= car.id_automovil %>" data-car-rate="<%= car.precio_por_dia %>">
+														Reservar
+													</button>
+												</div>
+											</div>
+										</div>
 									</div>
 								</td>
 							</tr>
@@ -54,7 +81,7 @@
 	}
 
 	.vehicle-row:hover {
-		background-color: #f8fafc;
+		background-color: #eef2ff;
 	}
 
 	.vehicle-details {
@@ -66,12 +93,40 @@
 	}
 
 	.vehicle-details-card {
-		padding: 1.25rem;
-		border: 1px dashed #d0d7e2;
+		padding: 1.5rem;
+		border: 1px solid #e2e8f0;
 		border-radius: 0.75rem;
-		background-color: #fdfefe;
-		color: #64748b;
-		font-style: italic;
+		background-color: #ffffff;
+	}
+
+	.vehicle-specs {
+		list-style: none;
+		padding-left: 0;
+		margin-bottom: 0;
+	}
+
+	.vehicle-specs li {
+		margin-bottom: 0.35rem;
+		color: #475569;
+	}
+
+	.vehicle-image {
+		max-width: 200px;
+		border-radius: 0.5rem;
+		background: #f8fafc;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 120px;
+		color: #94a3b8;
+		font-size: 0.9rem;
+		padding: 0.75rem;
+	}
+
+	.vehicle-actions {
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
 	}
 </style>
 
@@ -93,6 +148,30 @@
 			});
 		});
 	})();
+
+	(function setupReserveModalPrefill() {
+		const reserveModal = document.getElementById("reserveModal");
+		if (!reserveModal) return;
+		const bootstrapModal = bootstrap?.Modal ? bootstrap : window.bootstrap;
+		if (!bootstrapModal) return;
+		reserveModal.addEventListener("show.bs.modal", (event) => {
+			const button = event.relatedTarget;
+			if (!button) return;
+			const carId = button.getAttribute("data-car-id");
+			const rate = button.getAttribute("data-car-rate");
+			const carName = button.closest("tr")?.previousElementSibling?.querySelector("strong")?.textContent || "Vehículo seleccionado";
+			const vehicleInput = reserveModal.querySelector("#reserve-vehicle-id");
+			if (vehicleInput) vehicleInput.value = carId || "";
+			const rateInput = reserveModal.querySelector("#reserve-daily-rate");
+			if (rateInput) rateInput.value = rate || "0";
+			const summary = reserveModal.querySelector(".reserve-modal-summary");
+			if (summary) {
+				summary.textContent = `Reserva para vehículo #${carId || "--"} — ${carName}`;
+			}
+		});
+	})();
 </script>
+
+<%- include('partials/reserveForm_modal') %>
 
 <%- include('partials/footer') %>
