@@ -8,6 +8,7 @@ const session = require("express-session");
 const multer = require("multer"); //form encoding
 const multerFactory = multer({ dest: "./uploads" });
 const flash = require("connect-flash");
+const methodOverride = require("method-override");
 const app = express();
 
 const vehiclesRoutes = require("./routes/vehiculos.js");
@@ -32,6 +33,7 @@ app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(middlewareSession);
 app.use(flash());
+app.use(methodOverride("_method"));
 
 app.get("/api/session", is_logged, (req, res) => {
   const session = req.session || {};

@@ -25,6 +25,7 @@
     "express": "^5.1.0",
     "express-mysql-session": "^3.0.3",
     "express-session": "^1.18.2",
+    "method-override": "^3.0.0",
     "morgan": "^1.10.1",
     "multer": "^2.0.2",
     "mysql": "^2.18.1",
