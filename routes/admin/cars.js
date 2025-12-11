@@ -117,8 +117,9 @@ router.post("/delete", async (req, res) => {
   res.redirect("/admin/vehiculos");
 });
 
-router.post("/update", uploadImage.single("imagen"), async (req, res) => {
-  const { id_automovil } = req.body;
+router.post("/update/:id", uploadImage.single("imagen"), async (req, res) => {
+  const id_automovil = req.params.id || req.body.id_automovil;
+
   if (!id_automovil) {
     req.flash("error", "No se especificó el vehículo a modificar");
     return res.redirect("/admin/vehiculos");

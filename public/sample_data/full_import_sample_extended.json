@@ -12,7 +12,7 @@
 			"ciudad": "Barcelona",
 			"calle": "Aragó",
 			"numero": 73,
-			"codigo_postal": 08015
+			"codigo_postal": 28015
 		},
 		{
 			"id_direccion": 203,
@@ -92,7 +92,7 @@
 			"password": "Javier2024",
 			"telefono": "620999111",
 			"contraste": "normal",
-			"tamanio_texto": "pequeno",
+			"tamanio_texto": "normal",
 			"id_concesionario": 303
 		}
 	],
@@ -180,53 +180,6 @@
 			"imagen": "images/autos/auto_electrico.png",
 			"estado": "disponible",
 			"id_concesionario": 303
-		}
-	],
-	"reservas": [
-		{
-			"id_reserva": 701,
-			"id_usuario": 402,
-			"id_automovil": 601,
-			"nombre_cliente": "Carlos",
-			"apellido_paterno": "Rey",
-			"apellido_materno": "Gómez",
-			"dni": "X9988776",
-			"telefono": "630110022",
-			"fecha_inicio": "2024-06-02 09:00:00",
-			"fecha_fin": "2024-06-05 09:00:00",
-			"precio_final": 180,
-			"notas": "Entrega en sede Madrid",
-			"estado": "finalizada"
-		},
-		{
-			"id_reserva": 702,
-			"id_usuario": 403,
-			"id_automovil": 604,
-			"nombre_cliente": "Beatriz",
-			"apellido_paterno": "Serra",
-			"apellido_materno": "Casas",
-			"dni": "Y1122334",
-			"telefono": "640889977",
-			"fecha_inicio": "2024-06-10 12:00:00",
-			"fecha_fin": "2024-06-15 12:00:00",
-			"precio_final": 340,
-			"notas": "Cliente habitual",
-			"estado": "activa"
-		},
-		{
-			"id_reserva": 703,
-			"id_usuario": 404,
-			"id_automovil": 606,
-			"nombre_cliente": "Daniel",
-			"apellido_paterno": "Ibarra",
-			"apellido_materno": "Muñoz",
-			"dni": "Z7766554",
-			"telefono": "650443322",
-			"fecha_inicio": "2024-07-01 08:00:00",
-			"fecha_fin": "2024-07-04 08:00:00",
-			"precio_final": 285,
-			"notas": "Entrega aeropuerto VLC",
-			"estado": "reservada"
 		}
 	]
 }

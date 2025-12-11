@@ -38,7 +38,7 @@
 				<tbody>
 					<% if (Array.isArray(cars) && cars.length) { %>
 						<% cars.forEach((car) => { %>
-							<tr class="vehicle-row" data-car-id="<%= car.id_automovil %>">
+							<tr class="vehicle-row" data-car-id="<%= car.id_automovil %>" tabindex="0">
 								<td>
 									<strong><%= car.marca %> <%= car.modelo %></strong>
 									<span class="d-block text-muted small">Matrícula: <%= car.matricula %></span>
@@ -77,20 +77,7 @@
 														Reservar
 													</button>
 													<button type="button" class="btn btn-outline-primary w-100"
-														data-edit-vehicle
-														data-bs-toggle="modal" data-bs-target="#editCarModal"
-														data-car-id="<%= car.id_automovil %>"
-														data-car-matricula="<%= car.matricula %>"
-														data-car-marca="<%= car.marca %>"
-														data-car-modelo="<%= car.modelo %>"
-														data-car-anio="<%= car.anio_matriculacion %>"
-														data-car-plazas="<%= car.numero_plazas %>"
-														data-car-autonomia="<%= car.autonomia_km %>"
-														data-car-precio="<%= car.precio_por_dia %>"
-														data-car-color="<%= car.color %>"
-														data-car-estado="<%= car.estado %>"
-														data-car-concesionario="<%= car.id_concesionario %>"
-														data-car-imagen="<%= car.imagen %>">
+														data-bs-toggle="modal" data-bs-target="#editCarModal-<%= car.id_automovil %>">
 														Modificar este vehículo
 													</button>
 													<form action="/admin/vehiculos/delete" method="POST" class="w-100">
@@ -105,7 +92,78 @@
 									</div>
 								</td>
 							</tr>
-						<% }) %>
+							<div class="modal fade" id="editCarModal-<%= car.id_automovil %>" tabindex="-1" aria-labelledby="editCarLabel-<%= car.id_automovil %>" aria-hidden="true">
+								<div class="modal-dialog modal-lg">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="editCarLabel-<%= car.id_automovil %>">Editar vehículo #<%= car.id_automovil %></h5>
+											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+										</div>
+										<form action="/admin/vehiculos/update/<%= car.id_automovil %>" method="POST" enctype="multipart/form-data">
+											<input type="hidden" name="id_automovil" value="<%= car.id_automovil %>">
+											<input type="hidden" name="current_imagen" value="<%= car.imagen %>">
+											<div class="modal-body">
+												<div class="row g-3">
+													<div class="col-md-6">
+														<label for="edit-car-matricula-<%= car.id_automovil %>" class="form-label">Matrícula</label>
+														<input type="text" class="form-control" id="edit-car-matricula-<%= car.id_automovil %>" name="matricula" value="<%= car.matricula %>">
+													</div>
+													<div class="col-md-6">
+														<label for="edit-car-estado-<%= car.id_automovil %>" class="form-label">Estado</label>
+														<select class="form-select" id="edit-car-estado-<%= car.id_automovil %>" name="estado">
+															<option value="disponible" <%= car.estado === 'disponible' ? 'selected' : '' %>>Disponible</option>
+															<option value="reservado" <%= car.estado === 'reservado' ? 'selected' : '' %>>Reservado</option>
+															<option value="mantenimiento" <%= car.estado === 'mantenimiento' ? 'selected' : '' %>>Mantenimiento</option>
+														</select>
+													</div>
+													<div class="col-md-6">
+														<label for="edit-car-marca-<%= car.id_automovil %>" class="form-label">Marca</label>
+														<input type="text" class="form-control" id="edit-car-marca-<%= car.id_automovil %>" name="marca" value="<%= car.marca %>">
+													</div>
+													<div class="col-md-6">
+														<label for="edit-car-modelo-<%= car.id_automovil %>" class="form-label">Modelo</label>
+														<input type="text" class="form-control" id="edit-car-modelo-<%= car.id_automovil %>" name="modelo" value="<%= car.modelo %>">
+													</div>
+													<div class="col-md-6">
+														<label for="edit-car-anio-<%= car.id_automovil %>" class="form-label">Año de matriculación</label>
+														<input type="number" class="form-control" id="edit-car-anio-<%= car.id_automovil %>" name="anio_matriculacion" value="<%= car.anio_matriculacion %>">
+													</div>
+													<div class="col-md-6">
+														<label for="edit-car-plazas-<%= car.id_automovil %>" class="form-label">Número de plazas</label>
+														<input type="number" class="form-control" id="edit-car-plazas-<%= car.id_automovil %>" name="numero_plazas" value="<%= car.numero_plazas %>">
+													</div>
+													<div class="col-md-6">
+														<label for="edit-car-autonomia-<%= car.id_automovil %>" class="form-label">Autonomía (km)</label>
+														<input type="number" class="form-control" id="edit-car-autonomia-<%= car.id_automovil %>" name="autonomia_km" value="<%= car.autonomia_km %>">
+													</div>
+													<div class="col-md-6">
+														<label for="edit-car-precio-<%= car.id_automovil %>" class="form-label">Precio por día (€)</label>
+														<input type="number" class="form-control" id="edit-car-precio-<%= car.id_automovil %>" name="precio_por_dia" step="0.01" min="0" value="<%= car.precio_por_dia %>">
+													</div>
+													<div class="col-md-6">
+														<label for="edit-car-color-<%= car.id_automovil %>" class="form-label">Color</label>
+														<input type="text" class="form-control" id="edit-car-color-<%= car.id_automovil %>" name="color" value="<%= car.color %>">
+													</div>
+													<div class="col-md-6">
+														<label for="edit-car-image-<%= car.id_automovil %>" class="form-label">Imagen (opcional)</label>
+														<input type="file" class="form-control" id="edit-car-image-<%= car.id_automovil %>" name="imagen" accept="image/*">
+													</div>
+													<div class="col-12">
+														<label for="edit-car-dealership-<%= car.id_automovil %>" class="form-label">ID concesionario</label>
+														<input type="text" class="form-control" id="edit-car-dealership-<%= car.id_automovil %>" name="id_concesionario"
+															list="car-dealership-options" inputmode="numeric" value="<%= car.id_concesionario %>">
+													</div>
+												</div>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+												<button type="submit" class="btn btn-primary">Guardar cambios</button>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+							<% }) %>
 					<% } else { %>
 						<tr>
 							<td colspan="2" class="text-center text-muted py-5">
@@ -122,7 +180,7 @@
 <script src="/js/admin_cars.js"></script>
 <script src="/js/search.js"></script>
 
-<!-- Modal para nuevo vehículo -->
+
 <div class="modal fade" id="addCarModal" tabindex="-1" aria-labelledby="addCarLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
@@ -198,7 +256,6 @@
 	</div>
 </div>
 
-<!-- Modal para editar vehículo -->
 <div class="modal fade" id="editCarModal" tabindex="-1" aria-labelledby="editCarLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">

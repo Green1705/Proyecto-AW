@@ -40,6 +40,7 @@ router.post("/accesibilidad", (req, res) => {
   const requestedContrast = (req.body.contraste || "").toLowerCase();
   const requestedTextSize = (req.body.tamanio_texto || "").toLowerCase();
   const contrast = VALID_CONTRAST.has(requestedContrast) ? requestedContrast : "normal";
+  //make sure it is pequeno without the ñ otherwise it will break
   const textSize = VALID_TEXT_SIZE.has(requestedTextSize) ? requestedTextSize : "normal";
 
   const query = "UPDATE usuario SET contraste = ?, tamanio_texto = ? WHERE id_usuario = ?";

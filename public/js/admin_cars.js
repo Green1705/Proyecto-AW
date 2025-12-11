@@ -20,14 +20,16 @@
 	});
 	const editModal = document.getElementById("editCarModal");
 	if (!editModal) return;
+	const editForm = editModal.querySelector("form");
 
 	const fillEditModal = (button) => {
 		const setValue = (selector, value) => {
 			const input = editModal.querySelector(selector);
 			if (input) input.value = value ?? "";
 		};
+		const carId = button.getAttribute("data-car-id");
 
-		setValue("#edit-car-id", button.getAttribute("data-car-id"));
+		setValue("#edit-car-id", carId);
 		setValue("#edit-car-matricula", button.getAttribute("data-car-matricula"));
 		setValue("#edit-car-marca", button.getAttribute("data-car-marca"));
 		setValue("#edit-car-modelo", button.getAttribute("data-car-modelo"));
@@ -39,6 +41,7 @@
 		setValue("#edit-car-estado", button.getAttribute("data-car-estado"));
 		setValue("#edit-car-dealership", button.getAttribute("data-car-concesionario"));
 		setValue("#edit-car-current-image", button.getAttribute("data-car-imagen") || "");
+		if (editForm) editForm.action = "/admin/vehiculos/update";
 		const fileInput = editModal.querySelector("#edit-car-image");
 		if (fileInput) fileInput.value = "";
 	};

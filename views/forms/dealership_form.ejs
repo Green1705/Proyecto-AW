@@ -36,7 +36,7 @@
 				<tbody>
 					<% if (Array.isArray(dealerships) && dealerships.length) { %>
 						<% dealerships.forEach((dealer) => { %>
-							<tr class="dealership-row" data-dealer-id="<%= dealer.id_concesionario %>">
+							<tr class="dealership-row" data-dealer-id="<%= dealer.id_concesionario %>" tabindex="0">
 								<td>
 									<strong><%= dealer.nombre %></strong>
 									<span class="d-block text-muted small">Teléfono: <%= dealer.telefono %></span>

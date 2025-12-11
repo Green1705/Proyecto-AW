@@ -35,7 +35,7 @@ create table usuario(
     password varchar(20) not null,
     telefono varchar(20) not null,
     contraste enum('normal', 'alto') default 'normal',
-    tamanio_texto enum('pequeño', 'normal', 'grande') default 'normal',
+    tamanio_texto enum('pequeno', 'normal', 'grande') default 'normal',
     id_concesionario int,
 	foreign key (id_concesionario) references concesionario(id_concesionario)
 );

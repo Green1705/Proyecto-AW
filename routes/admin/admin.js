@@ -10,7 +10,7 @@ const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 2 *
 const promisePool = pool.promise();
 
 //changed to get temporarily
-router.get("/", (req, res) => {
+router.use("/",isAdmin, (req, res) => {
   res.render("admin_panel", {
     success: req.flash("success"),
     error: req.flash("error"),
@@ -210,7 +210,7 @@ router.post(
   },
 );
 
-router.use("/vehiculos", require("./cars.js"));
+router.use("/vehiculos",isAdmin, require("./cars.js"));
 router.use("/concesionarios", isAdmin, require("./dealership.js"));
 router.use("/empleados", isAdmin, require("./employee.js"));
 
