@@ -38,7 +38,11 @@
 		};
 
 		const applyFilter = () => {
-			const term = input.value.trim().toLowerCase();
+			const terms = input.value
+				.toLowerCase()
+				.split(",")
+				.map((t) => t.trim())
+				.filter(Boolean);
 			let visibleCount = 0;
 			rows.forEach((row) => {
 				const detailRow = getDetailRow(row);
@@ -46,7 +50,8 @@
 					row.textContent +
 					(detailRow ? ` ${detailRow.textContent}` : "")
 				).toLowerCase();
-				const matches = combinedText.includes(term);
+				const matches =
+					!terms.length || terms.every((term) => combinedText.includes(term));
 				row.style.display = matches ? "" : "none";
 				toggleDetailDisplay(detailRow, matches);
 				if (matches) visibleCount += 1;

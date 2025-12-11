@@ -1,185 +1,45 @@
 {
 	"direcciones": [
-		{
-			"id_direccion": 201,
-			"ciudad": "Madrid",
-			"calle": "Serrano",
-			"numero": 18,
-			"codigo_postal": 28001
-		},
-		{
-			"id_direccion": 202,
-			"ciudad": "Barcelona",
-			"calle": "Aragó",
-			"numero": 73,
-			"codigo_postal": 28015
-		},
-		{
-			"id_direccion": 203,
-			"ciudad": "Valencia",
-			"calle": "Colón",
-			"numero": 55,
-			"codigo_postal": 46004
-		}
+		{ "id_direccion": 201, "ciudad": "Madrid", "calle": "Serrano", "numero": 18, "codigo_postal": 28001 },
+		{ "id_direccion": 202, "ciudad": "Barcelona", "calle": "Aragó", "numero": 73, "codigo_postal": "08015" },
+		{ "id_direccion": 203, "ciudad": "Valencia", "calle": "Colón", "numero": 55, "codigo_postal": 46004 },
+		{ "id_direccion": 204, "ciudad": "Sevilla", "calle": "Sierpes", "numero": 12, "codigo_postal": 41004 },
+		{ "id_direccion": 205, "ciudad": "Bilbao", "calle": "Gran Via", "numero": 80, "codigo_postal": 48009 },
+		{ "id_direccion": 206, "ciudad": "Malaga", "calle": "Alcazabilla", "numero": 3, "codigo_postal": 29015 },
+		{ "id_direccion": 207, "ciudad": "Zaragoza", "calle": "Paseo Independencia", "numero": 25, "codigo_postal": 50001 }
 	],
 	"concesionarios": [
-		{
-			"id_concesionario": 301,
-			"nombre": "ElectroMov Madrid",
-			"telefono": "915550011",
-			"direccion_id": 201
-		},
-		{
-			"id_concesionario": 302,
-			"nombre": "BCN Volt Autos",
-			"telefono": "933112233",
-			"direccion_id": 202
-		},
-		{
-			"id_concesionario": 303,
-			"nombre": "Valencia E-Rides",
-			"telefono": "963221144",
-			"direccion_id": 203
-		}
+		{ "id_concesionario": 301, "nombre": "ElectroMov Madrid Serrano", "telefono": "915550011", "direccion_id": 201 },
+		{ "id_concesionario": 302, "nombre": "BCN Volt Autos Barcelona", "telefono": "933112233", "direccion_id": 202 },
+		{ "id_concesionario": 303, "nombre": "Valencia E-Rides Colon", "telefono": "963221144", "direccion_id": 203 },
+		{ "id_concesionario": 304, "nombre": "Sevilla EV Center", "telefono": "954778899", "direccion_id": 204 },
+		{ "id_concesionario": 305, "nombre": "Bilbao Electrico Norte", "telefono": "944556677", "direccion_id": 205 },
+		{ "id_concesionario": 306, "nombre": "Malaga Green Cars Centro", "telefono": "952334455", "direccion_id": 206 },
+		{ "id_concesionario": 307, "nombre": "Zaragoza eMotion", "telefono": "976223344", "direccion_id": 207 }
 	],
 	"usuarios": [
-		{
-			"id_usuario": 401,
-			"nombre": "Lucía",
-			"apellido_paterno": "Navarro",
-			"apellido_materno": "Soria",
-			"rol": "administrador",
-			"email": "lucia.navarro@aem.com",
-			"password": "Lucia2024",
-			"telefono": "600111333",
-			"contraste": "normal",
-			"tamanio_texto": "normal",
-			"id_concesionario": 301
-		},
-		{
-			"id_usuario": 402,
-			"nombre": "Miguel",
-			"apellido_paterno": "Torres",
-			"apellido_materno": "Campos",
-			"rol": "empleado",
-			"email": "miguel.torres@aem.com",
-			"password": "Miguel2024",
-			"telefono": "600222333",
-			"contraste": "alto",
-			"tamanio_texto": "grande",
-			"id_concesionario": 301
-		},
-		{
-			"id_usuario": 403,
-			"nombre": "Andrea",
-			"apellido_paterno": "Salas",
-			"apellido_materno": "Martí",
-			"rol": "empleado",
-			"email": "andrea.salas@aem.com",
-			"password": "Andrea2024",
-			"telefono": "610123456",
-			"contraste": "normal",
-			"tamanio_texto": "normal",
-			"id_concesionario": 302
-		},
-		{
-			"id_usuario": 404,
-			"nombre": "Javier",
-			"apellido_paterno": "Beltrán",
-			"apellido_materno": "Costa",
-			"rol": "empleado",
-			"email": "javier.beltran@aem.com",
-			"password": "Javier2024",
-			"telefono": "620999111",
-			"contraste": "normal",
-			"tamanio_texto": "normal",
-			"id_concesionario": 303
-		}
+		{ "id_usuario": 401, "nombre": "Lucia", "apellido_paterno": "Navarro", "apellido_materno": "Soria", "rol": "administrador", "email": "lucia.navarro@aem.com", "password": "Lucia2024", "telefono": "600111333", "contraste": "normal", "tamanio_texto": "normal", "id_concesionario": 301 },
+		{ "id_usuario": 402, "nombre": "Miguel", "apellido_paterno": "Torres", "apellido_materno": "Campos", "rol": "empleado", "email": "miguel.torres@aem.com", "password": "Miguel2024", "telefono": "600222333", "contraste": "alto", "tamanio_texto": "grande", "id_concesionario": 301 },
+		{ "id_usuario": 403, "nombre": "Andrea", "apellido_paterno": "Salas", "apellido_materno": "Marti", "rol": "empleado", "email": "andrea.salas@aem.com", "password": "Andrea2024", "telefono": "610123456", "contraste": "normal", "tamanio_texto": "normal", "id_concesionario": 302 },
+		{ "id_usuario": 404, "nombre": "Javier", "apellido_paterno": "Beltran", "apellido_materno": "Costa", "rol": "empleado", "email": "javier.beltran@aem.com", "password": "Javier2024", "telefono": "620999111", "contraste": "normal", "tamanio_texto": "normal", "id_concesionario": 303 },
+		{ "id_usuario": 405, "nombre": "Elena", "apellido_paterno": "Ramirez", "apellido_materno": "Lopez", "rol": "empleado", "email": "elena.ramirez@aem.com", "password": "Elena2024", "telefono": "630111222", "contraste": "normal", "tamanio_texto": "normal", "id_concesionario": 304 },
+		{ "id_usuario": 406, "nombre": "Iker", "apellido_paterno": "Garcia", "apellido_materno": "Santos", "rol": "administrador", "email": "iker.garcia@aem.com", "password": "Iker2024", "telefono": "640555666", "contraste": "alto", "tamanio_texto": "grande", "id_concesionario": 305 },
+		{ "id_usuario": 407, "nombre": "Marta", "apellido_paterno": "Suarez", "apellido_materno": "Diaz", "rol": "empleado", "email": "marta.suarez@aem.com", "password": "Marta2024", "telefono": "650333444", "contraste": "normal", "tamanio_texto": "normal", "id_concesionario": 306 },
+		{ "id_usuario": 408, "nombre": "Diego", "apellido_paterno": "Romero", "apellido_materno": "Perez", "rol": "empleado", "email": "diego.romero@aem.com", "password": "Diego2024", "telefono": "660777888", "contraste": "normal", "tamanio_texto": "normal", "id_concesionario": 307 }
 	],
 	"automoviles": [
-		{
-			"id_automovil": 601,
-			"matricula": "MAD-4501",
-			"marca": "Nissan",
-			"modelo": "Leaf",
-			"anio_matriculacion": 2022,
-			"numero_plazas": 5,
-			"autonomia_km": 320,
-			"precio_por_dia": 60,
-			"color": "Blanco",
-			"imagen": "images/autos/auto_electrico.png",
-			"estado": "disponible",
-			"id_concesionario": 301
-		},
-		{
-			"id_automovil": 602,
-			"matricula": "MAD-7822",
-			"marca": "Renault",
-			"modelo": "Zoe",
-			"anio_matriculacion": 2021,
-			"numero_plazas": 5,
-			"autonomia_km": 300,
-			"precio_por_dia": 55,
-			"color": "Azul",
-			"imagen": "images/autos/auto_electrico.png",
-			"estado": "mantenimiento",
-			"id_concesionario": 301
-		},
-		{
-			"id_automovil": 603,
-			"matricula": "BCN-9010",
-			"marca": "Hyundai",
-			"modelo": "Kona EV",
-			"anio_matriculacion": 2023,
-			"numero_plazas": 5,
-			"autonomia_km": 420,
-			"precio_por_dia": 78,
-			"color": "Gris",
-			"imagen": "images/autos/auto_electrico.png",
-			"estado": "disponible",
-			"id_concesionario": 302
-		},
-		{
-			"id_automovil": 604,
-			"matricula": "BCN-4520",
-			"marca": "Seat",
-			"modelo": "Born",
-			"anio_matriculacion": 2022,
-			"numero_plazas": 5,
-			"autonomia_km": 360,
-			"precio_por_dia": 68,
-			"color": "Rojo",
-			"imagen": "images/autos/auto_electrico.png",
-			"estado": "reservado",
-			"id_concesionario": 302
-		},
-		{
-			"id_automovil": 605,
-			"matricula": "VAL-3307",
-			"marca": "Tesla",
-			"modelo": "Model Y",
-			"anio_matriculacion": 2023,
-			"numero_plazas": 5,
-			"autonomia_km": 510,
-			"precio_por_dia": 110,
-			"color": "Negro",
-			"imagen": "images/autos/auto_electrico.png",
-			"estado": "disponible",
-			"id_concesionario": 303
-		},
-		{
-			"id_automovil": 606,
-			"matricula": "VAL-8812",
-			"marca": "Kia",
-			"modelo": "EV6",
-			"anio_matriculacion": 2022,
-			"numero_plazas": 5,
-			"autonomia_km": 500,
-			"precio_por_dia": 95,
-			"color": "Plateado",
-			"imagen": "images/autos/auto_electrico.png",
-			"estado": "disponible",
-			"id_concesionario": 303
-		}
+		{ "id_automovil": 601, "matricula": "MAD-4501", "marca": "Nissan", "modelo": "Leaf", "anio_matriculacion": 2022, "numero_plazas": 5, "autonomia_km": 320, "precio_por_dia": 60, "color": "Blanco", "imagen": "images/autos/auto_electrico.png", "estado": "disponible", "id_concesionario": 301 },
+		{ "id_automovil": 602, "matricula": "MAD-7822", "marca": "Renault", "modelo": "Zoe", "anio_matriculacion": 2021, "numero_plazas": 5, "autonomia_km": 300, "precio_por_dia": 55, "color": "Azul", "imagen": "images/autos/auto_electrico.png", "estado": "mantenimiento", "id_concesionario": 301 },
+		{ "id_automovil": 603, "matricula": "BCN-9010", "marca": "Hyundai", "modelo": "Kona EV", "anio_matriculacion": 2023, "numero_plazas": 5, "autonomia_km": 420, "precio_por_dia": 78, "color": "Gris", "imagen": "images/autos/auto_electrico.png", "estado": "disponible", "id_concesionario": 302 },
+		{ "id_automovil": 604, "matricula": "BCN-4520", "marca": "Seat", "modelo": "Born", "anio_matriculacion": 2022, "numero_plazas": 5, "autonomia_km": 360, "precio_por_dia": 68, "color": "Rojo", "imagen": "images/autos/auto_electrico.png", "estado": "reservado", "id_concesionario": 302 },
+		{ "id_automovil": 605, "matricula": "VAL-3307", "marca": "Tesla", "modelo": "Model Y", "anio_matriculacion": 2023, "numero_plazas": 5, "autonomia_km": 510, "precio_por_dia": 110, "color": "Negro", "imagen": "images/autos/auto_electrico.png", "estado": "disponible", "id_concesionario": 303 },
+		{ "id_automovil": 606, "matricula": "VAL-8812", "marca": "Kia", "modelo": "EV6", "anio_matriculacion": 2022, "numero_plazas": 5, "autonomia_km": 500, "precio_por_dia": 95, "color": "Plateado", "imagen": "images/autos/auto_electrico.png", "estado": "disponible", "id_concesionario": 303 },
+		{ "id_automovil": 607, "matricula": "SEV-2201", "marca": "Citroen", "modelo": "e-C4", "anio_matriculacion": 2022, "numero_plazas": 5, "autonomia_km": 350, "precio_por_dia": 65, "color": "Blanco", "imagen": "images/autos/auto_electrico.png", "estado": "disponible", "id_concesionario": 304 },
+		{ "id_automovil": 608, "matricula": "SEV-5520", "marca": "Peugeot", "modelo": "e-2008", "anio_matriculacion": 2023, "numero_plazas": 5, "autonomia_km": 400, "precio_por_dia": 72, "color": "Gris", "imagen": "images/autos/auto_electrico.png", "estado": "disponible", "id_concesionario": 304 },
+		{ "id_automovil": 609, "matricula": "BIL-3301", "marca": "Volkswagen", "modelo": "ID.3", "anio_matriculacion": 2022, "numero_plazas": 5, "autonomia_km": 420, "precio_por_dia": 78, "color": "Azul", "imagen": "images/autos/auto_electrico.png", "estado": "disponible", "id_concesionario": 305 },
+		{ "id_automovil": 610, "matricula": "BIL-7710", "marca": "Cupra", "modelo": "Born", "anio_matriculacion": 2023, "numero_plazas": 5, "autonomia_km": 450, "precio_por_dia": 82, "color": "Negro", "imagen": "images/autos/auto_electrico.png", "estado": "reservado", "id_concesionario": 305 },
+		{ "id_automovil": 611, "matricula": "MLG-4412", "marca": "Hyundai", "modelo": "Ioniq 5", "anio_matriculacion": 2023, "numero_plazas": 5, "autonomia_km": 480, "precio_por_dia": 95, "color": "Blanco", "imagen": "images/autos/auto_electrico.png", "estado": "disponible", "id_concesionario": 306 },
+		{ "id_automovil": 612, "matricula": "ZAZ-9033", "marca": "Renault", "modelo": "Megane E-Tech", "anio_matriculacion": 2022, "numero_plazas": 5, "autonomia_km": 450, "precio_por_dia": 74, "color": "Rojo", "imagen": "images/autos/auto_electrico.png", "estado": "disponible", "id_concesionario": 307 },
+		{ "id_automovil": 613, "matricula": "ZAZ-1205", "marca": "Peugeot", "modelo": "e-208", "anio_matriculacion": 2021, "numero_plazas": 5, "autonomia_km": 340, "precio_por_dia": 58, "color": "Verde", "imagen": "images/autos/auto_electrico.png", "estado": "mantenimiento", "id_concesionario": 307 }
 	]
 }

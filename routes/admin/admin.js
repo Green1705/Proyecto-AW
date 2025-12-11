@@ -10,7 +10,7 @@ const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 2 *
 const promisePool = pool.promise();
 
 //changed to get temporarily
-router.use("/",isAdmin, (req, res) => {
+router.get("/",isAdmin, (req, res) => {
   res.render("admin_panel", {
     success: req.flash("success"),
     error: req.flash("error"),
@@ -18,6 +18,7 @@ router.use("/",isAdmin, (req, res) => {
 });
 
 router.post(
+  //for importing the json
   "/import-json",
   isAdmin,
   upload.single("dataFile"),
